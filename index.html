@@ -1,0 +1,4949 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content">
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#eceef1" id="themeColorLight">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#14161a" id="themeColorDark">
+  <meta name="color-scheme" content="light dark">
+  <title>Typolor Studio | Tactile Color & Typography Scale Generator</title>
+  <meta name="description" content="Typolor Studio is a unified tactile design studio for generating harmonic 11-shade color palettes and musical interval typographic scales with instant export for Tailwind CSS, CSS Custom Properties, and modern design tokens.">
+  <meta name="keywords" content="color palette generator, typography scale generator, tailwind css theme, design tokens, apca contrast, color studio">
+  <meta name="author" content="Typolor">
+  
+  <!-- Open Graph / Social Sharing -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Typolor Studio | Tactile Color & Typography Scale Generator">
+  <meta property="og:description" content="Harmonic 11-step color palettes and proportional typographic scales with instant export for Tailwind CSS, CSS variables, and design tokens.">
+  <meta property="og:image" content="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='630' viewBox='0 0 1200 630'%3E%3Crect width='1200' height='630' fill='%2314161a'/%3E%3Ccircle cx='400' cy='315' r='180' fill='%233B82F6' opacity='0.8'/%3E%3Ccircle cx='600' cy='315' r='180' fill='%2310B981' opacity='0.8'/%3E%3Ctext x='600' y='340' font-family='system-ui,sans-serif' font-size='72' font-weight='800' fill='%23ffffff' text-anchor='middle'%3ETypolor Studio%3C/text%3E%3C/svg%3E">
+  
+  <!-- Twitter Cards -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Typolor Studio | Tactile Color & Typography Scale Generator">
+  <meta name="twitter:description" content="Harmonic 11-step color palettes and proportional typographic scales with instant export for Tailwind CSS.">
+  
+  <!-- Sleek Embedded Vector Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%233B82F6'/%3E%3Cstop offset='100%25' stop-color='%2310B981'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='8' fill='%2314161a'/%3E%3Ccircle cx='12' cy='16' r='6' fill='url(%23g)'/%3E%3Cpath d='M19 11h7m-3.5 0v10m-3 0h6' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet">
+  <style>
+
+    /* --------------------------------------------------------------------------
+       TACTILE INDUSTRIAL HARDWARE DESIGN SYSTEM
+       Tactile physical hardware architecture:
+       silvery-grey matte textured chassis, concentric recessed circular wells,
+       elevated porcelain disc pucks with directional studio key light,
+       illuminated amber and glowing red jewels, and #1A1A1A obsidian hardware.
+       -------------------------------------------------------------------------- */
+    :root,
+    [data-theme="light"] {
+      /* Silvery-Grey Matte Industrial Chassis Canvas */
+      --canvas-bg: #eceef1;
+      --canvas-gradient:
+        radial-gradient(ellipse 90% 70% at 50% 15%, #f9fafb 0%, #eceef1 55%, #dfe2e7 100%);
+
+      /* Physical Matte Porcelain Surfaces */
+      --surface-raised: #ebedf2;
+      --surface-raised-top: #ffffff;
+      --surface-raised-bottom: #e2e5eb;
+      --surface-card: #f8f9fc;
+      --surface-card-subtle: #f0f2f6;
+
+      /* Recessed Sunken Wells & Cavities (Milled into chassis) */
+      --surface-sunken: #d8dce3;
+      --surface-sunken-inner: #cfd4dc;
+      --surface-cutout: #d8dce3;
+      --surface-cutout-deep: #cad0da;
+      --surface-bezel: #d0d5de;
+
+      /* Elevated Puck Knobs */
+      --surface-knob: #edf0f5;
+      --surface-knob-top: #ffffff;
+
+      /* Primary #1A1A1A Obsidian Hardware */
+      --surface-obsidian: #191a1d;
+      --surface-obsidian-top: #2c2d33;
+
+      /* Lighting Rims & Specular Chamfers */
+      --rim-light: rgba(255, 255, 255, 0.95);
+      --rim-subtle: rgba(255, 255, 255, 0.65);
+      --rim-shadow: rgba(0, 0, 0, 0.08);
+
+      /* Elevated Chassis Slab Shadow (Smooth directional studio key light) */
+      --clay-slab-shadow:
+        0 14px 36px -8px rgba(15, 23, 42, 0.12),
+        0 3px 8px rgba(15, 23, 42, 0.05),
+        inset 0 1.5px 2px var(--rim-light),
+        inset 0 -1.5px 2px rgba(0, 0, 0, 0.05);
+      --shadow-card: var(--clay-slab-shadow);
+      --shadow-card-hover:
+        0 18px 42px -6px rgba(15, 23, 42, 0.16),
+        0 4px 10px rgba(15, 23, 42, 0.06),
+        inset 0 1.5px 2px var(--rim-light);
+
+      /* Sunken Cavity Well Shadow (Concentric circular wells) */
+      --clay-sunken-shadow:
+        inset 0 4px 10px rgba(15, 23, 42, 0.14),
+        inset 0 1.5px 3px rgba(15, 23, 42, 0.08),
+        inset 0 -2px 3px var(--rim-light);
+      --shadow-cutout: var(--clay-sunken-shadow);
+      --shadow-cutout-deep:
+        inset 0 5px 12px rgba(15, 23, 42, 0.18),
+        inset 0 -2px 3px var(--rim-light);
+
+      /* Elevated Tactile Porcelain Puck Shadow (Main action buttons from reference images) */
+      --clay-puck-shadow:
+        0 6px 18px -3px rgba(15, 23, 42, 0.13),
+        0 2px 4px rgba(15, 23, 42, 0.06),
+        inset 0 1.5px 2px var(--rim-light),
+        inset 0 -1.5px 2px rgba(0, 0, 0, 0.07);
+      --shadow-pill: var(--clay-puck-shadow);
+      --shadow-pill-hover:
+        0 10px 24px -4px rgba(15, 23, 42, 0.18),
+        0 3px 6px rgba(15, 23, 42, 0.08),
+        inset 0 1.5px 2px var(--rim-light);
+
+      /* #1A1A1A Obsidian Hardware Shadow */
+      --clay-obsidian-shadow:
+        0 8px 22px -3px rgba(0, 0, 0, 0.36),
+        0 3px 6px rgba(0, 0, 0, 0.18),
+        inset 0 1.5px 2px rgba(255, 255, 255, 0.28),
+        inset 0 -2px 3px rgba(0, 0, 0, 0.7);
+      --shadow-obsidian: var(--clay-obsidian-shadow);
+      --shadow-obsidian-hover:
+        0 12px 28px -4px rgba(0, 0, 0, 0.46),
+        0 4px 8px rgba(0, 0, 0, 0.25),
+        inset 0 1.5px 2px rgba(255, 255, 255, 0.35);
+
+      /* Tactile Neutral Tokens */
+      --border-hairline: rgba(0, 0, 0, 0.07);
+      --border-subtle: rgba(15, 23, 42, 0.08);
+      --border-focus: rgba(15, 23, 42, 0.25);
+
+      /* Typography Tokens */
+      --text: #171920;
+      --text-muted: #4e5362;
+      --text-subtle: #73798a;
+      --header-gradient: linear-gradient(180deg, #11141c 0%, #2e3442 100%);
+
+      /* TAILWIND CSS SPACING SCALE */
+      --space-0: 0px;
+      --space-0_5: 2px;
+      --space-1: 4px;
+      --space-1_5: 6px;
+      --space-2: 8px;
+      --space-2_5: 10px;
+      --space-3: 12px;
+      --space-3_5: 14px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-7: 28px;
+      --space-8: 32px;
+      --space-9: 36px;
+      --space-10: 40px;
+      --space-12: 48px;
+      --space-14: 56px;
+      --space-16: 64px;
+      --space-20: 80px;
+
+      /* TAILWIND CSS BORDER RADIUS SCALE */
+      --radius-none: 0px;
+      --radius-xs: 4px;
+      --radius-sm: 6px;
+      --radius-md: 8px;
+      --radius-lg: 10px;
+      --radius-xl: 12px;
+      --radius-2xl: 16px;
+      --radius-3xl: 20px;
+      --radius-slab: 30px;
+      --radius-tile: 20px;
+      --radius-pill: 9999px;
+      --radius-full: 9999px;
+
+      /* TAILWIND CSS TYPOGRAPHY SCALE */
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', 'Fira Code', Menlo, monospace;
+      --text-2xs: 0.65rem;
+      --text-xs: 0.75rem;
+      --text-sm: 0.875rem;
+      --text-base: 1rem;
+      --text-lg: 1.125rem;
+      --text-xl: 1.25rem;
+      --text-2xl: 1.5rem;
+      --text-3xl: 1.875rem;
+      --text-4xl: 2.25rem;
+
+      /* TIMING & ANIMATION */
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      --dur-fast: 120ms;
+      --dur-normal: 220ms;
+      --dur-slow: 350ms;
+      --transition: all var(--dur-normal) var(--ease-out);
+
+      /* MOBILE SAFE AREA INSETS */
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+      --safe-left: env(safe-area-inset-left, 0px);
+      --safe-right: env(safe-area-inset-right, 0px);
+    }
+
+    [data-theme="dark"] {
+      --canvas-bg: #14161a;
+      --canvas-gradient:
+        radial-gradient(ellipse 90% 70% at 50% 15%, #20232a 0%, #14161a 55%, #0b0c0e 100%);
+
+      --surface-raised: #1c1f26;
+      --surface-raised-top: #272b35;
+      --surface-raised-bottom: #16181e;
+      --surface-card: #1c1f26;
+      --surface-card-subtle: #16181e;
+
+      --surface-sunken: #0f1115;
+      --surface-sunken-inner: #090a0d;
+      --surface-cutout: #0f1115;
+      --surface-cutout-deep: #07080a;
+      --surface-bezel: #181a20;
+
+      --surface-knob: #252833;
+      --surface-knob-top: #333847;
+
+      --surface-obsidian: #0c0d10;
+      --surface-obsidian-top: #1b1c22;
+
+      --rim-light: rgba(255, 255, 255, 0.16);
+      --rim-subtle: rgba(255, 255, 255, 0.08);
+      --rim-shadow: rgba(0, 0, 0, 0.6);
+
+      --clay-slab-shadow:
+        0 16px 40px -10px rgba(0, 0, 0, 0.7),
+        0 4px 10px rgba(0, 0, 0, 0.4),
+        inset 0 1.5px 2px var(--rim-light),
+        inset 0 -1.5px 2px rgba(0, 0, 0, 0.6);
+      --shadow-card: var(--clay-slab-shadow);
+      --shadow-card-hover:
+        0 20px 48px -8px rgba(0, 0, 0, 0.8),
+        inset 0 1.5px 2px var(--rim-light);
+
+      --clay-sunken-shadow:
+        inset 0 5px 12px rgba(0, 0, 0, 0.65),
+        inset 0 1.5px 3px rgba(0, 0, 0, 0.45),
+        inset 0 -2px 3px rgba(255, 255, 255, 0.05);
+      --shadow-cutout: var(--clay-sunken-shadow);
+      --shadow-cutout-deep:
+        inset 0 6px 14px rgba(0, 0, 0, 0.8);
+
+      --clay-puck-shadow:
+        0 8px 22px -3px rgba(0, 0, 0, 0.6),
+        0 2px 5px rgba(0, 0, 0, 0.35),
+        inset 0 1.5px 2px var(--rim-light),
+        inset 0 -1px 2px rgba(0, 0, 0, 0.5);
+      --shadow-pill: var(--clay-puck-shadow);
+      --shadow-pill-hover:
+        0 12px 28px -4px rgba(0, 0, 0, 0.7),
+        inset 0 1.5px 2px var(--rim-light);
+
+      --clay-obsidian-shadow:
+        0 10px 24px -4px rgba(0, 0, 0, 0.85),
+        inset 0 1.5px 2px rgba(255, 255, 255, 0.16),
+        inset 0 -2px 3px rgba(0, 0, 0, 0.8);
+      --shadow-obsidian: var(--clay-obsidian-shadow);
+      --shadow-obsidian-hover:
+        0 14px 32px -4px rgba(0, 0, 0, 0.95);
+
+      --border-hairline: rgba(255, 255, 255, 0.08);
+      --border-subtle: rgba(255, 255, 255, 0.1);
+      --border-focus: rgba(255, 255, 255, 0.3);
+
+      --text: #f1f3f7;
+      --text-muted: #9ba2b2;
+      --text-subtle: #6b7282;
+      --header-gradient: linear-gradient(180deg, #ffffff 0%, #cbd2e0 100%);
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      -webkit-tap-highlight-color: transparent;
+      -webkit-text-size-adjust: 100%;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--canvas-bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      min-height: 100dvh;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      padding: max(var(--space-6), calc(var(--space-4) + var(--safe-top)))
+               max(var(--space-4), calc(var(--space-3) + var(--safe-right)))
+               max(var(--space-12), calc(var(--space-8) + var(--safe-bottom)))
+               max(var(--space-4), calc(var(--space-3) + var(--safe-left)));
+      background-image: var(--canvas-gradient);
+      background-attachment: fixed;
+      transition: background-color var(--dur-normal) ease, color var(--dur-normal) ease;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    button,
+    input,
+    select,
+    textarea,
+    optgroup {
+      font-family: var(--font-sans);
+    }
+
+    /* Prevent mobile browser zoom drift: iOS Safari auto-zooms inputs under 16px */
+    input, textarea, select {
+      font-size: 16px;
+    }
+
+    @media (pointer: coarse) {
+      input, textarea, select {
+        font-size: 16px !important;
+      }
+    }
+
+    /* Tactile Touch Optimization: instant 0ms tap, no long-press callouts on controls */
+    button,
+    a,
+    [role="button"],
+    .btn-obsidian-crystal,
+    .btn-crystal-clear-pill,
+    .mode-pill-btn,
+    .tab-pill-btn,
+    .picker-gem-btn,
+    .history-color-ellipse,
+    .swatch-color-box,
+    .swatch-info-card,
+    .ts-stepper-btn,
+    .ts-preset-pill,
+    .icon-tool-btn,
+    .btn-format-switcher,
+    .tactile-select-trigger,
+    .ts-step-copy-btn,
+    .history-clear-btn {
+      touch-action: manipulation;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-touch-callout: none;
+    }
+
+    /* Touch press micro-feedback */
+    button:active,
+    [role="button"]:active,
+    .btn-obsidian-crystal:active,
+    .btn-crystal-clear-pill:active,
+    .mode-pill-btn:active,
+    .tab-pill-btn:active,
+    .picker-gem-btn:active,
+    .history-color-ellipse:active,
+    .ts-stepper-btn:active,
+    .ts-preset-pill:active,
+    .icon-tool-btn:active,
+    .btn-format-switcher:active {
+      transform: scale(0.97);
+    }
+
+    .container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+      width: 100%;
+      box-sizing: border-box;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* --------------------------------------------------------------------------
+       HEADER & TACTILE INDUSTRIAL BADGE
+       -------------------------------------------------------------------------- */
+    header {
+      margin-bottom: 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .tactile-badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.45rem 1.15rem;
+      background: linear-gradient(180deg, var(--surface-raised-top) 0%, var(--surface-raised) 100%);
+      border: 1.5px solid var(--rim-light);
+      border-radius: var(--radius-pill);
+      box-shadow: var(--clay-puck-shadow);
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+      position: relative;
+      user-select: none;
+    }
+
+    
+
+    h1 {
+      font-size: 2.45rem;
+      font-weight: 800;
+      letter-spacing: -0.035em;
+      line-height: 1.2;
+      background: var(--header-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .header-desc {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-top: 0.4rem;
+      max-width: 640px;
+      line-height: 1.55;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 0.85rem;
+      align-items: center;
+    }
+
+    /* --------------------------------------------------------------------------
+       #1A1A1A OBSIDIAN TACTILE BUTTON (Primary Hardware Action)
+       Sculpted matte obsidian polymer puck with top chamfer highlight,
+       satisfying physical press movement, and flawless optical centering.
+       -------------------------------------------------------------------------- */
+    .btn-obsidian-crystal {
+      height: 42px;
+      box-sizing: border-box;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      padding: 0 1.65rem;
+      background: linear-gradient(180deg, var(--surface-obsidian-top) 0%, var(--surface-obsidian) 100%);
+      border: 1.5px solid rgba(255, 255, 255, 0.16);
+      border-radius: var(--radius-pill);
+      position: relative;
+      cursor: pointer;
+      user-select: none;
+      transition: var(--transition);
+      box-shadow: var(--clay-obsidian-shadow);
+      color: #ffffff;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      line-height: 1;
+      letter-spacing: -0.01em;
+    }
+
+    .btn-obsidian-crystal .obsidian-core {
+      display: none;
+    }
+
+    .btn-obsidian-crystal .btn-content {
+      position: relative;
+      z-index: 2;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.55rem;
+      color: #ffffff;
+      line-height: 1;
+    }
+
+    .btn-obsidian-crystal svg,
+    .btn-obsidian-crystal .btn-content svg {
+      display: block;
+      flex-shrink: 0;
+    }
+
+    .btn-obsidian-crystal:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-obsidian-hover);
+    }
+
+    .btn-obsidian-crystal:active {
+      transform: translateY(2px) scale(0.98);
+      box-shadow: 
+        0 2px 6px rgba(0, 0, 0, 0.4),
+        inset 0 2px 5px rgba(0, 0, 0, 0.7);
+    }
+
+    /* --------------------------------------------------------------------------
+       SECONDARY TACTILE PORCELAIN PILL BUTTON
+       Off-white tactile ceramic pill with exact optical vertical centering.
+       -------------------------------------------------------------------------- */
+    .btn-crystal-clear-pill {
+      height: 42px;
+      box-sizing: border-box;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.55rem;
+      padding: 0 1.5rem;
+      background: linear-gradient(180deg, var(--surface-raised-top) 0%, var(--surface-raised) 100%);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      line-height: 1;
+      border: 1.5px solid var(--rim-light);
+      border-radius: var(--radius-pill);
+      box-shadow: var(--clay-puck-shadow);
+      cursor: pointer;
+      position: relative;
+      transition: var(--transition);
+      user-select: none;
+    }
+
+    .btn-crystal-clear-pill span {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+    }
+
+    .btn-crystal-clear-pill svg {
+      display: block;
+      flex-shrink: 0;
+    }
+
+    .btn-crystal-clear-pill:hover {
+      transform: translateY(-2px);
+      background: linear-gradient(180deg, var(--surface-raised-top) 0%, var(--surface-raised) 100%);
+      box-shadow: var(--shadow-pill-hover);
+    }
+
+    .btn-crystal-clear-pill:active {
+      transform: translateY(2px) scale(0.98);
+      box-shadow: 
+        0 2px 4px rgba(15, 23, 42, 0.08),
+        inset 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    /* --------------------------------------------------------------------------
+       HERO COLOR INPUT STATION (Central Tactile Hardware Console)
+       Physical ceramic chassis with sunken cavity track and tactile color orb.
+       -------------------------------------------------------------------------- */
+    .hero-color-station {
+      background: linear-gradient(180deg, var(--surface-raised-top) 0%, var(--surface-raised) 100%);
+      border: 2px solid var(--rim-light);
+      border-radius: var(--radius-slab);
+      padding: var(--space-7) var(--space-9);
+      box-shadow: var(--clay-slab-shadow);
+      margin-bottom: var(--space-10);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-5);
+      position: relative;
+      transition: var(--transition);
+    }
+
+    .console-main-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      flex-wrap: wrap;
+    }
+
+    /* Tactile Color Orb in Recessed Concentric Well */
+    .hero-orb-wrap {
+      position: relative;
+      cursor: pointer;
+      flex-shrink: 0;
+      background: var(--surface-sunken);
+      padding: 4px;
+      border-radius: 50%;
+      box-shadow: 
+        inset 0 3px 6px rgba(15, 23, 42, 0.18),
+        0 1.5px 2px var(--rim-light);
+    }
+
+    .hero-liquid-orb {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      position: relative;
+      overflow: hidden;
+      border: 2px solid rgba(255, 255, 255, 0.95);
+      box-shadow: 
+        0 6px 16px rgba(15, 23, 42, 0.16),
+        inset 0 2px 3px rgba(255, 255, 255, 0.8),
+        inset 0 -2px 3px rgba(0, 0, 0, 0.2);
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .hero-orb-wrap {
+      position: relative;
+    }
+
+    .hero-liquid-orb input[type="color"] {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* --------------------------------------------------------------------------
+       TACTILE INDUSTRIAL HARDWARE COLOR PICKER POPOVER
+       Rich physical hardware styling matching the design system:
+       silvery-grey matte textured chassis, frosted porcelain glass,
+       2D Saturation-Value spectrum, Hue rainbow slider, and designer gems.
+       -------------------------------------------------------------------------- */
+    .tactile-picker-popover {
+      position: absolute;
+      top: calc(100% + 14px);
+      left: 0;
+      width: 320px;
+      max-width: min(340px, 92vw);
+      background: linear-gradient(180deg, var(--surface-raised-top) 0%, var(--surface-raised) 100%);
+      border: 1.5px solid var(--rim-light);
+      border-radius: var(--radius-3xl);
+      padding: var(--space-4) var(--space-4_5, 1.15rem);
+      box-shadow: 
+        0 24px 54px -6px rgba(15, 23, 42, 0.28),
+        0 8px 22px rgba(15, 23, 42, 0.12),
+        inset 0 1.5px 2px var(--rim-light);
+      z-index: 1000;
+      display: none;
+      flex-direction: column;
+      gap: var(--space-3);
+      user-select: none;
+      animation: popoverFadeIn 0.2s var(--ease-out);
+      box-sizing: border-box;
+      cursor: default;
+    }
+
+    [data-theme="dark"] .tactile-picker-popover {
+      background: linear-gradient(180deg, rgba(32, 36, 46, 0.98) 0%, rgba(20, 23, 30, 0.98) 100%);
+      box-shadow: 
+        0 28px 64px -8px rgba(0, 0, 0, 0.85),
+        0 10px 26px rgba(0, 0, 0, 0.6),
+        inset 0 1.5px 2px rgba(255, 255, 255, 0.18);
+      border: 1.5px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .tactile-picker-popover.is-open {
+      display: flex;
+    }
+
+    .picker-popover-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .picker-popover-title {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.775rem;
+      font-weight: 800;
+      color: var(--text);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    .picker-status-pip {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--primary-accent, #3B82F6);
+      box-shadow: 0 0 8px var(--primary-accent, #3B82F6);
+    }
+
+    .picker-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .picker-icon-btn {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--surface-sunken);
+      border: 1px solid var(--surface-bezel);
+      color: var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition);
+      padding: 0;
+    }
+
+    .picker-icon-btn:hover {
+      color: var(--text);
+      background: var(--surface-raised-top);
+      transform: scale(1.1);
+    }
+
+    /* 2D Saturation-Value Canvas Box (Square Shape) - Standard default cursor */
+    .picker-sv-box {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: 14px;
+      background-color: hsl(217, 100%, 50%);
+      cursor: default;
+      overflow: hidden;
+      border: 1.5px solid var(--rim-light);
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.25);
+      touch-action: none;
+    }
+
+    body.is-sv-dragging,
+    body.is-sv-dragging * {
+      cursor: default !important;
+    }
+
+    .picker-sv-white {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, #ffffff 0%, rgba(255, 255, 255, 0) 100%);
+      pointer-events: none;
+    }
+
+    .picker-sv-black {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, #000000 0%, rgba(0, 0, 0, 0) 100%);
+      pointer-events: none;
+    }
+
+    /* Clean circular color picker knob with instant zero-latency tracking */
+    .picker-sv-knob {
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 2.5px solid #ffffff;
+      box-shadow: 
+        0 0 0 1px rgba(0, 0, 0, 0.55),
+        0 3px 8px rgba(0, 0, 0, 0.4);
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      background: transparent;
+    }
+
+    /* Hue Slider Track */
+    .picker-hue-box {
+      position: relative;
+      width: 100%;
+      height: 16px;
+      border-radius: 9999px;
+      background: linear-gradient(to right, #ff0000 0%, #ffff00 17%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%);
+      cursor: default;
+      border: 1.5px solid var(--rim-light);
+      box-shadow: inset 0 1.5px 3px rgba(0, 0, 0, 0.3);
+      touch-action: none;
+    }
+
+    .picker-hue-knob {
+      position: absolute;
+      top: 50%;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: 2px solid var(--rim-light);
+      box-shadow: 
+        0 2px 6px rgba(0, 0, 0, 0.35),
+        inset 0 1px 1px rgba(255, 255, 255, 0.9);
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    /* Designer Seeds Presets Grid */
+    .picker-presets-section {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .picker-presets-label {
+      font-size: 0.65rem;
+      font-weight: 800;
+      color: var(--text-subtle);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    .picker-presets-grid {
+      display: grid;
+      grid-template-columns: repeat(9, 1fr);
+      gap: 8px;
+    }
+
+    .picker-gem-btn {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255, 255, 255, 0.85);
+      box-shadow: 
+        0 1.5px 3px rgba(15, 23, 42, 0.15),
+        inset 0 1px 1px rgba(255, 255, 255, 0.4);
+      cursor: pointer;
+      padding: 0;
+      transition: transform 0.12s ease, box-shadow 0.12s ease;
+      outline: none;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .picker-gem-btn:hover {
+      transform: scale(1.08);
+      z-index: 2;
+      border-color: #ffffff;
+      box-shadow: 0 3px 8px rgba(15, 23, 42, 0.25);
+    }
+
+    /* Selected Active State: Crisp, perfectly round black accent ring (matching history selection and obsidian theme), ZERO overlap with neighbors */
+    .picker-gem-btn.is-active {
+      transform: scale(0.92);
+      border-color: #ffffff;
+      box-shadow: 
+        0 0 0 2px var(--surface-raised-top),
+        0 0 0 4px var(--text),
+        0 3px 8px rgba(15, 23, 42, 0.25);
+      z-index: 3;
+    }
+
+    [data-theme="dark"] .picker-gem-btn.is-active {
+      box-shadow: 
+        0 0 0 2px var(--surface-raised),
+        0 0 0 4px #ffffff,
+        0 3px 8px rgba(0, 0, 0, 0.6);
+      border-color: rgba(255, 255, 255, 0.4);
+    }
+
+    /* Footer Action Buttons: Cancel on left, Done on right */
+    .picker-footer-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 0.5rem;
+      border-top: 1px solid var(--surface-sunken);
+    }
+
+    .btn-picker-cancel {
+      height: 32px;
+      padding: 0 1.15rem;
+      font-size: 0.775rem;
+      font-weight: 700;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      border-radius: var(--radius-pill);
+      background: var(--surface-raised-top);
+      border: 1.5px solid var(--surface-bezel);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-picker-cancel:hover {
+      color: var(--text);
+      background: var(--surface-raised);
+      border-color: var(--rim-light);
+      transform: translateY(-1px);
+    }
+
+    .hero-orb-wrap:hover .hero-liquid-orb {
+      transform: scale(1.05);
+      box-shadow: 
+        0 10px 22px rgba(15, 23, 42, 0.22),
+        inset 0 2px 4px #ffffff;
+    }
+
+    /* Recessed Sunken Input Cavity (Laser-milled groove into console) */
+    .hero-input-capsule {
+      flex: 1;
+      min-width: 280px;
+      display: flex;
+      align-items: center;
+      background: var(--surface-sunken);
+      border: 1.5px solid var(--surface-bezel);
+      border-radius: var(--radius-pill);
+      padding: var(--space-2) var(--space-3_5) var(--space-2) var(--space-5);
+      box-shadow: var(--clay-sunken-shadow);
+      gap: var(--space-3);
+      position: relative;
+      transition: var(--transition);
+    }
+
+    .hero-input-capsule:focus-within {
+      background: var(--surface-sunken-inner);
+      border-color: rgba(255, 255, 255, 0.9);
+      box-shadow: 
+        inset 0 6px 16px rgba(15, 23, 42, 0.2),
+        0 0 0 3px rgba(255, 255, 255, 0.5);
+    }
+
+    .input-prefix-icon {
+      color: var(--text-subtle);
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .universal-color-input {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--text);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.125rem;
+      font-weight: 700;
+      flex: 1;
+      width: 100%;
+      letter-spacing: -0.01em;
+    }
+
+    .universal-color-input::placeholder {
+      color: var(--text-subtle);
+      opacity: 0.7;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+
+    .input-action-cluster {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      flex-shrink: 0;
+    }
+
+    /* Color Format Switcher Pill & Dropdown */
+    .format-switcher-wrap {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .btn-format-switcher {
+      height: 32px;
+      padding: 0 0.65rem 0 0.75rem;
+      border-radius: var(--radius-pill);
+      background: linear-gradient(180deg, var(--surface-raised-top) 0%, var(--surface-raised) 100%);
+      border: 1.5px solid var(--rim-light);
+      box-shadow: var(--clay-puck-shadow);
+      color: var(--text);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      cursor: pointer;
+      transition: var(--transition);
+      user-select: none;
+      outline: none;
+    }
+
+    .btn-format-switcher:hover {
+      background: #ffffff;
+      color: var(--text);
+      border-color: var(--text-subtle);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 10px rgba(15, 23, 42, 0.12);
+    }
+
+    .btn-format-switcher:active {
+      transform: translateY(1px);
+      box-shadow: inset 0 1.5px 3px rgba(0, 0, 0, 0.15);
+    }
+
+    .format-caret-icon {
+      display: inline-flex;
+      align-items: center;
+      color: var(--text-muted);
+      transition: transform 0.2s ease, color 0.15s;
+    }
+
+    .btn-format-switcher:hover .format-caret-icon {
+      color: var(--text);
+    }
+
+    .format-switcher-wrap.is-open .format-caret-icon {
+      color: var(--primary-accent, #3B82F6);
+      transform: scaleY(-1);
+    }
+
+    .format-dropdown-menu {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      min-width: 130px;
+      background: var(--surface-raised);
+      border: 1.5px solid var(--rim-light);
+      border-radius: 14px;
+      padding: 0.35rem;
+      box-shadow: 
+        0 18px 38px -6px rgba(15, 23, 42, 0.25),
+        0 6px 14px rgba(15, 23, 42, 0.12),
+        inset 0 1px 1px var(--rim-light);
+      z-index: 1050;
+      display: none;
+      flex-direction: column;
+      gap: 2px;
+      animation: dropdownFadeIn 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+      user-select: none;
+    }
+
+    [data-theme="dark"] .format-dropdown-menu {
+      background: rgba(24, 27, 34, 0.98);
+      box-shadow: 0 20px 42px -6px rgba(0, 0, 0, 0.75), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.12);
+    }
+
+    .format-switcher-wrap.is-open .format-dropdown-menu {
+      display: flex;
+    }
+
+    .format-dropdown-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.45rem 0.65rem;
+      border-radius: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.775rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .format-dropdown-item:hover {
+      background: var(--surface-sunken);
+      color: var(--text);
+    }
+
+    .format-dropdown-item.is-selected {
+      background: var(--surface-sunken);
+      color: var(--text);
+      font-weight: 800;
+    }
+
+    .format-dropdown-item .format-check {
+      opacity: 0;
+      color: var(--primary-accent, #3B82F6);
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .format-dropdown-item.is-selected .format-check {
+      opacity: 1;
+    }
+
+    .icon-tool-btn {
+      background: linear-gradient(180deg, var(--surface-raised-top) 0%, var(--surface-raised) 100%);
+      border: 1.5px solid var(--rim-light);
+      border-radius: 50%;
+      width: 34px;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      cursor: pointer;
+      box-shadow: var(--clay-puck-shadow);
+      transition: var(--transition);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    .icon-tool-btn:hover {
+      background: #ffffff;
+      color: var(--text);
+      transform: translateY(-1.5px);
+    }
+
+    .icon-tool-btn:active {
+      transform: translateY(1.5px);
+      box-shadow: inset 0 1.5px 3px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn-hero-shuffle {
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+
+    .btn-hero-shuffle .key-hint {
+      display: inline-block;
+      font-size: 0.675rem;
+      font-weight: 400;
+      padding: 4px 6px;
+      background: rgba(255, 255, 255, 0.16);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 12px;
+      margin-left: 0.35rem;
+      letter-spacing: 0.05em;
+      opacity: 0.85;
+    }
+
+    /* Metrics & Controls Row */
+    .console-metrics-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.15rem;
+      padding-top: 1.15rem;
+      border-top: 1.5px solid var(--surface-sunken);
+    }
+
+    /* --------------------------------------------------------------------------
+       TACTILE COLOR HISTORY BAR (Recents Ellipses: Left to Right)
+       -------------------------------------------------------------------------- */
+    .color-history-chassis {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      background: linear-gradient(180deg, var(--surface-raised-top) 0%, var(--surface-raised) 100%);
+      border: 1.5px solid var(--rim-light);
+      border-radius: var(--radius-pill);
+      padding: 0.2rem 0.55rem 0.2rem 0.85rem;
+      box-shadow: var(--clay-puck-shadow);
+      user-select: none;
+      max-width: 100%;
+      box-sizing: border-box;
+      white-space: nowrap;
+      transition: var(--transition);
+      min-height: 42px;
+    }
+
+    .history-label-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.38rem;
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: var(--text-subtle);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      flex-shrink: 0;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    .history-label-tag svg {
+      opacity: 0.8;
+      flex-shrink: 0;
+    }
+
+    .history-ellipses-track {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      padding: 8px 8px;
+      min-height: 38px;
+      box-sizing: border-box;
+      flex-shrink: 1;
+    }
+
+    .history-ellipses-track::-webkit-scrollbar {
+      display: none;
+    }
+
+    .history-color-ellipse {
+      width: 30px;
+      height: 20px;
+      border-radius: var(--radius-pill);
+      border: 1.5px solid rgba(255, 255, 255, 0.85);
+      box-shadow: 
+        0 2px 5px rgba(15, 23, 42, 0.16),
+        inset 0 1px 1px rgba(255, 255, 255, 0.45),
+        inset 0 -1px 1.5px rgba(0, 0, 0, 0.22);
+      cursor: pointer;
+      position: relative;
+      flex-shrink: 0;
+      margin: 1px;
+      transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.18s, border-color 0.18s;
+      outline: none;
+      padding: 0;
+      font-family: inherit;
+      box-sizing: border-box;
+    }
+
+    .history-color-ellipse:not(.is-active):hover {
+      transform: translateY(-2px) scale(1.15);
+      box-shadow: 
+        0 5px 12px rgba(15, 23, 42, 0.22),
+        inset 0 1.5px 2px rgba(255, 255, 255, 0.75);
+      border-color: #ffffff;
+      z-index: 5;
+    }
+
+    .history-color-ellipse:active {
+      transform: translateY(1px) scale(0.95);
+    }
+
+    /* Selected Active State: Matches Curated Designer Seeds ring style (white gap + black outer ring), preserving ellipse shape without inner pip */
+    .history-color-ellipse.is-active {
+      transform: scale(0.92);
+      border-color: #ffffff;
+      box-shadow: 
+        0 0 0 2px var(--surface-raised-top),
+        0 0 0 4px var(--text),
+        0 3px 8px rgba(15, 23, 42, 0.25);
+      z-index: 4;
+    }
+
+    [data-theme="dark"] .history-color-ellipse.is-active {
+      box-shadow: 
+        0 0 0 2px var(--surface-raised),
+        0 0 0 4px #ffffff,
+        0 3px 8px rgba(0, 0, 0, 0.6);
+      border-color: rgba(255, 255, 255, 0.4);
+    }
+
+    .history-color-ellipse.is-active:hover {
+      transform: scale(0.92);
+      border-color: #ffffff;
+    }
+
+    .history-clear-btn {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: none;
+      background: transparent;
+      color: var(--text-subtle);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0.5;
+      padding: 0;
+      flex-shrink: 0;
+      transition: opacity 0.15s, color 0.15s, transform 0.15s;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    .history-clear-btn:hover {
+      opacity: 1;
+      color: var(--text);
+      transform: scale(1.15);
+      background: var(--surface-sunken);
+    }
+
+    .history-clear-btn:active {
+      transform: scale(0.92);
+    }
+
+    /* Mode Switcher: Recessed Cavity Track with Sliding Obsidian Pill */
+    .console-controls-cluster {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .crystal-mode-toggle {
+      display: flex;
+      background: var(--surface-sunken);
+      padding: 4px;
+      border-radius: var(--radius-pill);
+      border: 1.5px solid var(--surface-bezel);
+      box-shadow: var(--clay-sunken-shadow);
+      gap: 4px;
+    }
+
+    .mode-pill-btn {
+      padding: 0.48rem 1.05rem;
+      background: transparent;
+      border: none;
+      border-radius: var(--radius-pill);
+      color: var(--text-muted);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 0.825rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      white-space: nowrap;
+      position: relative;
+    }
+
+    .mode-pill-btn.active {
+      background: linear-gradient(180deg, var(--surface-obsidian-top) 0%, var(--surface-obsidian) 100%);
+      color: #ffffff;
+      box-shadow: var(--clay-obsidian-shadow);
+    }
+
+    /* Dedicated Shade-Lock Selector Capsule */
+    .shade-lock-pill-container {
+      display: flex;
+      align-items: center;
+      background: linear-gradient(180deg, var(--surface-raised-top) 0%, var(--surface-raised) 100%);
+      padding: 4px 10px 4px 12px;
+      border-radius: var(--radius-pill);
+      border: 1.5px solid var(--rim-light);
+      gap: 0.5rem;
+      box-shadow: var(--clay-puck-shadow);
+      font-size: 0.8rem;
+    }
+
+    .shade-lock-label {
+      font-weight: 800;
+      font-size: 0.72rem;
+      color: var(--text-subtle);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .shade-select-dropdown {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--text);
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 800;
+      font-size: 0.85rem;
+      cursor: pointer;
+      padding: 3px 6px;
+      border-radius: 8px;
+    }
+
+    .shade-select-dropdown option {
+      background: var(--surface-raised);
+      color: var(--text);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+
+    /* --------------------------------------------------------------------------
+       TACTILE PHYSICAL HARDWARE CUSTOM DROPDOWNS
+       Replaces generic OS select popups with tactile frosted porcelain menus
+       -------------------------------------------------------------------------- */
+    .tactile-select-wrapper {
+      position: relative;
+      width: 100%;
+      box-sizing: border-box;
+      user-select: none;
+    }
+
+    /* In shade-lock bar, keep compact inline width */
+    .tactile-select-wrapper.is-shade-lock {
+      width: auto;
+      display: inline-flex;
+      position: relative;
+    }
+
+    /* The Trigger Button: Matches tactile porcelain pucks */
+    .tactile-select-trigger {
+      width: 100%;
+      box-sizing: border-box;
+      background: linear-gradient(180deg, var(--surface-raised-top) 0%, var(--surface-raised) 100%);
+      border: 1.5px solid var(--rim-light);
+      border-radius: var(--radius-pill);
+      padding: 0.58rem 1rem;
+      color: var(--text);
+      font-size: 0.825rem;
+      font-weight: 700;
+      outline: none;
+      box-shadow: var(--clay-puck-shadow);
+      transition: var(--transition);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      text-align: left;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    .tactile-select-wrapper.is-shade-lock .tactile-select-trigger {
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      padding: 2px 4px;
+      font-size: 0.85rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 800;
+      color: var(--text);
+      gap: 4px;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .tactile-select-wrapper.is-shade-lock .tactile-select-label {
+      min-width: 28px;
+      text-align: center;
+      display: inline-block;
+    }
+
+    .tactile-select-trigger:hover {
+      border-color: var(--text);
+      box-shadow: var(--shadow-pill-hover);
+      transform: translateY(-1px);
+    }
+
+    .tactile-select-wrapper.is-shade-lock .tactile-select-trigger:hover {
+      transform: none;
+      color: var(--primary-accent, var(--text));
+    }
+
+    .tactile-select-wrapper.is-open .tactile-select-trigger {
+      border-color: var(--text);
+      box-shadow: 0 0 0 2px rgba(15, 23, 42, 0.12);
+    }
+
+    [data-theme="dark"] .tactile-select-wrapper.is-open .tactile-select-trigger {
+      border-color: var(--text);
+      box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.2);
+    }
+
+    .tactile-select-label {
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .tactile-select-arrow {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-subtle);
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), color 0.15s;
+      flex-shrink: 0;
+    }
+
+    .tactile-select-wrapper.is-open .tactile-select-arrow {
+      transform: rotate(180deg);
+      color: var(--text);
+    }
+
+    /* Floating Frosted Hardware Popover Menu */
+    .tactile-select-menu {
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      width: 100%;
+      min-width: 280px;
+      max-width: min(440px, 92vw);
+      max-height: 280px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      z-index: 1000;
+      border-radius: 14px;
+      padding: 6px;
+      box-sizing: border-box;
+      display: none;
+      animation: dropdownFadeIn 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+      
+      /* Frosted porcelain styling */
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(246, 248, 252, 0.94) 100%);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1.5px solid var(--rim-light);
+      box-shadow: 
+        0 18px 40px -4px rgba(15, 23, 42, 0.18),
+        0 6px 16px rgba(15, 23, 42, 0.08),
+        inset 0 1px 1px rgba(255, 255, 255, 0.8);
+    }
+
+    .tactile-select-wrapper.is-shade-lock .tactile-select-menu {
+      min-width: 96px;
+      width: 96px;
+      max-height: 380px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      right: 0;
+      left: auto;
+      transform: none;
+      scrollbar-width: thin;
+      scrollbar-color: var(--surface-bezel) transparent;
+      overscroll-behavior: contain;
+    }
+
+    .tactile-select-wrapper.is-shade-lock .tactile-select-menu::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .tactile-select-wrapper.is-shade-lock .tactile-select-menu::-webkit-scrollbar-track {
+      background: transparent;
+      margin: 8px 0;
+    }
+
+    .tactile-select-wrapper.is-shade-lock .tactile-select-menu::-webkit-scrollbar-thumb {
+      background: var(--surface-bezel);
+      border-radius: 9999px;
+    }
+
+    @media (max-height: 520px) {
+      .tactile-select-wrapper.is-shade-lock .tactile-select-menu {
+        max-height: calc(100vh - 120px);
+      }
+    }
+
+    [data-theme="dark"] .tactile-select-menu {
+      background: linear-gradient(180deg, rgba(32, 36, 46, 0.96) 0%, rgba(20, 23, 30, 0.95) 100%);
+      box-shadow: 
+        0 24px 50px -4px rgba(0, 0, 0, 0.75),
+        0 8px 20px rgba(0, 0, 0, 0.5),
+        inset 0 1px 1px rgba(255, 255, 255, 0.16);
+      border: 1.5px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .tactile-select-wrapper.is-open .tactile-select-menu {
+      display: block;
+    }
+
+    @keyframes dropdownFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-5px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Scrollbar styling for dropdown menu */
+    .tactile-select-menu {
+      scrollbar-width: thin;
+      scrollbar-color: var(--surface-bezel) transparent;
+    }
+    .tactile-select-menu::-webkit-scrollbar {
+      width: 5px;
+    }
+    .tactile-select-menu::-webkit-scrollbar-track {
+      background: transparent;
+      margin: 8px 0;
+    }
+    .tactile-select-menu::-webkit-scrollbar-thumb {
+      background: var(--surface-bezel);
+      border-radius: 9999px;
+    }
+
+    /* Group Header (e.g. SANS-SERIF, SERIF, MONOSPACE) */
+    .tactile-select-group-header {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 0.65rem;
+      font-weight: 800;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 8px 10px 4px;
+      user-select: none;
+    }
+
+    /* Option Item */
+    .tactile-select-option {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.65rem;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 0.825rem;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.12s ease;
+      user-select: none;
+      white-space: nowrap;
+    }
+
+    .tactile-select-wrapper.is-shade-lock .tactile-select-option {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.825rem;
+      font-weight: 800;
+      padding: 6px 10px;
+      justify-content: center;
+      white-space: nowrap;
+      border-radius: 6px;
+    }
+
+    .tactile-select-option:hover {
+      background: var(--surface-sunken);
+      color: var(--text);
+      transform: translateX(2px);
+    }
+
+    .tactile-select-wrapper.is-shade-lock .tactile-select-option:hover {
+      transform: none;
+    }
+
+    [data-theme="dark"] .tactile-select-option:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    /* Selected state */
+    .tactile-select-option.is-selected {
+      background: var(--surface-obsidian);
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    [data-theme="dark"] .tactile-select-option.is-selected {
+      background: #ffffff;
+      color: #0f172a;
+      font-weight: 700;
+    }
+
+    .tactile-select-check {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      line-height: 1;
+    }
+
+    .tactile-select-option.is-selected .tactile-select-check {
+      display: inline-flex;
+    }
+
+    .tactile-select-wrapper.is-shade-lock .tactile-select-check {
+      display: none !important;
+    }
+
+    .meta-quick-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2_5);
+    }
+
+    /* --------------------------------------------------------------------------
+       PALETTE PRESENTATION CHASSIS: Contained, Elegant & Usable
+       100% contained within layout, zero horizontal overflow,
+       clean typography, high-contrast lock actions, and pure color clarity.
+       -------------------------------------------------------------------------- */
+    .palette-presentation-chassis {
+      background: linear-gradient(180deg, var(--surface-raised-top) 0%, var(--surface-raised) 100%);
+      border: 1.5px solid var(--rim-light);
+      border-radius: var(--radius-slab);
+      padding: var(--space-6) var(--space-7);
+      box-shadow: var(--clay-slab-shadow);
+      margin-bottom: var(--space-10);
+      width: 100%;
+      box-sizing: border-box;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .palette-meta-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.25rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .color-title-wrap {
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .color-name-heading {
+      font-size: 1.55rem;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      color: var(--text);
+      line-height: 1.2;
+    }
+
+    .color-skeleton-ref {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .color-skeleton-ref strong {
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    /* The 11-Shade Scale Grid: Strictly contained with minmax(0, 1fr) */
+    .scale-grid {
+      display: grid;
+      grid-template-columns: repeat(11, minmax(0, 1fr));
+      gap: 0.55rem;
+      width: 100%;
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    @media (max-width: 960px) {
+      .scale-grid {
+        grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+        gap: 0.65rem;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .scale-grid {
+        grid-template-columns: repeat(auto-fit, minmax(88px, 1fr));
+        gap: 0.5rem;
+      }
+    }
+
+    /* Individual Swatch Column: Flex container pairing Color Box on top and Info Box below */
+    .swatch-column {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+    }
+
+    /* 1. Pure Color Box (Top - Perfectly Square!) */
+    .swatch-color-box {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      height: auto;
+      border-radius: 12px;
+      position: relative;
+      cursor: pointer;
+      user-select: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 0.55rem 0.55rem;
+      min-width: 0;
+      box-sizing: border-box;
+      overflow: hidden;
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 
+        0 4px 10px rgba(15, 23, 42, 0.08),
+        0 1px 3px rgba(15, 23, 42, 0.04),
+        inset 0 1px 1px rgba(255, 255, 255, 0.42),
+        inset 0 -1.5px 2px rgba(0, 0, 0, 0.12);
+    }
+
+    .swatch-column.is-light-shade .swatch-color-box {
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      color: #0f172a;
+    }
+
+    .swatch-column.is-dark-shade .swatch-color-box {
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: #ffffff;
+    }
+
+    .swatch-color-box:hover {
+      transform: translateY(-3px);
+      box-shadow: 
+        0 12px 24px -4px rgba(15, 23, 42, 0.16),
+        0 4px 8px rgba(15, 23, 42, 0.06),
+        inset 0 1px 1.5px rgba(255, 255, 255, 0.55);
+      z-index: 3;
+    }
+
+    /* Top: Shade Number & Subtle Lock Icon */
+    .swatch-color-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      min-width: 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    .swatch-shade-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
+
+    /* Subtle Floating Lock Icon (NO black outline, NO dark background, pure organic elegance) */
+    .swatch-subtle-lock-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      background: transparent;
+      color: inherit;
+      line-height: 1;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    /* Hover reveal: soft floating icon in matching shade text color */
+    .swatch-color-box:hover .swatch-subtle-lock-btn {
+      opacity: 0.7;
+      pointer-events: auto;
+      transform: scale(1);
+    }
+
+    .swatch-subtle-lock-btn:hover {
+      opacity: 1 !important;
+      transform: scale(1.18);
+    }
+
+    .swatch-column.is-dark-shade .swatch-subtle-lock-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .swatch-column.is-light-shade .swatch-subtle-lock-btn:hover {
+      background: rgba(15, 23, 42, 0.07);
+    }
+
+    /* Locked State: Luminous Frosted Crystal Halo (NO black box!) */
+    .swatch-subtle-lock-btn.is-locked {
+      opacity: 1 !important;
+      pointer-events: auto;
+      transform: scale(1.05);
+    }
+
+    .swatch-column.is-dark-shade .swatch-subtle-lock-btn.is-locked {
+      background: rgba(255, 255, 255, 0.24);
+      color: #ffffff;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      box-shadow: 
+        inset 0 1px 1px rgba(255, 255, 255, 0.45),
+        0 2px 6px rgba(0, 0, 0, 0.15);
+    }
+
+    .swatch-column.is-light-shade .swatch-subtle-lock-btn.is-locked {
+      background: rgba(255, 255, 255, 0.65);
+      color: #0f172a;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      box-shadow: 
+        inset 0 1px 1px #ffffff,
+        0 2px 5px rgba(15, 23, 42, 0.08);
+    }
+
+    /* Refined tactile locked indicator around the square */
+    .swatch-column.is-active-locked .swatch-color-box {
+      box-shadow: 
+        0 6px 16px rgba(15, 23, 42, 0.14),
+        inset 0 0 0 2px rgba(255, 255, 255, 0.75),
+        inset 0 1px 1px rgba(255, 255, 255, 0.5);
+    }
+
+    .swatch-column.is-light-shade.is-active-locked .swatch-color-box {
+      box-shadow: 
+        0 6px 16px rgba(15, 23, 42, 0.1),
+        inset 0 0 0 2px rgba(15, 23, 42, 0.22);
+    }
+
+    /* 2. External Info Box (Physically OUTSIDE & below the color box) */
+    .swatch-info-card {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      padding: 6px 7px;
+      border-radius: 9px;
+      background: var(--surface-raised);
+      border: 1px solid var(--border-subtle);
+      box-shadow: 0 2px 5px rgba(15, 23, 42, 0.04);
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+      box-sizing: border-box;
+      width: 100%;
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    .swatch-info-card:hover {
+      border-color: var(--border-focus);
+      box-shadow: 0 4px 10px rgba(15, 23, 42, 0.08);
+      transform: translateY(-1.5px);
+    }
+
+    .swatch-hex-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(0.67rem, 0.9vw, 0.73rem);
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      line-height: 1.1;
+      min-width: 0;
+    }
+
+    .swatch-hex-val {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .swatch-copy-icon {
+      opacity: 0.55;
+      display: inline-flex;
+      flex-shrink: 0;
+      color: var(--text-muted);
+      transition: opacity 0.15s, transform 0.15s, color 0.15s;
+    }
+
+    .swatch-info-card:hover .swatch-copy-icon {
+      opacity: 1;
+      color: var(--primary-accent, var(--text));
+      transform: scale(1.15);
+    }
+
+    .swatch-contrast-line {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(0.58rem, 0.78vw, 0.63rem);
+      font-weight: 700;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: 1.2;
+    }
+
+    .swatch-contrast-line .wcag-pip {
+      display: inline-block;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--text-muted);
+      flex-shrink: 0;
+    }
+
+    .swatch-contrast-line.is-pass .wcag-pip {
+      background: var(--text-muted);
+    }
+
+    /* Copied Feedback Overlay on the Color Box */
+    .swatch-copied-overlay {
+      position: absolute;
+      inset: 0;
+      border-radius: 12px;
+      background: rgba(15, 23, 42, 0.82);
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      font-weight: 800;
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 20;
+    }
+
+    .swatch-copied-overlay.show {
+      opacity: 1;
+    }
+
+    /* --------------------------------------------------------------------------
+       TYPE SCALE GENERATOR STUDIO (Inspired by typescale.com)
+       Tactile porcelain chassis with live Google Fonts integration,
+       musical ratio presets, editable preview hierarchy, and instant token export.
+       -------------------------------------------------------------------------- */
+    .typescale-studio-chassis {
+      background: linear-gradient(180deg, var(--surface-raised-top) 0%, var(--surface-raised) 100%);
+      border: 2px solid var(--rim-light);
+      border-radius: var(--radius-slab);
+      padding: var(--space-8);
+      margin-bottom: var(--space-12);
+      box-shadow: var(--clay-slab-shadow);
+      position: relative;
+      width: 100%;
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+
+    .typescale-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1.85rem;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+    }
+
+    .typescale-header-actions {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    /* Controls Station (Recessed Tactile Grid) */
+    .typescale-controls-station {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-bottom: 2.25rem;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    @media (max-width: 1080px) {
+      .typescale-controls-station {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .typescale-controls-station {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .ts-control-card {
+      background: var(--surface-sunken);
+      border: 1.5px solid var(--surface-bezel);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-4) var(--space-5);
+      box-shadow: var(--clay-sunken-shadow);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2_5);
+      box-sizing: border-box;
+      min-width: 0;
+    }
+
+    .ts-control-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: var(--text-subtle);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .ts-badge-live,
+    .ts-badge-ratio {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--text);
+      background: var(--surface-raised);
+      padding: 2px 7px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--rim-light);
+      text-transform: none;
+      letter-spacing: normal;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .ts-select-dropdown,
+    .ts-text-input {
+      width: 100%;
+      box-sizing: border-box;
+      background: linear-gradient(180deg, var(--surface-raised-top) 0%, var(--surface-raised) 100%);
+      border: 1.5px solid var(--rim-light);
+      border-radius: var(--radius-pill);
+      padding: 0.55rem 0.95rem;
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 0.825rem;
+      font-weight: 700;
+      outline: none;
+      box-shadow: var(--clay-puck-shadow);
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .ts-number-input {
+      width: 100%;
+      box-sizing: border-box;
+      background: linear-gradient(180deg, var(--surface-raised-top) 0%, var(--surface-raised) 100%);
+      border: 1.5px solid var(--rim-light);
+      border-radius: var(--radius-pill);
+      padding: 0.55rem 0.95rem;
+      color: var(--text);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.825rem;
+      font-weight: 700;
+      outline: none;
+      box-shadow: var(--clay-puck-shadow);
+      transition: var(--transition);
+    }
+
+    .ts-text-input {
+      cursor: text;
+    }
+
+    .ts-select-dropdown:focus,
+    .ts-text-input:focus,
+    .ts-number-input:focus {
+      border-color: var(--text);
+      box-shadow: 0 0 0 2px rgba(15, 23, 42, 0.15);
+    }
+
+    [data-theme="dark"] .ts-select-dropdown:focus,
+    [data-theme="dark"] .ts-text-input:focus,
+    [data-theme="dark"] .ts-number-input:focus {
+      border-color: var(--text);
+      box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.22);
+    }
+
+    .ts-select-dropdown option {
+      background: var(--surface-raised);
+      color: var(--text);
+    }
+
+    .ts-stepper-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .ts-stepper-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(180deg, var(--surface-raised-top) 0%, var(--surface-raised) 100%);
+      border: 1.5px solid var(--rim-light);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: var(--clay-puck-shadow);
+      transition: var(--transition);
+      flex-shrink: 0;
+      user-select: none;
+      padding: 0;
+      line-height: 1;
+    }
+
+    .ts-stepper-btn svg {
+      display: block;
+      pointer-events: none;
+    }
+
+    .ts-stepper-btn:hover {
+      transform: scale(1.08);
+      background: #ffffff;
+    }
+
+    .ts-stepper-btn:active {
+      transform: scale(0.95);
+    }
+
+    .ts-stepper-val {
+      flex: 1;
+      text-align: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.95rem;
+      font-weight: 800;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--text);
+      width: 45px;
+      -moz-appearance: textfield;
+      appearance: textfield;
+    }
+
+    /* Hide native number input spin buttons across Chrome, Safari, Edge, Opera, Firefox */
+    .ts-stepper-val::-webkit-outer-spin-button,
+    .ts-stepper-val::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+      -webkit-appearance: none !important;
+      margin: 0 !important;
+      display: none !important;
+    }
+
+    input[type="number"] {
+      -moz-appearance: textfield;
+      appearance: textfield;
+    }
+
+    .ts-phrase-presets {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+      margin-top: 2px;
+    }
+
+    .ts-preset-pill {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 2px 7px;
+      background: var(--surface-raised);
+      border: 1px solid var(--rim-light);
+      border-radius: var(--radius-pill);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: var(--transition);
+      line-height: 1.2;
+    }
+
+    .ts-preset-pill:hover {
+      color: var(--text);
+      border-color: var(--text-muted);
+      transform: translateY(-1px);
+    }
+
+    /* Live Preview Stack */
+    .typescale-preview-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      width: 100%;
+      box-sizing: border-box;
+      margin-bottom: 0;
+    }
+
+    .ts-step-card {
+      background: linear-gradient(180deg, var(--surface-raised-top) 0%, var(--surface-raised) 100%);
+      border: 1.5px solid var(--rim-light);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-4) var(--space-6);
+      display: flex;
+      align-items: center;
+      gap: var(--space-6);
+      box-shadow: var(--clay-puck-shadow);
+      transition: transform 0.18s var(--ease-out), box-shadow 0.18s var(--ease-out);
+      width: 100%;
+      box-sizing: border-box;
+      min-width: 0;
+      position: relative;
+    }
+
+    @media (max-width: 768px) {
+      .ts-step-card {
+        flex-direction: column;
+        gap: 0.65rem;
+        align-items: stretch;
+      }
+    }
+
+    .ts-step-card:hover {
+      transform: translateX(4px);
+      box-shadow: var(--shadow-pill-hover);
+    }
+
+    .ts-step-meta {
+      width: 215px;
+      min-width: 215px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      user-select: none;
+      align-self: center;
+    }
+
+    .ts-tag-pill {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 3px 8.5px;
+      border-radius: var(--radius-pill);
+      background: var(--surface-sunken);
+      color: var(--text);
+      border: 1px solid var(--surface-bezel);
+      box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.06);
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .ts-tag-pill.is-paragraph,
+    .ts-tag-pill.is-heading,
+    .ts-tag-pill.is-base {
+      background: var(--surface-sunken);
+      color: var(--text);
+      border: 1px solid var(--surface-bezel);
+      box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.06);
+    }
+
+    .ts-base-badge {
+      font-size: 0.58rem;
+      font-weight: 800;
+      padding: 1.5px 5.5px;
+      border-radius: 999px;
+      background: var(--surface-obsidian);
+      color: #ffffff;
+      letter-spacing: 0.04em;
+    }
+
+    [data-theme="dark"] .ts-base-badge {
+      background: rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+    }
+
+    .ts-step-card.is-base-card {
+      border-color: rgba(26, 26, 26, 0.25);
+      background: linear-gradient(180deg, var(--surface-raised-top) 0%, var(--surface-raised) 100%);
+      box-shadow: 0 4px 14px -2px rgba(15, 23, 42, 0.12), inset 0 1.5px 2px var(--rim-light);
+    }
+
+    [data-theme="dark"] .ts-step-card.is-base-card {
+      border-color: rgba(255, 255, 255, 0.22);
+      background: linear-gradient(180deg, #2a2f3a 0%, var(--surface-raised) 100%);
+      box-shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.65), inset 0 1.5px 2px var(--rim-light);
+    }
+
+    .ts-category-banner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.65rem 0.25rem 0.65rem 0.25rem;
+      border-bottom: 1px solid var(--surface-bezel);
+      margin-bottom: 0.35rem;
+    }
+
+    .ts-category-banner.is-second {
+      margin-top: 1.25rem;
+    }
+
+    .ts-category-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .ts-category-pill {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 2.5px 8.5px;
+      border-radius: var(--radius-pill);
+      background: var(--surface-sunken);
+      color: var(--text-muted);
+      border: 1px solid var(--surface-bezel);
+      box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.06);
+    }
+
+    .ts-category-hint {
+      font-size: 0.78rem;
+      color: var(--text-subtle);
+      font-weight: 600;
+    }
+
+    .ts-dimension-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      line-height: 1.25;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-self: center;
+    }
+
+    .ts-step-copy-btn {
+      background: none;
+      border: none;
+      color: var(--text-subtle);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px;
+      border-radius: 6px;
+      transition: color 0.15s, transform 0.15s;
+      margin-left: auto;
+      align-self: center;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    .ts-step-copy-btn:hover {
+      color: var(--text);
+      transform: scale(1.15);
+    }
+
+    .ts-step-rendered-text {
+      flex: 1;
+      min-width: 0;
+      color: var(--text);
+      outline: none;
+      overflow-wrap: break-word;
+      word-break: break-word;
+      white-space: pre-wrap;
+      cursor: text;
+      transition: color 0.2s ease;
+      align-self: center;
+    }
+
+    .ts-step-rendered-text:focus {
+      outline: 2px dashed var(--text-muted);
+      outline-offset: 4px;
+      border-radius: 4px;
+    }
+
+    /* Export Code Drawer */
+    .typescale-export-drawer {
+      background: var(--surface-sunken);
+      border: 1.5px solid var(--surface-bezel);
+      border-radius: 16px;
+      padding: 1.25rem 1.45rem;
+      box-shadow: var(--clay-sunken-shadow);
+      width: 100%;
+      box-sizing: border-box;
+      margin-top: 1.5rem;
+      animation: fadeIn 0.2s ease;
+    }
+
+    .ts-drawer-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+      gap: 0.85rem;
+    }
+
+    /* --------------------------------------------------------------------------
+       MODAL: Floating Tactile Hardware Sheet
+       -------------------------------------------------------------------------- */
+    .glass-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.55);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .glass-modal-backdrop.open {
+      display: flex;
+    }
+
+    .crystal-modal-window {
+      background: linear-gradient(180deg, var(--surface-raised-top) 0%, var(--surface-raised) 100%);
+      border: 2px solid var(--rim-light);
+      border-radius: var(--radius-slab);
+      width: 100%;
+      max-width: 650px;
+      overflow: hidden;
+      box-shadow: 
+        0 30px 60px -15px rgba(0, 0, 0, 0.35),
+        inset 0 2px 3px var(--rim-light);
+    }
+
+    .modal-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.45rem 1.85rem;
+      border-bottom: 1.5px solid var(--surface-sunken);
+    }
+
+    .modal-tabs {
+      display: flex;
+      gap: 0.5rem;
+      padding: 0.85rem 1.85rem;
+      background: var(--surface-sunken);
+      box-shadow: inset 0 2px 4px rgba(15, 23, 42, 0.08);
+      border-bottom: 1.5px solid var(--surface-sunken);
+    }
+
+    .tab-pill-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-weight: 700;
+      font-size: 0.825rem;
+      padding: 0.45rem 0.95rem;
+      border-radius: var(--radius-pill);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .tab-pill-btn.active {
+      background: linear-gradient(180deg, var(--surface-obsidian-top) 0%, var(--surface-obsidian) 100%);
+      color: #ffffff;
+      box-shadow: var(--clay-obsidian-shadow);
+    }
+
+    .code-glass-terminal {
+      padding: 1.45rem 1.85rem;
+      background: #0f1115;
+      max-height: 380px;
+      overflow-y: auto;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      color: #7dd3fc;
+      white-space: pre;
+    }
+
+    .modal-foot {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.85rem;
+      padding: 1.25rem 1.85rem;
+      border-top: 1.5px solid var(--surface-sunken);
+    }
+
+    /* --------------------------------------------------------------------------
+       RESPONSIVE & MOBILE-NATIVE ADAPTATIONS
+       Covers: safe areas, notch, bottom sheets, sticky-hover gating, 100dvh,
+       tap target hygiene (>=44px), and fluid layouts across 1080px, 768px, 640px, 480px, 380px.
+       -------------------------------------------------------------------------- */
+    @media (hover: hover) and (pointer: fine) {
+      .btn-obsidian-crystal:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-obsidian-hover);
+      }
+      .btn-crystal-clear-pill:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-pill-hover);
+      }
+      .btn-format-switcher:hover {
+        background: #ffffff;
+        color: var(--text);
+        border-color: var(--text-subtle);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 10px rgba(15, 23, 42, 0.12);
+      }
+      .icon-tool-btn:hover {
+        background: #ffffff;
+        color: var(--text);
+        transform: translateY(-1.5px);
+      }
+      .history-color-ellipse:not(.is-active):hover {
+        transform: translateY(-2px) scale(1.15);
+        box-shadow: 
+          0 5px 12px rgba(15, 23, 42, 0.22),
+          inset 0 1.5px 2px rgba(255, 255, 255, 0.75);
+        border-color: #ffffff;
+        z-index: 5;
+      }
+      .history-color-ellipse.is-active:hover {
+        transform: scale(0.92);
+        border-color: #ffffff;
+      }
+      .picker-gem-btn:not(.is-active):hover {
+        transform: scale(1.08);
+        z-index: 2;
+        border-color: #ffffff;
+        box-shadow: 0 3px 8px rgba(15, 23, 42, 0.25);
+      }
+      .picker-gem-btn.is-active:hover {
+        transform: scale(0.92);
+        border-color: #ffffff;
+      }
+      .swatch-color-box:hover {
+        transform: translateY(-3px);
+        box-shadow: 
+          0 12px 24px -4px rgba(15, 23, 42, 0.16),
+          0 4px 8px rgba(15, 23, 42, 0.06),
+          inset 0 1px 1.5px rgba(255, 255, 255, 0.55);
+        z-index: 3;
+      }
+      .swatch-info-card:hover {
+        border-color: var(--border-focus);
+        box-shadow: 0 4px 10px rgba(15, 23, 42, 0.08);
+        transform: translateY(-1.5px);
+      }
+      .ts-step-card:hover {
+        transform: translateX(4px);
+        box-shadow: var(--shadow-pill-hover);
+      }
+    }
+
+    @media (max-width: 1080px) {
+      .typescale-controls-station {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: var(--space-3) !important;
+      }
+    }
+
+    @media (max-width: 960px) {
+      .scale-grid {
+        grid-template-columns: repeat(auto-fit, minmax(105px, 1fr)) !important;
+        gap: var(--space-2_5) !important;
+      }
+    }
+
+    @media (max-width: 768px) {
+      header {
+        margin-bottom: var(--space-6) !important;
+        gap: var(--space-4) !important;
+      }
+      .header-actions {
+        width: 100% !important;
+        justify-content: flex-start !important;
+        flex-wrap: wrap !important;
+      }
+      .hero-color-station {
+        padding: var(--space-5) var(--space-4) !important;
+        border-radius: var(--radius-2xl) !important;
+        margin-bottom: var(--space-6) !important;
+        gap: var(--space-4) !important;
+      }
+      .palette-presentation-chassis {
+        padding: var(--space-5) var(--space-4) !important;
+        border-radius: var(--radius-2xl) !important;
+        margin-bottom: var(--space-6) !important;
+      }
+      .typescale-studio-chassis {
+        padding: var(--space-5) var(--space-4) !important;
+        border-radius: var(--radius-2xl) !important;
+        margin-bottom: var(--space-6) !important;
+      }
+      .ts-step-card {
+        flex-direction: column !important;
+        gap: var(--space-3) !important;
+        align-items: stretch !important;
+        padding: var(--space-3_5) var(--space-4) !important;
+      }
+      .ts-step-meta {
+        width: 100% !important;
+        min-width: 0 !important;
+        justify-content: space-between !important;
+        align-self: stretch !important;
+      }
+      .ts-step-rendered-text {
+        align-self: stretch !important;
+        overflow-wrap: break-word !important;
+        word-break: break-word !important;
+      }
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding-left: max(var(--space-3), calc(var(--space-2) + var(--safe-left))) !important;
+        padding-right: max(var(--space-3), calc(var(--space-2) + var(--safe-right))) !important;
+      }
+      .container {
+        padding: 0 var(--space-1) !important;
+      }
+      h1 {
+        font-size: clamp(1.65rem, 6.5vw, 2.15rem) !important;
+      }
+      .header-actions {
+        flex-direction: column !important;
+        width: 100% !important;
+        gap: var(--space-2) !important;
+      }
+      .header-actions .btn-crystal-clear-pill,
+      .header-actions .btn-obsidian-crystal {
+        width: 100% !important;
+        justify-content: center !important;
+      }
+      .hero-color-station {
+        padding: var(--space-4) var(--space-3) !important;
+      }
+      .console-main-row {
+        gap: var(--space-2_5) !important;
+      }
+      .hero-input-capsule {
+        min-width: 0 !important;
+        padding: var(--space-2) var(--space-2_5) var(--space-2) var(--space-3) !important;
+        gap: var(--space-2) !important;
+      }
+      .universal-color-input {
+        font-size: 1rem !important;
+      }
+      .console-metrics-row {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: var(--space-3) !important;
+      }
+      .color-history-chassis {
+        width: 100% !important;
+        justify-content: space-between !important;
+      }
+      .console-controls-cluster {
+        width: 100% !important;
+        justify-content: space-between !important;
+      }
+      .crystal-mode-toggle {
+        flex: 1 !important;
+        justify-content: space-between !important;
+      }
+      .mode-pill-btn {
+        flex: 1 !important;
+        justify-content: center !important;
+        padding: var(--space-2) var(--space-2) !important;
+        font-size: 0.78rem !important;
+      }
+      .shade-lock-pill-container {
+        justify-content: space-between !important;
+      }
+      .typescale-controls-station {
+        grid-template-columns: 1fr !important;
+        gap: var(--space-3) !important;
+      }
+      .typescale-header {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: var(--space-3) !important;
+      }
+      .typescale-header-actions {
+        width: 100% !important;
+        gap: var(--space-2) !important;
+      }
+      .typescale-header-actions .btn-crystal-clear-pill,
+      .typescale-header-actions .btn-obsidian-crystal {
+        flex: 1 !important;
+        justify-content: center !important;
+      }
+      .scale-grid {
+        grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)) !important;
+        gap: var(--space-2) !important;
+      }
+      /* Centered mobile toast */
+      .toast-crystal-capsule {
+        left: 50% !important;
+        right: auto !important;
+        bottom: max(var(--space-4), calc(var(--space-3) + var(--safe-bottom))) !important;
+        transform: translate(-50%, 120px) !important;
+        max-width: calc(100vw - 32px) !important;
+        padding: var(--space-3) var(--space-5) !important;
+        font-size: 0.8rem !important;
+        width: max-content !important;
+      }
+      .toast-crystal-capsule.show {
+        transform: translate(-50%, 0) !important;
+      }
+    }
+
+    @media (max-width: 540px) {
+      /* Native Mobile Bottom Sheet Modal for Color Studio */
+      .tactile-picker-popover {
+        position: fixed !important;
+        top: auto !important;
+        bottom: max(var(--space-3), var(--safe-bottom)) !important;
+        left: var(--space-3) !important;
+        right: var(--space-3) !important;
+        width: auto !important;
+        max-width: min(440px, calc(100vw - 24px)) !important;
+        margin: 0 auto !important;
+        border-radius: var(--radius-3xl) !important;
+        box-shadow: 
+          0 20px 60px rgba(0, 0, 0, 0.65),
+          0 0 0 100vw rgba(0, 0, 0, 0.45) !important;
+        z-index: 10000 !important;
+        max-height: calc(100dvh - 32px) !important;
+        overflow-y: auto !important;
+        overscroll-behavior: contain !important;
+        padding: var(--space-4) !important;
+        gap: var(--space-3) !important;
+      }
+      .picker-presets-grid {
+        grid-template-columns: repeat(9, 1fr) !important;
+        gap: 6px !important;
+      }
+      .picker-footer-row .btn-picker-cancel,
+      .picker-footer-row .btn-obsidian-crystal {
+        height: 38px !important;
+        font-size: 0.825rem !important;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .btn-hero-shuffle {
+        width: 100% !important;
+        justify-content: center !important;
+        height: 44px !important;
+      }
+      .picker-presets-grid {
+        grid-template-columns: repeat(6, 1fr) !important;
+        gap: 8px !important;
+      }
+      .color-title-wrap {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: var(--space-1) !important;
+      }
+      .meta-quick-actions {
+        width: 100% !important;
+      }
+      .meta-quick-actions .btn-crystal-clear-pill {
+        width: 100% !important;
+        justify-content: center !important;
+      }
+      .palette-meta-bar {
+        gap: var(--space-3) !important;
+      }
+      .typescale-export-drawer {
+        padding: var(--space-3) !important;
+      }
+      .crystal-modal-window {
+        max-width: calc(100vw - 24px) !important;
+        border-radius: var(--radius-2xl) !important;
+      }
+      .modal-head, .modal-foot, .code-glass-terminal {
+        padding: var(--space-3) var(--space-4) !important;
+      }
+      .modal-tabs {
+        padding: var(--space-2) var(--space-3) !important;
+        overflow-x: auto !important;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .scale-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: var(--space-2) !important;
+      }
+    }
+
+    /* --------------------------------------------------------------------------
+       TOAST CAPSULE
+       -------------------------------------------------------------------------- */
+    .toast-crystal-capsule {
+      position: fixed;
+      bottom: 2.5rem;
+      right: 2.5rem;
+      background: linear-gradient(180deg, var(--surface-raised-top) 0%, var(--surface-raised) 100%);
+      border: 1.5px solid var(--rim-light);
+      color: var(--text);
+      padding: 0.9rem 1.65rem;
+      border-radius: var(--radius-pill);
+      box-shadow: 
+        0 18px 40px -8px rgba(15, 23, 42, 0.22),
+        0 4px 10px rgba(15, 23, 42, 0.1),
+        inset 0 1.5px 2px #ffffff;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 0.875rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      transform: translateY(120px);
+      opacity: 0;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 200;
+    }
+
+    .toast-crystal-capsule.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <!-- Header -->
+    <header>
+    <div>
+      <h1>Typolor Studio</h1>
+      <p class="header-desc">
+        Generate harmonious, accessible color palettes and proportional typographic scales with instant export for Tailwind CSS and modern design systems.
+      </p>
+    </div>
+    <div class="header-actions">
+      <!-- Theme Switcher Pill -->
+      <button class="btn-crystal-clear-pill" id="globalThemeBtn" title="Toggle Page Theme (Light / Dark)">
+        <span id="globalThemeIcon"><svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><path d="M108.11,28.11A96.09,96.09,0,0,0,227.89,147.89,96,96,0,1,1,108.11,28.11Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg></span>
+        <span id="globalThemeText">Dark Theme</span>
+      </button>
+
+      <!-- Primary #1A1A1A Obsidian Button -->
+      <button class="btn-obsidian-crystal" id="btnOpenExport">
+        <div class="obsidian-core"></div>
+        <div class="btn-content">
+          <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><path d="M176,104h24a8,8,0,0,1,8,8v96a8,8,0,0,1-8,8H56a8,8,0,0,1-8-8V112a8,8,0,0,1,8-8H80" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><polyline points="88 64 128 24 168 64" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="128" y1="24" x2="128" y2="136" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>
+          <span>Export Code</span>
+        </div>
+      </button>
+    </div>
+  </header>
+
+    <!-- Hero Color Station: Prioritized Central Command Hub -->
+    <section class="hero-color-station" id="heroColorStation">
+      <!-- Main Input Row: Liquid Orb + Universal Input + Shuffle Button -->
+      <div class="console-main-row">
+        <!-- Tactile 3D Liquid Crystal Color Orb & Tactile Color Studio Popover -->
+        <div class="hero-orb-wrap" id="heroOrbWrap" title="Click to open tactile color studio">
+          <div class="hero-liquid-orb" id="heroLiquidOrb" tabindex="0" role="button" aria-haspopup="dialog" aria-expanded="false" aria-label="Open tactile color studio">
+            <div class="orb-specular-glare"></div>
+            <div class="orb-caustic-ring"></div>
+          </div>
+          <!-- Hidden native picker fallback -->
+          <input type="color" id="nativeColorPicker" value="#3B82F6" style="position:absolute; width:1px; height:1px; opacity:0; pointer-events:none;">
+
+          <!-- Tactile Industrial Hardware Color Picker Popover Panel -->
+          <div class="tactile-picker-popover" id="tactilePickerPopover" role="dialog" aria-label="Tactile Color Studio">
+            <!-- 2D Saturation-Value Canvas Box (Square Shape) -->
+            <div class="picker-sv-box" id="pickerSvBox">
+              <div class="picker-sv-white"></div>
+              <div class="picker-sv-black"></div>
+              <div class="picker-sv-knob" id="pickerSvKnob"></div>
+            </div>
+
+            <!-- Hue Spectrum Track -->
+            <div class="picker-hue-box" id="pickerHueBox">
+              <div class="picker-hue-knob" id="pickerHueKnob"></div>
+            </div>
+
+            <!-- Designer Palette Gem Presets (18 Hand-Crafted Seeds) -->
+            <div class="picker-presets-section">
+              <div class="picker-presets-label">Curated Designer Seeds</div>
+              <div class="picker-presets-grid" id="pickerPresetsGrid">
+                <!-- Populated dynamically: 18 curated color gems -->
+              </div>
+            </div>
+
+            <!-- Footer: Cancel & Done Buttons -->
+            <div class="picker-footer-row">
+              <button type="button" class="btn-picker-cancel" id="pickerCancelBtn">
+                <span>Cancel</span>
+              </button>
+              <button type="button" class="btn-obsidian-crystal" id="pickerDoneBtn" style="height:32px; padding:0 1.35rem; font-size:0.775rem;">
+                <span>Done</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Multi-Format Universal Input Capsule -->
+        <div class="hero-input-capsule">
+          <div class="input-prefix-icon"><svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><circle cx="112" cy="112" r="80" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="168.57" y1="168.57" x2="224" y2="224" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg></div>
+          <input type="text" class="universal-color-input" id="universalColorInput" value="#3B82F6"
+            placeholder="Enter HEX (#3B82F6), RGB, HSB, HSL, or name (e.g. crimson)..." spellcheck="false"
+            autocomplete="off">
+          <div class="input-action-cluster">
+            <!-- Color Format Switcher Pill & Dropdown -->
+            <div class="format-switcher-wrap" id="formatSwitcherWrap">
+              <button type="button" class="btn-format-switcher" id="btnFormatSwitcher" aria-haspopup="listbox" aria-expanded="false" title="Change color format (HEX, RGB, HSB, HSL, OKLCH)">
+                <span class="format-current-label" id="formatCurrentLabel">HEX</span>
+                <span class="format-caret-icon">
+                  <svg width="12" height="12" viewBox="0 0 256 256" fill="currentColor">
+                    <path d="M181.66,170.34a8,8,0,0,1,0,11.32l-48,48a8,8,0,0,1-11.32,0l-48-48a8,8,0,0,1,11.32-11.32L128,212.69l42.34-42.35A8,8,0,0,1,181.66,170.34Zm-96-84.68L128,43.31l42.34,42.35a8,8,0,0,0,11.32-11.32l-48-48a8,8,0,0,0-11.32,0l-48,48A8,8,0,0,0,85.66,85.66Z"/>
+                  </svg>
+                </span>
+              </button>
+
+              <div class="format-dropdown-menu" id="formatDropdownMenu" role="listbox" aria-label="Color Formats">
+                <div class="format-dropdown-item is-selected" role="option" data-format="HEX" aria-selected="true">
+                  <span class="format-name">HEX</span>
+                  <span class="format-check"><svg width="12" height="12" viewBox="0 0 256 256" fill="currentColor"><polyline points="216 72 104 184 48 128" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"/></svg></span>
+                </div>
+                <div class="format-dropdown-item" role="option" data-format="RGB" aria-selected="false">
+                  <span class="format-name">RGB</span>
+                  <span class="format-check"><svg width="12" height="12" viewBox="0 0 256 256" fill="currentColor"><polyline points="216 72 104 184 48 128" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"/></svg></span>
+                </div>
+                <div class="format-dropdown-item" role="option" data-format="HSB" aria-selected="false">
+                  <span class="format-name">HSB</span>
+                  <span class="format-check"><svg width="12" height="12" viewBox="0 0 256 256" fill="currentColor"><polyline points="216 72 104 184 48 128" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"/></svg></span>
+                </div>
+                <div class="format-dropdown-item" role="option" data-format="HSL" aria-selected="false">
+                  <span class="format-name">HSL</span>
+                  <span class="format-check"><svg width="12" height="12" viewBox="0 0 256 256" fill="currentColor"><polyline points="216 72 104 184 48 128" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"/></svg></span>
+                </div>
+                <div class="format-dropdown-item" role="option" data-format="OKLCH" aria-selected="false">
+                  <span class="format-name">OKLCH</span>
+                  <span class="format-check"><svg width="12" height="12" viewBox="0 0 256 256" fill="currentColor"><polyline points="216 72 104 184 48 128" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"/></svg></span>
+                </div>
+              </div>
+            </div>
+
+            <button class="icon-tool-btn" id="btnEyeDropper" title="Pick color from screen (Eyedropper)" aria-label="Pick color from screen">
+              <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><path d="M182.43,113.17l4.88,4.89a16,16,0,0,1,0,22.63l-9,9a8,8,0,0,1-11.31,0L106.34,89a8,8,0,0,1,0-11.31l9-9a16,16,0,0,1,22.63,0l4.89,4.88,25-25.1c10.79-10.79,28.37-11.45,39.44-1a28,28,0,0,1,.57,40.15Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><path d="M159.31,141.94l-56.68,56.69a32,32,0,0,1-32.06,8h0l-20,8.74a8,8,0,0,1-8.86-1.67h0a5.74,5.74,0,0,1-1.2-6.36l9.19-21.06h0a32,32,0,0,1,7.7-32.87l56.69-56.68" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>
+            </button>
+            <button class="icon-tool-btn" id="btnClearInput" title="Clear input" aria-label="Clear input">
+              <svg width="14" height="14" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><line x1="200" y1="56" x2="56" y2="200" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="200" y1="200" x2="56" y2="56" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- #1A1A1A Obsidian Shuffle Button with Encapsulated Shell -->
+        <button class="btn-obsidian-crystal btn-hero-shuffle" id="btnShuffle" title="Shuffle palette (or press Spacebar)">
+          <div class="obsidian-core"></div>
+          <div class="btn-content">
+            <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><path d="M32,72H55.06a64,64,0,0,1,52.08,26.8l41.72,58.4A64,64,0,0,0,200.94,184H232" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><polyline points="208 48 232 72 208 96" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><polyline points="208 160 232 184 208 208" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><path d="M147.66,100.47l1.2-1.67A64,64,0,0,1,200.94,72H232" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><path d="M32,184H55.06a64,64,0,0,0,52.08-26.8l1.2-1.67" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>
+            <span>Shuffle</span>
+            <span class="key-hint">Space</span>
+          </div>
+        </button>
+      </div>
+
+      <!-- Live Format Readouts & Controls Row -->
+      <div class="console-metrics-row">
+        <!-- Tactile Color History (Horizontal Ellipses: Newest at Left) -->
+        <div class="color-history-chassis" id="colorHistoryChassis" title="Recently used colors (click any ellipse to apply)">
+          <div class="history-label-tag">
+            <svg width="13" height="13" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><polyline points="32 104 32 40 96 40" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><path d="M128,40A96,96,0,1,1,40,128" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><polyline points="128 72 128 128 168 152" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>
+            <span>History</span>
+          </div>
+          <div class="history-ellipses-track" id="historyEllipsesTrack">
+            <!-- Dynamically populated ellipses: newest at the left -->
+          </div>
+          <button class="history-clear-btn" id="btnClearHistory" title="Clear color history" aria-label="Clear color history">
+            <svg width="12" height="12" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><line x1="200" y1="56" x2="56" y2="200" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="200" y1="200" x2="56" y2="56" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>
+          </button>
+        </div>
+
+        <!-- Controls: Algorithm Modes & Unlocked Shade Lock -->
+        <div class="console-controls-cluster">
+          <div class="crystal-mode-toggle">
+            <button class="mode-pill-btn active" data-mode="original"
+              title="Adaptive nearest lightness anchor">Original</button>
+            <button class="mode-pill-btn" data-mode="lockInputColor" title="Lock color to exact shade">Lock
+              Shade</button>
+            <button class="mode-pill-btn" data-mode="apca" title="APCA contrast targets calibration">APCA</button>
+          </div>
+
+          <!-- Fully Unlocked Shade Lock Selector -->
+          <div class="shade-lock-pill-container" id="shadeLockBar" title="Lock your input color to any shade number">
+            <span class="shade-lock-label">Lock Shade:</span>
+            <select id="lockShadeSelect" class="shade-select-dropdown">
+              <option value="50">50</option>
+              <option value="100">100</option>
+              <option value="200">200</option>
+              <option value="300">300</option>
+              <option value="400">400</option>
+              <option value="500" selected>500</option>
+              <option value="600">600</option>
+              <option value="700">700</option>
+              <option value="800">800</option>
+              <option value="900">900</option>
+              <option value="950">950</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Palette Metadata Bar -->
+    <div class="palette-presentation-chassis">
+      <div class="palette-meta-bar">
+        <div class="color-title-wrap">
+          <h2 class="color-name-heading" id="paletteNameDisplay">Azure Radiance</h2>
+          <span class="color-skeleton-ref">Base skeleton: <strong id="skeletonNameDisplay">Blue</strong> • 11 Design System Tokens</span>
+        </div>
+        <div class="meta-quick-actions">
+          <button class="btn-crystal-clear-pill" id="btnCopyAllShades" title="Copy all 11 hex codes to clipboard">
+          <svg width="14" height="14" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><polyline points="168 168 216 168 216 40 88 40 88 88" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><rect x="40" y="88" width="128" height="128" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>
+          <span>Copy All Shades</span>
+        </button>
+        </div>
+      </div>
+
+      <!-- Scale Presentation: 11 Contained Swatches -->
+      <div class="scale-grid" id="swatchGrid">
+        <!-- Populated dynamically -->
+      </div>
+    </div>
+
+    <!-- Type Scale Generator Studio (Inspired by typescale.com) -->
+    <div class="typescale-studio-chassis" id="typescaleStudio">
+      <div class="typescale-header">
+        <div>
+          <h2 style="font-size:1.6rem; font-weight:800; letter-spacing:-0.025em; color:var(--text); margin-bottom: 0.35rem;">
+            Type Scale Generator
+          </h2>
+          <p style="font-size:0.875rem; color:var(--text-muted); max-width: 600px;">
+            Choose from Google Fonts or enter any custom font, select musical interval ratios, and generate responsive typographic scales with instant CSS & Tailwind export.
+          </p>
+        </div>
+        <div class="typescale-header-actions">
+          <button class="btn-crystal-clear-pill" id="btnResetTypeScale" title="Reset to standard defaults">
+            <svg width="14" height="14" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><polyline points="24 56 24 104 72 104" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><path d="M67.59,192A88,88,0,1,0,65.77,65.77L24,104" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>
+            <span>Reset</span>
+          </button>
+          <button class="btn-obsidian-crystal" id="btnToggleTypeScaleExport" title="Toggle Code Export Drawer">
+            <div class="obsidian-core"></div>
+            <div class="btn-content">
+              <svg width="14" height="14" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><polyline points="64 88 16 128 64 168" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><polyline points="192 88 240 128 192 168" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="160" y1="40" x2="96" y2="216" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>
+              <span>Export Tokens</span>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <!-- Controls Station (4 Control Cards) -->
+      <div class="typescale-controls-station">
+        <!-- Control 1: Font Family (Google Fonts) -->
+        <div class="ts-control-card">
+          <div class="ts-control-label">
+            <span>Google Font</span>
+            <span class="ts-badge-live" id="activeFontBadge">Inter</span>
+          </div>
+          <select id="tsFontFamilySelect" class="ts-select-dropdown" title="Choose Google Font">
+            <optgroup label="Sans-Serif">
+              <option value="Inter" selected>Inter</option>
+              <option value="Plus Jakarta Sans">Plus Jakarta Sans</option>
+              <option value="Roboto">Roboto</option>
+              <option value="Poppins">Poppins</option>
+              <option value="Outfit">Outfit</option>
+              <option value="Montserrat">Montserrat</option>
+              <option value="DM Sans">DM Sans</option>
+              <option value="Manrope">Manrope</option>
+              <option value="Work Sans">Work Sans</option>
+              <option value="Space Grotesk">Space Grotesk</option>
+              <option value="Bricolage Grotesque">Bricolage Grotesque</option>
+              <option value="Cabinet Grotesk">Cabinet Grotesk</option>
+              <option value="Syne">Syne</option>
+              <option value="Epilogue">Epilogue</option>
+              <option value="Oswald">Oswald</option>
+            </optgroup>
+            <optgroup label="Serif">
+              <option value="Playfair Display">Playfair Display</option>
+              <option value="Merriweather">Merriweather</option>
+              <option value="Lora">Lora</option>
+              <option value="Newsreader">Newsreader</option>
+              <option value="Cormorant Garamond">Cormorant Garamond</option>
+              <option value="Cinzel">Cinzel</option>
+              <option value="Fraunces">Fraunces</option>
+              <option value="EB Garamond">EB Garamond</option>
+            </optgroup>
+            <optgroup label="Monospace">
+              <option value="JetBrains Mono">JetBrains Mono</option>
+              <option value="Fira Code">Fira Code</option>
+              <option value="Space Mono">Space Mono</option>
+              <option value="IBM Plex Mono">IBM Plex Mono</option>
+              <option value="Geist Mono">Geist Mono</option>
+            </optgroup>
+          </select>
+          <input type="text" id="tsCustomFontInput" class="ts-text-input" placeholder="Or enter ANY Google Font name..." spellcheck="false" title="Type any Google Font to load and apply it live">
+        </div>
+
+        <!-- Control 2: Scale Ratio -->
+        <div class="ts-control-card">
+          <div class="ts-control-label">
+            <span>Scale Ratio</span>
+            <span class="ts-badge-ratio" id="activeRatioVal">1.250</span>
+          </div>
+          <select id="tsScaleRatioSelect" class="ts-select-dropdown" title="Musical interval ratio">
+            <option value="1.067">1.067 – Minor Second (15:16)</option>
+            <option value="1.125">1.125 – Major Second (8:9)</option>
+            <option value="1.200">1.200 – Minor Third (5:6)</option>
+            <option value="1.250" selected>1.250 – Major Third (4:5)</option>
+            <option value="1.333">1.333 – Perfect Fourth (3:4)</option>
+            <option value="1.414">1.414 – Augmented Fourth (1:√2)</option>
+            <option value="1.500">1.500 – Perfect Fifth (2:3)</option>
+            <option value="1.618">1.618 – Golden Ratio (1:1.618)</option>
+            <option value="custom">Custom Ratio...</option>
+          </select>
+          <div id="tsCustomRatioContainer" style="display: none;">
+            <input type="number" id="tsCustomRatioInput" class="ts-number-input" step="0.001" min="1.01" max="2.5" value="1.250" placeholder="Custom decimal ratio">
+          </div>
+        </div>
+
+        <!-- Control 3: Base Size & Weight -->
+        <div class="ts-control-card">
+          <div class="ts-control-label">
+            <span>Base Size & Weight</span>
+            <span class="ts-badge-live" id="activeBaseDisplay">16px</span>
+          </div>
+          <div class="ts-stepper-row">
+            <button class="ts-stepper-btn" id="btnBaseMinus" title="Decrease base size by 1px" aria-label="Decrease base size">
+              <svg width="13" height="13" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><line x1="40" y1="128" x2="216" y2="128" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>
+            </button>
+            <input type="number" id="tsBaseSizeInput" class="ts-stepper-val" value="16" min="10" max="32" step="1">
+            <span style="font-size:0.8rem; font-weight:700; color:var(--text-muted); margin-right:4px;">px</span>
+            <button class="ts-stepper-btn" id="btnBasePlus" title="Increase base size by 1px" aria-label="Increase base size">
+              <svg width="13" height="13" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><line x1="40" y1="128" x2="216" y2="128" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="128" y1="40" x2="128" y2="216" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>
+            </button>
+          </div>
+          <select id="tsFontWeightSelect" class="ts-select-dropdown" title="Select font weight">
+            <option value="300">Light (300)</option>
+            <option value="400">Regular (400)</option>
+            <option value="500">Medium (500)</option>
+            <option value="600" selected>SemiBold (600)</option>
+            <option value="700">Bold (700)</option>
+            <option value="800">ExtraBold (800)</option>
+          </select>
+        </div>
+
+        <!-- Control 4: Live Preview Sample Text -->
+        <div class="ts-control-card">
+          <div class="ts-control-label">
+            <span>Sample Text</span>
+            <span style="font-size:0.7rem; color:var(--text-muted);">Live Preview</span>
+          </div>
+          <input type="text" id="tsSampleTextInput" class="ts-text-input" value="A visual type scale" placeholder="Type sample phrase..." spellcheck="false">
+          <div class="ts-phrase-presets">
+            <button class="ts-preset-pill" data-phrase="A visual type scale">Title</button>
+            <button class="ts-preset-pill" data-phrase="The quick brown fox jumps over the lazy dog">Alphabet</button>
+            <button class="ts-preset-pill" data-phrase="Sphinx of black quartz, judge my vow">Pangram</button>
+            <button class="ts-preset-pill" data-phrase="Harmonious digital interfaces and typography">Prose</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Type Scale Live Rendering Stack -->
+      <div class="typescale-preview-stack" id="typescalePreviewStack">
+        <!-- Populated dynamically: 11 scale steps (Headings: Display, H1-H6; Paragraphs: Large, Regular [Base], Small, Extra Small) -->
+      </div>
+
+      <!-- Type Scale Export Code Drawer -->
+      <div class="typescale-export-drawer" id="typescaleExportDrawer" style="display: none;">
+        <div class="ts-drawer-head">
+          <div style="display:flex; align-items:center; gap:0.75rem; flex-wrap:wrap;">
+            <span style="font-weight:800; font-size:0.95rem; color:var(--text);">Type Scale Tokens</span>
+            <div class="modal-tabs" style="margin:0;">
+              <button class="tab-pill-btn active" data-tstab="tailwindV4">Tailwind v4</button>
+              <button class="tab-pill-btn" data-tstab="tailwindV3">Tailwind v3</button>
+              <button class="tab-pill-btn" data-tstab="cssVars">CSS Variables</button>
+              <button class="tab-pill-btn" data-tstab="json">JSON Tokens</button>
+            </div>
+          </div>
+          <button class="btn-obsidian-crystal" id="btnCopyTypeScaleCode" style="height:36px; padding:0 1.15rem; font-size:0.775rem;">
+            <div class="obsidian-core"></div>
+            <div class="btn-content">
+              <svg width="13" height="13" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><polyline points="168 168 216 168 216 40 88 40 88 88" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><rect x="40" y="88" width="128" height="128" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>
+              <span>Copy Code</span>
+            </div>
+          </button>
+        </div>
+        <div class="code-glass-terminal" id="tsExportCodeBlock" style="max-height: 220px;"></div>
+      </div>
+    </div>
+
+      </div>
+
+<!-- Export Modal: Floating Crystal Prism Sheet -->
+  <div class="glass-modal-backdrop" id="exportModal">
+    <div class="crystal-modal-window">
+      <div class="modal-head">
+        <h3 style="font-size:1.2rem; font-weight:800; letter-spacing:-0.02em;">Export Palette Code</h3>
+        <button style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:1.5rem; padding:0.25rem; display:inline-flex; align-items:center; justify-content:center;" id="btnCloseExport" title="Close" aria-label="Close export modal">
+        <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><line x1="200" y1="56" x2="56" y2="200" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="200" y1="200" x2="56" y2="56" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>
+      </button>
+      </div>
+      <div class="modal-tabs">
+        <button class="tab-pill-btn active" data-tab="tailwindV4">Tailwind v4 (@theme)</button>
+        <button class="tab-pill-btn" data-tab="tailwindV3">Tailwind v3</button>
+        <button class="tab-pill-btn" data-tab="cssVariables">CSS Variables</button>
+        <button class="tab-pill-btn" data-tab="json">JSON</button>
+      </div>
+      <div class="code-glass-terminal" id="exportCodeOutput"></div>
+      <div class="modal-foot">
+        <!-- #1A1A1A Primary Modal Button with Encapsulation -->
+        <button class="btn-obsidian-crystal" id="btnCopyExport">
+          <div class="obsidian-core"></div>
+          <div class="btn-content">
+            <svg width="15" height="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><polyline points="168 168 216 168 216 40 88 40 88 88" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><rect x="40" y="88" width="128" height="128" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>
+            <span>Copy to Clipboard</span>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Capsule -->
+  <div class="toast-crystal-capsule" id="toastBox">
+    <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"/></svg>
+    <span id="toastMsg">Copied #3B82F6 to clipboard!</span>
+  </div>
+
+  <!-- Load Standalone Engine -->
+  <script src="typolor-engine.js"></script>
+
+  <script>
+    // State
+    let currentHex = '#3B82F6';
+    try {
+      const storedHist = localStorage.getItem('typolor_palette_history');
+      if (storedHist) {
+        const parsedHist = JSON.parse(storedHist);
+        if (Array.isArray(parsedHist) && parsedHist.length > 0 && typeof parsedHist[0] === 'string') {
+          currentHex = parsedHist[0].toUpperCase();
+        }
+      }
+    } catch (e) { }
+    let currentMode = 'original';
+    let currentLockShade = 500;
+    let currentPalette = null;
+    let pageTheme = localStorage.getItem('typolor_page_theme') || 'light';
+    
+    let activeTab = 'tailwindV4';
+    
+
+    // ==========================================================================
+    // TACTILE COLOR STUDIO (Staged Industrial Hardware Color Picker)
+    // ==========================================================================
+    const heroOrbWrap = document.getElementById('heroOrbWrap');
+    const tactilePickerPopover = document.getElementById('tactilePickerPopover');
+    const pickerSvBox = document.getElementById('pickerSvBox');
+    const pickerSvKnob = document.getElementById('pickerSvKnob');
+    const pickerHueBox = document.getElementById('pickerHueBox');
+    const pickerHueKnob = document.getElementById('pickerHueKnob');
+    const pickerPresetsGrid = document.getElementById('pickerPresetsGrid');
+
+    // 18 Curated Designer Seed Gems
+    const PICKER_PRESET_GEMS = [
+      '#EF4444', '#F97316', '#F59E0B', '#10B981', '#06B6D4', '#3B82F6', '#6366F1', '#8B5CF6', '#EC4899',
+      '#991B1B', '#C2410C', '#B45309', '#047857', '#0E7490', '#1D4ED8', '#4338CA', '#6D28D9', '#0F172A'
+    ];
+
+    let pickerH = 217;
+    let pickerS = 0.76;
+    let pickerV = 0.96;
+    let pickerStagedHex = '#3B82F6';
+    let pickerInitialHex = '#3B82F6';
+    let isDraggingSv = false;
+    let isDraggingHue = false;
+
+    function initTactilePicker() {
+      // Build 18 Gem Presets
+      if (pickerPresetsGrid) {
+        pickerPresetsGrid.innerHTML = '';
+        PICKER_PRESET_GEMS.forEach(gemHex => {
+          const gem = document.createElement('button');
+          gem.type = 'button';
+          gem.className = 'picker-gem-btn' + (gemHex.toUpperCase() === currentHex.toUpperCase() ? ' is-active' : '');
+          gem.style.backgroundColor = gemHex;
+          gem.setAttribute('data-hex', gemHex);
+          gem.title = gemHex.toUpperCase();
+          gem.addEventListener('click', (e) => {
+            e.stopPropagation();
+            // Stage the gem color WITHOUT generating palette or modifying history
+            setPickerStagedColor(gemHex);
+          });
+          pickerPresetsGrid.appendChild(gem);
+        });
+      }
+
+      // Toggle Popover on Orb Click
+      heroLiquidOrb.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleTactilePicker();
+      });
+
+      heroLiquidOrb.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          toggleTactilePicker();
+        }
+      });
+
+      // Cancel Button (Discards staged changes and reverts)
+      const cancelBtn = document.getElementById('pickerCancelBtn');
+      if (cancelBtn) {
+        cancelBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          cancelTactilePicker();
+        });
+      }
+
+      // Done Button (Applies chosen color, generates palette, and records to history)
+      const doneBtn = document.getElementById('pickerDoneBtn');
+      if (doneBtn) {
+        doneBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          commitTactilePicker();
+        });
+      }
+
+      // 2D Saturation-Value Canvas Dragging & Automatic Cursor Following
+      if (pickerSvBox) {
+        const onSvPointerDown = (e) => {
+          isDraggingSv = true;
+          document.body.classList.add('is-sv-dragging');
+          pickerSvBox.setPointerCapture?.(e.pointerId);
+          handleSvPointer(e);
+        };
+
+        const onSvPointerMove = (e) => {
+          if (!isDraggingSv) return;
+          handleSvPointer(e);
+        };
+
+        const onSvPointerUp = (e) => {
+          if (!isDraggingSv) return;
+          isDraggingSv = false;
+          document.body.classList.remove('is-sv-dragging');
+          pickerSvBox.releasePointerCapture?.(e.pointerId);
+          // Do NOT commit to history or generate palette here! User has not pressed Done yet.
+        };
+
+        // Only move knob and update color when clicking or dragging (pointerdown / isDraggingSv)
+        pickerSvBox.addEventListener('pointerdown', onSvPointerDown);
+        window.addEventListener('pointermove', onSvPointerMove);
+        window.addEventListener('pointerup', onSvPointerUp);
+        window.addEventListener('pointercancel', onSvPointerUp);
+      }
+
+      // Hue Rainbow Slider Dragging
+      if (pickerHueBox) {
+        const onHuePointerDown = (e) => {
+          isDraggingHue = true;
+          pickerHueBox.setPointerCapture?.(e.pointerId);
+          handleHuePointer(e);
+        };
+
+        const onHuePointerMove = (e) => {
+          if (!isDraggingHue) return;
+          handleHuePointer(e);
+        };
+
+        const onHuePointerUp = (e) => {
+          if (!isDraggingHue) return;
+          isDraggingHue = false;
+          pickerHueBox.releasePointerCapture?.(e.pointerId);
+          // Do NOT commit to history or generate palette here! User has not pressed Done yet.
+        };
+
+        pickerHueBox.addEventListener('pointerdown', onHuePointerDown);
+        window.addEventListener('pointermove', onHuePointerMove);
+        window.addEventListener('pointerup', onHuePointerUp);
+        window.addEventListener('pointercancel', onHuePointerUp);
+      }
+
+      // Close Popover on Outside Click (acts like Cancel: discards unstaged changes)
+      document.addEventListener('pointerdown', (e) => {
+        if (!tactilePickerPopover.classList.contains('is-open')) return;
+        if (!e.target.closest('#heroOrbWrap')) {
+          cancelTactilePicker();
+        }
+      });
+
+      // Close on Escape Key (acts like Cancel)
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && tactilePickerPopover.classList.contains('is-open')) {
+          cancelTactilePicker();
+        }
+      });
+    }
+
+    function handleSvPointer(e) {
+      const rect = pickerSvBox.getBoundingClientRect();
+      let x = e.clientX - rect.left;
+      let y = e.clientY - rect.top;
+      x = Math.max(0, Math.min(rect.width, x));
+      y = Math.max(0, Math.min(rect.height, y));
+      pickerS = x / rect.width;
+      pickerV = 1 - (y / rect.height);
+      updateStagedFromHsv();
+    }
+
+    function handleHuePointer(e) {
+      const rect = pickerHueBox.getBoundingClientRect();
+      let x = e.clientX - rect.left;
+      x = Math.max(0, Math.min(rect.width, x));
+      pickerH = (x / rect.width) * 360;
+      if (pickerH >= 360) pickerH = 359.9;
+      updateStagedFromHsv();
+    }
+
+    function updateStagedFromHsv() {
+      try {
+        pickerStagedHex = TypolorEngine.chroma.hsv(pickerH, pickerS, pickerV).hex().toUpperCase();
+        // Update ONLY studio knobs, SV surface, and gems.
+        // DO NOT generate palette! DO NOT touch history!
+        renderStudioStagingControls();
+      } catch (err) { }
+    }
+
+    function setPickerStagedColor(hex) {
+      try {
+        const parsed = tryParseColor(hex);
+        if (!parsed) return;
+        pickerStagedHex = parsed.toUpperCase();
+        const hsv = TypolorEngine.chroma(pickerStagedHex).hsv();
+        pickerH = isNaN(hsv[0]) ? pickerH : hsv[0];
+        pickerS = isNaN(hsv[1]) ? 0 : hsv[1];
+        pickerV = isNaN(hsv[2]) ? 1 : hsv[2];
+        renderStudioStagingControls();
+      } catch (err) { }
+    }
+
+    function renderStudioStagingControls() {
+      // SV Box background and knob
+      if (pickerSvBox && pickerSvKnob) {
+        pickerSvBox.style.backgroundColor = `hsl(${pickerH}, 100%, 50%)`;
+        pickerSvKnob.style.left = `${pickerS * 100}%`;
+        pickerSvKnob.style.top = `${(1 - pickerV) * 100}%`;
+      }
+      // Hue knob
+      if (pickerHueKnob) {
+        const huePercent = (pickerH / 360) * 100;
+        pickerHueKnob.style.left = `${huePercent}%`;
+        pickerHueKnob.style.backgroundColor = `hsl(${pickerH}, 100%, 50%)`;
+      }
+      // Hero liquid orb staging preview
+      if (heroLiquidOrb) {
+        heroLiquidOrb.style.backgroundColor = pickerStagedHex;
+      }
+      // Real-time update in search bar (formatted to selected format: HEX, RGB, HSB, HSL, OKLCH)
+      if (universalColorInput) {
+        universalColorInput.value = formatColorString(pickerStagedHex, selectedColorFormat);
+      }
+      // Update active state on preset gems (clean non-colliding inset ring)
+      if (pickerPresetsGrid) {
+        pickerPresetsGrid.querySelectorAll('.picker-gem-btn').forEach(btn => {
+          const isMatch = btn.getAttribute('data-hex').toUpperCase() === pickerStagedHex.toUpperCase();
+          btn.classList.toggle('is-active', isMatch);
+        });
+      }
+    }
+
+    function openTactilePicker() {
+      pickerInitialHex = currentHex;
+      pickerStagedHex = currentHex;
+      const hsv = TypolorEngine.chroma(pickerStagedHex).hsv();
+      pickerH = isNaN(hsv[0]) ? 217 : hsv[0];
+      pickerS = isNaN(hsv[1]) ? 0.76 : hsv[1];
+      pickerV = isNaN(hsv[2]) ? 0.96 : hsv[2];
+      renderStudioStagingControls();
+      tactilePickerPopover.classList.add('is-open');
+      heroLiquidOrb.setAttribute('aria-expanded', 'true');
+    }
+
+    function commitTactilePicker() {
+      tactilePickerPopover.classList.remove('is-open');
+      heroLiquidOrb.setAttribute('aria-expanded', 'false');
+      document.body.classList.remove('is-sv-dragging');
+      // NOW AND ONLY NOW: Generate color palette and push to history!
+      setColor(pickerStagedHex, true);
+    }
+
+    function cancelTactilePicker() {
+      if (!tactilePickerPopover.classList.contains('is-open')) return;
+      tactilePickerPopover.classList.remove('is-open');
+      heroLiquidOrb.setAttribute('aria-expanded', 'false');
+      document.body.classList.remove('is-sv-dragging');
+      // Revert liquid orb to original color
+      heroLiquidOrb.style.backgroundColor = pickerInitialHex;
+      // Revert search bar to original color
+      if (universalColorInput) {
+        universalColorInput.value = formatColorString(pickerInitialHex, selectedColorFormat);
+      }
+      // Do NOT generate palette. Do NOT touch history.
+    }
+
+    function toggleTactilePicker() {
+      if (tactilePickerPopover.classList.contains('is-open')) {
+        cancelTactilePicker();
+      } else {
+        openTactilePicker();
+      }
+    }
+
+    function syncTactilePickerValues(updateInitial = false) {
+      if (tactilePickerPopover && tactilePickerPopover.classList.contains('is-open')) {
+        renderStudioStagingControls();
+      }
+    }
+
+    // Curated Designer Color Seeds for Shuffle
+    const CURATED_SEEDS = [
+      '#3B82F6', // Azure Blue
+      '#6366F1', // Indigo
+      '#8B5CF6', // Royal Violet
+      '#A855F7', // Bright Purple
+      '#EC4899', // Pink Neon
+      '#F43F5E', // Rose Coral
+      '#EF4444', // Electric Red
+      '#F97316', // Sunset Orange
+      '#F59E0B', // Amber Gold
+      '#10B981', // Emerald Mint
+      '#14B8A6', // Caribbean Teal
+      '#06B6D4', // Electric Cyan
+      '#0EA5E9', // Sky Blue
+      '#84CC16', // Electric Lime
+      '#22C55E', // Fresh Green
+      '#D946EF', // Fuchsia
+      '#E11D48', // Crimson Red
+      '#2563EB', // Sapphire
+      '#059669', // Deep Jade
+      '#D97706', // Ochre Gold
+      '#7C3AED', // Electric Violet
+      '#0284C7'  // Deep Ocean
+    ];
+
+    // DOM Elements
+    const nativePicker = document.getElementById('nativeColorPicker');
+    const heroLiquidOrb = document.getElementById('heroLiquidOrb');
+    const universalColorInput = document.getElementById('universalColorInput');
+    const btnClearInput = document.getElementById('btnClearInput');
+    const btnEyeDropper = document.getElementById('btnEyeDropper');
+    const btnShuffle = document.getElementById('btnShuffle');
+    const btnCopyAllShades = document.getElementById('btnCopyAllShades');
+
+    const historyEllipsesTrack = document.getElementById('historyEllipsesTrack');
+    const btnClearHistory = document.getElementById('btnClearHistory');
+
+    const lockShadeSelect = document.getElementById('lockShadeSelect');
+    const swatchGrid = document.getElementById('swatchGrid');
+    const paletteNameDisplay = document.getElementById('paletteNameDisplay');
+    const skeletonNameDisplay = document.getElementById('skeletonNameDisplay');
+
+    const exportModal = document.getElementById('exportModal');
+    const exportCodeOutput = document.getElementById('exportCodeOutput');
+    const globalThemeBtn = document.getElementById('globalThemeBtn');
+    const globalThemeIcon = document.getElementById('globalThemeIcon');
+    const globalThemeText = document.getElementById('globalThemeText');
+    
+
+    // Official Phosphor Icons (Regular Weight - https://phosphoricons.com/)
+    const PHOSPHOR_ICONS = {
+      sun: `<svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><line x1="128" y1="40" x2="128" y2="16" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><circle cx="128" cy="128" r="56" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="64" y1="64" x2="48" y2="48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="64" y1="192" x2="48" y2="208" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="192" y1="64" x2="208" y2="48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="192" y1="192" x2="208" y2="208" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="40" y1="128" x2="16" y2="128" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="128" y1="216" x2="128" y2="240" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="216" y1="128" x2="240" y2="128" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>`,
+      moon: `<svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><path d="M108.11,28.11A96.09,96.09,0,0,0,227.89,147.89,96,96,0,1,1,108.11,28.11Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>`,
+      copy: `<svg width="13" height="13" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><polyline points="168 168 216 168 216 40 88 40 88 88" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><rect x="40" y="88" width="128" height="128" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>`,
+      lock: `<svg width="13" height="13" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><rect x="40" y="88" width="176" height="128" rx="8" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><circle cx="128" cy="152" r="12" fill="currentColor"/><path d="M88,88V56a40,40,0,0,1,80,0V88" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>`,
+      lockSimple: `<svg width="13" height="13" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><rect x="40" y="88" width="176" height="128" rx="8" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><path d="M88,88V56a40,40,0,0,1,80,0V88" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>`,
+      check: `<svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><polyline points="40 144 96 200 224 72" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>`,
+      code: `<svg width="14" height="14" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><polyline points="64 88 16 128 64 168" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><polyline points="192 88 240 128 192 168" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="160" y1="40" x2="96" y2="216" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>`,
+      arrowCounterClockwise: `<svg width="14" height="14" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><polyline points="24 56 24 104 72 104" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><path d="M67.59,192A88,88,0,1,0,65.77,65.77L24,104" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>`,
+      eyedropper: `<svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><path d="M182.43,113.17l4.88,4.89a16,16,0,0,1,0,22.63l-9,9a8,8,0,0,1-11.31,0L106.34,89a8,8,0,0,1,0-11.31l9-9a16,16,0,0,1,22.63,0l4.89,4.88,25-25.1c10.79-10.79,28.37-11.45,39.44-1a28,28,0,0,1,.57,40.15Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><path d="M159.31,141.94l-56.68,56.69a32,32,0,0,1-32.06,8h0l-20,8.74a8,8,0,0,1-8.86-1.67h0a5.74,5.74,0,0,1-1.2-6.36l9.19-21.06h0a32,32,0,0,1,7.7-32.87l56.69-56.68" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>`,
+      shuffle: `<svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><path d="M32,72H55.06a64,64,0,0,1,52.08,26.8l41.72,58.4A64,64,0,0,0,200.94,184H232" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><polyline points="208 48 232 72 208 96" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><polyline points="208 160 232 184 208 208" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><path d="M147.66,100.47l1.2-1.67A64,64,0,0,1,200.94,72H232" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><path d="M32,184H55.06a64,64,0,0,0,52.08-26.8l1.2-1.67" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>`,
+      x: `<svg width="14" height="14" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><line x1="200" y1="56" x2="56" y2="200" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="200" y1="200" x2="56" y2="56" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>`,
+      magnifyingGlass: `<svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><circle cx="112" cy="112" r="80" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="168.57" y1="168.57" x2="224" y2="224" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>`,
+      plus: `<svg width="13" height="13" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><line x1="40" y1="128" x2="216" y2="128" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="128" y1="40" x2="128" y2="216" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>`,
+      minus: `<svg width="13" height="13" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><line x1="40" y1="128" x2="216" y2="128" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>`,
+      caretDown: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="12" height="12"><rect width="256" height="256" fill="none"/><polyline points="208 96 128 176 48 96" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>`,
+      export: `<svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><path d="M176,104h24a8,8,0,0,1,8,8v96a8,8,0,0,1-8,8H56a8,8,0,0,1-8-8V112a8,8,0,0,1,8-8H80" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><polyline points="88 64 128 24 168 64" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="128" y1="24" x2="128" y2="136" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>`
+    };
+    const HUGE_ICONS = PHOSPHOR_ICONS; // backward compat alias
+
+    const SUN_SVG = PHOSPHOR_ICONS.sun;
+    const MOON_SVG = PHOSPHOR_ICONS.moon;
+
+    function applyPageTheme(theme) {
+      pageTheme = theme;
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('typolor_page_theme', theme);
+
+      // Sync mobile browser chrome status-bar theme-color
+      const themeMetaLight = document.getElementById('themeColorLight');
+      const themeMetaDark = document.getElementById('themeColorDark');
+      const metaColor = (theme === 'dark') ? '#14161a' : '#eceef1';
+      if (themeMetaLight) themeMetaLight.setAttribute('content', metaColor);
+      if (themeMetaDark) themeMetaDark.setAttribute('content', metaColor);
+
+      if (theme === 'dark') {
+        globalThemeIcon.innerHTML = SUN_SVG;
+        globalThemeText.textContent = 'Light Theme';
+      } else {
+        globalThemeIcon.innerHTML = MOON_SVG;
+        globalThemeText.textContent = 'Dark Theme';
+      }
+    }
+
+    // Color Format State & Formatter
+    let selectedColorFormat = 'HEX'; // 'HEX' | 'RGB' | 'HSB' | 'HSL' | 'OKLCH'
+    try {
+      const storedFmt = localStorage.getItem('typolor_color_format');
+      if (storedFmt) {
+        let fmt = storedFmt.toUpperCase();
+        if (fmt === 'HSV') fmt = 'HSB';
+        if (['HEX', 'RGB', 'HSB', 'HSL', 'OKLCH'].includes(fmt)) {
+          selectedColorFormat = fmt;
+        }
+      }
+    } catch (e) { }
+
+    function formatColorString(hex, format = selectedColorFormat) {
+      try {
+        const c = TypolorEngine.chroma(hex);
+        switch (format.toUpperCase()) {
+          case 'HEX':
+            return c.hex().toUpperCase();
+          case 'RGB': {
+            const rgb = c.rgb();
+            return `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
+          }
+          case 'HSB':
+          case 'HSV': {
+            const hsv = c.hsv();
+            const h = Math.round(isNaN(hsv[0]) ? 0 : hsv[0]);
+            const s = Math.round((isNaN(hsv[1]) ? 0 : hsv[1]) * 100);
+            const b = Math.round((isNaN(hsv[2]) ? 0 : hsv[2]) * 100);
+            return `hsb(${h}, ${s}%, ${b}%)`;
+          }
+          case 'HSL': {
+            const hsl = c.hsl();
+            const h = Math.round(isNaN(hsl[0]) ? 0 : hsl[0]);
+            const s = Math.round((isNaN(hsl[1]) ? 0 : hsl[1]) * 100);
+            const l = Math.round((isNaN(hsl[2]) ? 0 : hsl[2]) * 100);
+            return `hsl(${h}, ${s}%, ${l}%)`;
+          }
+          case 'OKLCH': {
+            const oklch = c.oklch();
+            const l = (oklch[0] * 100).toFixed(1);
+            const cVal = oklch[1].toFixed(3);
+            const hVal = Math.round(isNaN(oklch[2]) ? 0 : oklch[2]);
+            return `oklch(${l}% ${cVal} ${hVal})`;
+          }
+          default:
+            return c.hex().toUpperCase();
+        }
+      } catch (e) {
+        return hex;
+      }
+    }
+
+    // Universal Color Normalization (Supports HEX, RGB, HSB, HSL, OKLCH, and color names)
+    function tryParseColor(raw) {
+      if (!raw || typeof raw !== 'string') return null;
+      raw = raw.trim();
+
+      // Custom HSB / HSV parsing (e.g. hsb(217, 76%, 96%) or hsv(217, 76%, 96%))
+      const hsbMatch = raw.match(/^(?:hsb|hsv)\s*\(\s*([\d\.]+)\s*,\s*([\d\.]+)%?\s*,\s*([\d\.]+)%?\s*\)$/i);
+      if (hsbMatch) {
+        try {
+          let h = parseFloat(hsbMatch[1]), s = parseFloat(hsbMatch[2]), b = parseFloat(hsbMatch[3]);
+          if (s > 1) s /= 100;
+          if (b > 1) b /= 100;
+          return TypolorEngine.chroma.hsv(h, s, b).hex().toUpperCase();
+        } catch (e) { }
+      }
+
+      try {
+        if (TypolorEngine.chroma.valid(raw)) {
+          return TypolorEngine.chroma(raw).hex().toUpperCase();
+        }
+        if (TypolorEngine.chroma.valid('#' + raw)) {
+          return TypolorEngine.chroma('#' + raw).hex().toUpperCase();
+        }
+      } catch (e) { }
+      return null;
+    }
+
+    // Color History Management (Ellipses from left [newest] to right [older], capped to single-line support)
+    const MAX_HISTORY = 10;
+    const DEFAULT_HISTORY = [
+      '#3B82F6', // Azure Blue
+      '#6366F1', // Indigo
+      '#8B5CF6', // Purple
+      '#EC4899', // Pink
+      '#F43F5E', // Rose
+      '#F97316', // Orange
+      '#EAB308', // Amber
+      '#10B981', // Emerald
+      '#06B6D4', // Cyan
+      '#0EA5E9'  // Sky
+    ];
+
+    let colorHistory = [];
+    try {
+      const stored = localStorage.getItem('typolor_palette_history');
+      if (stored) {
+        colorHistory = JSON.parse(stored);
+      }
+    } catch (e) {
+      colorHistory = [];
+    }
+
+    // Auto-Recovery Sanitizer: If stored history was corrupted by rapid input drags (e.g. multiple identical/near-identical red shades)
+    function sanitizeHistory(arr) {
+      if (!Array.isArray(arr) || arr.length === 0) return [...DEFAULT_HISTORY];
+      // Filter out invalid items
+      const valid = arr.filter(c => typeof c === 'string' && tryParseColor(c)).map(c => tryParseColor(c));
+      if (valid.length === 0) return [...DEFAULT_HISTORY];
+
+      // Detect if user has flood-corrupted history (all items within 10% hue/saturation of each other)
+      if (valid.length >= 3 && window.TypolorEngine && TypolorEngine.chroma) {
+        try {
+          const hues = valid.map(c => TypolorEngine.chroma(c).get('hsl.h') || 0);
+          const minH = Math.min(...hues);
+          const maxH = Math.max(...hues);
+          const isFlooded = (maxH - minH) < 15;
+          if (isFlooded) {
+            // Restore diverse palette, keeping user's most recent color at index 0!
+            const recent = valid[0];
+            return [recent, ...DEFAULT_HISTORY.filter(c => c.toUpperCase() !== recent.toUpperCase())].slice(0, MAX_HISTORY);
+          }
+        } catch (e) { }
+      }
+
+      // Ensure distinct values
+      const distinct = [];
+      valid.forEach(c => {
+        if (!distinct.includes(c)) distinct.push(c);
+      });
+
+      // Fill up with defaults if too short
+      DEFAULT_HISTORY.forEach(d => {
+        if (distinct.length < MAX_HISTORY && !distinct.includes(d)) {
+          distinct.push(d);
+        }
+      });
+
+      return distinct.slice(0, MAX_HISTORY);
+    }
+
+    colorHistory = sanitizeHistory(colorHistory);
+
+    // On page load/refresh: Always stay on the latest color from the history (index 0, newest)
+    if (colorHistory && colorHistory.length > 0) {
+      const latestFromHistory = tryParseColor(colorHistory[0]);
+      if (latestFromHistory) {
+        currentHex = latestFromHistory.toUpperCase();
+      }
+    }
+
+    // Add distinct finalized color to history:
+    // - If the color is ALREADY in history, keep it at its existing position and simply select it.
+    // - Only if it's a completely NEW color does it get added at the front (index 0).
+    function addToHistory(hex) {
+      const parsed = tryParseColor(hex);
+      if (!parsed) return;
+      const norm = parsed.toUpperCase();
+
+      const existingIndex = colorHistory.findIndex(c => c.toUpperCase() === norm);
+      if (existingIndex !== -1) {
+        // Color is ALREADY in history: keep its exact position, do NOT move it to the front
+        renderHistory();
+        return;
+      }
+
+      // Completely NEW color: prepend to front (index 0) and cap at MAX_HISTORY
+      colorHistory = [norm, ...colorHistory].slice(0, MAX_HISTORY);
+
+      try {
+        localStorage.setItem('typolor_palette_history', JSON.stringify(colorHistory));
+      } catch (e) { }
+
+      renderHistory();
+    }
+
+    function renderHistory() {
+      if (!historyEllipsesTrack) return;
+      historyEllipsesTrack.innerHTML = '';
+
+      colorHistory.forEach((hex) => {
+        const ellipse = document.createElement('button');
+        ellipse.type = 'button';
+        const isActive = (hex.toUpperCase() === currentHex.toUpperCase());
+        let isLightShade = false;
+        try {
+          if (window.TypolorEngine && TypolorEngine.chroma) {
+            isLightShade = TypolorEngine.chroma(hex).luminance() > 0.45;
+          }
+        } catch (e) { }
+        ellipse.className = 'history-color-ellipse' + (isActive ? ' is-active' : '') + (isLightShade ? ' is-light-shade' : '');
+        ellipse.style.backgroundColor = hex;
+        ellipse.setAttribute('data-hex', hex);
+        
+        let colorName = '';
+        try {
+          if (window.TypolorEngine && TypolorEngine.namer) {
+            colorName = TypolorEngine.namer(hex);
+          }
+        } catch (e) { }
+
+        const titleText = colorName ? `${hex.toUpperCase()} • ${colorName}` : hex.toUpperCase();
+        ellipse.title = `${titleText} (Click to apply)`;
+        ellipse.setAttribute('aria-label', `Color ${titleText}`);
+
+        ellipse.addEventListener('click', (e) => {
+          e.stopPropagation();
+          setColor(hex, true);
+          showToast(`Switched to ${hex.toUpperCase()}`);
+        });
+
+        historyEllipsesTrack.appendChild(ellipse);
+      });
+    }
+
+    // Live update without writing history (for smooth 60fps dragging or live typing):
+    function setLiveColor(newColor, updateInputText = true) {
+      const parsed = tryParseColor(newColor);
+      if (!parsed) return;
+      currentHex = parsed;
+      nativePicker.value = currentHex;
+      if (updateInputText && document.activeElement !== universalColorInput) {
+        universalColorInput.value = formatColorString(currentHex, selectedColorFormat);
+      }
+      render(false);
+      if (typeof syncTactilePickerValues === 'function') {
+        syncTactilePickerValues(false);
+      }
+    }
+
+    // Committed color change (Shuffle, clicking history, picking preset, or finishing drag):
+    function setColor(newColor, updateInputText = true) {
+      const parsed = tryParseColor(newColor);
+      if (!parsed) return;
+      currentHex = parsed;
+      nativePicker.value = currentHex;
+      if (updateInputText && document.activeElement !== universalColorInput) {
+        universalColorInput.value = formatColorString(currentHex, selectedColorFormat);
+      }
+      addToHistory(currentHex);
+      render();
+      if (typeof syncTactilePickerValues === 'function') {
+        syncTactilePickerValues(true);
+      }
+    }
+
+    function shuffleColor() {
+      const available = CURATED_SEEDS.filter(c => c.toUpperCase() !== currentHex.toUpperCase());
+      const randomColor = available[Math.floor(Math.random() * available.length)] || TypolorEngine.chroma.random().hex();
+      setColor(randomColor, true);
+      showToast(`Shuffled: ${currentPalette.name} (${currentHex})`);
+    }
+
+    function render(updateInput = true) {
+      try {
+        currentPalette = TypolorEngine.generate(currentHex, {
+          mode: currentMode,
+          lockShade: currentLockShade
+        });
+      } catch (e) {
+        console.error(e);
+        return;
+      }
+
+      paletteNameDisplay.textContent = currentPalette.name;
+      skeletonNameDisplay.textContent = currentPalette.closestColorFamily;
+
+      // Update Hero Liquid Orb background
+      heroLiquidOrb.style.backgroundColor = currentHex;
+
+      // Update dynamic accent color variable
+      document.documentElement.style.setProperty('--primary-accent', currentHex);
+
+      // Update Color History Active Indicator
+      renderHistory();
+
+      if (updateInput && document.activeElement !== universalColorInput) {
+        universalColorInput.value = formatColorString(currentHex, selectedColorFormat);
+      }
+
+      // Render 11 Contained Swatches (Color box on top, external info box underneath)
+      swatchGrid.innerHTML = '';
+
+      currentPalette.shades.forEach((shade) => {
+        const cWhite = TypolorEngine.chroma.contrast(shade.hexcode, '#ffffff');
+        const cBlack = TypolorEngine.chroma.contrast(shade.hexcode, '#000000');
+        const preferWhite = cWhite >= cBlack;
+        const bestContrast = (preferWhite ? cWhite : cBlack).toFixed(1);
+        const wcagGrade = bestContrast >= 7 ? 'AAA' : bestContrast >= 4.5 ? 'AA' : bestContrast >= 3 ? 'AA+' : 'Fail';
+        const isLocked = shade.isLocked || (currentMode === 'original' && shade.hexcode.toUpperCase() === currentHex.toUpperCase()) || (currentMode === 'lockInputColor' && shade.number === currentLockShade);
+
+        // Column containing Color Box (top) and Info Box (bottom, outside color)
+        const col = document.createElement('div');
+        col.className = 'swatch-column ' + (preferWhite ? 'is-dark-shade' : 'is-light-shade') + (isLocked ? ' is-active-locked' : '');
+        col.setAttribute('data-shade', shade.number);
+        col.setAttribute('data-hex', shade.hexcode);
+
+        col.innerHTML = `
+          <!-- 1. Pure Color Box (Top) -->
+          <div class="swatch-color-box" style="background-color: ${shade.hexcode};" title="Click to copy ${shade.hexcode.toUpperCase()}">
+            <div class="swatch-color-header">
+              <span class="swatch-shade-number">${shade.number}</span>
+              <button class="swatch-subtle-lock-btn ${isLocked ? 'is-locked' : ''}" 
+                      data-shade="${shade.number}" 
+                      title="${isLocked ? 'Locked shade ' + shade.number + ' (click to unlock)' : 'Lock color to shade ' + shade.number}"
+                      aria-label="Lock color to shade ${shade.number}">
+                ${PHOSPHOR_ICONS.lock}
+              </button>
+            </div>
+
+            <!-- Instant Feedback Copied Badge -->
+            <div class="swatch-copied-overlay">
+              ${PHOSPHOR_ICONS.check}
+              <span>COPIED!</span>
+            </div>
+          </div>
+
+          <!-- 2. External Info Box (Outside and below the color box) -->
+          <div class="swatch-info-card" title="Click to copy ${shade.hexcode.toUpperCase()}">
+            <div class="swatch-hex-line">
+              <span class="swatch-hex-val">${shade.hexcode.toUpperCase()}</span>
+              <span class="swatch-copy-icon" title="Copy ${shade.hexcode.toUpperCase()}">${PHOSPHOR_ICONS.copy}</span>
+            </div>
+            <div class="swatch-contrast-line ${bestContrast >= 4.5 ? 'is-pass' : ''}">
+              <span class="wcag-pip"></span>
+              <span>${bestContrast}:1 ${wcagGrade}</span>
+            </div>
+          </div>
+        `;
+
+        // Handle copying hex code
+        const doCopyHex = () => {
+          navigator.clipboard.writeText(shade.hexcode.toUpperCase());
+          const overlay = col.querySelector('.swatch-copied-overlay');
+          if (overlay) {
+            overlay.classList.add('show');
+            setTimeout(() => overlay.classList.remove('show'), 750);
+          }
+          showToast(`Copied ${shade.hexcode.toUpperCase()} to clipboard!`);
+        };
+
+        // Subtle Lock Button handler
+        const lockBtn = col.querySelector('.swatch-subtle-lock-btn');
+        if (lockBtn) {
+          lockBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const targetShade = parseInt(lockBtn.getAttribute('data-shade'), 10);
+            if (currentMode === 'lockInputColor' && currentLockShade === targetShade) {
+              currentMode = 'original';
+              document.querySelectorAll('.mode-pill-btn').forEach(b => {
+                b.classList.toggle('active', b.getAttribute('data-mode') === 'original');
+              });
+              render();
+              showToast(`Unlocked shade ${targetShade}`);
+            } else {
+              currentLockShade = targetShade;
+              lockShadeSelect.value = targetShade;
+              currentMode = 'lockInputColor';
+              document.querySelectorAll('.mode-pill-btn').forEach(b => {
+                b.classList.toggle('active', b.getAttribute('data-mode') === 'lockInputColor');
+              });
+              render();
+              showToast(`Locked exact color to shade ${targetShade}!`);
+            }
+          });
+        }
+
+        // Click Color Box to copy
+        const colorBox = col.querySelector('.swatch-color-box');
+        if (colorBox) {
+          colorBox.addEventListener('click', (e) => {
+            if (e.target.closest('.swatch-subtle-lock-btn')) return;
+            doCopyHex();
+          });
+        }
+
+        // Click Info Card to copy
+        const infoCard = col.querySelector('.swatch-info-card');
+        if (infoCard) {
+          infoCard.addEventListener('click', () => {
+            doCopyHex();
+          });
+        }
+
+        swatchGrid.appendChild(col);
+      });
+
+      renderTypeScale();
+      updateExportCode();
+    }
+
+    function getShadeHex(num) {
+      const s = currentPalette.shades.find(x => x.number == num);
+      return s ? s.hexcode : currentHex;
+    }
+
+    // ==========================================================================
+    // TYPE SCALE STUDIO ENGINE & CONTROLLER (typescale.com inspiration)
+    // ==========================================================================
+    const tsFontFamilySelect = document.getElementById('tsFontFamilySelect');
+    const tsCustomFontInput = document.getElementById('tsCustomFontInput');
+    const tsScaleRatioSelect = document.getElementById('tsScaleRatioSelect');
+    const tsCustomRatioContainer = document.getElementById('tsCustomRatioContainer');
+    const tsCustomRatioInput = document.getElementById('tsCustomRatioInput');
+    const tsBaseSizeInput = document.getElementById('tsBaseSizeInput');
+    const tsFontWeightSelect = document.getElementById('tsFontWeightSelect');
+    const tsSampleTextInput = document.getElementById('tsSampleTextInput');
+    const typescalePreviewStack = document.getElementById('typescalePreviewStack');
+    const activeFontBadge = document.getElementById('activeFontBadge');
+    const activeRatioVal = document.getElementById('activeRatioVal');
+    const activeBaseDisplay = document.getElementById('activeBaseDisplay');
+    const typescaleExportDrawer = document.getElementById('typescaleExportDrawer');
+    const btnToggleTypeScaleExport = document.getElementById('btnToggleTypeScaleExport');
+    const btnResetTypeScale = document.getElementById('btnResetTypeScale');
+    const tsExportCodeBlock = document.getElementById('tsExportCodeBlock');
+    const btnCopyTypeScaleCode = document.getElementById('btnCopyTypeScaleCode');
+
+    let tsCurrentFont = 'Inter';
+    let tsCurrentRatio = 1.250;
+    let tsCurrentBase = 16;
+    let tsCurrentWeight = 600;
+    let tsCurrentText = 'A visual type scale';
+    let tsActiveTab = 'tailwindV4';
+
+    const TYPE_SCALE_STEPS = [
+      { category: 'heading', tag: 'Display', label: 'Display Heading', power: 7, lh: 1.15 },
+      { category: 'heading', tag: 'H1', label: 'Heading 1', power: 6, lh: 1.18 },
+      { category: 'heading', tag: 'H2', label: 'Heading 2', power: 5, lh: 1.22 },
+      { category: 'heading', tag: 'H3', label: 'Heading 3', power: 4, lh: 1.25 },
+      { category: 'heading', tag: 'H4', label: 'Heading 4', power: 3, lh: 1.30 },
+      { category: 'heading', tag: 'H5', label: 'Heading 5', power: 2, lh: 1.35 },
+      { category: 'heading', tag: 'H6', label: 'Heading 6', power: 1, lh: 1.40 },
+      { category: 'paragraph', tag: 'Large', label: 'Paragraph Large', power: 1, lh: 1.50 },
+      { category: 'paragraph', tag: 'Regular', label: 'Paragraph Regular', power: 0, lh: 1.55, isBase: true },
+      { category: 'paragraph', tag: 'Small', label: 'Paragraph Small', power: -1, lh: 1.50 },
+      { category: 'paragraph', tag: 'Extra Small', label: 'Paragraph Extra Small', power: -2, lh: 1.45 }
+    ];
+
+    // Dynamically load any Google font
+    function loadGoogleFont(fontName) {
+      if (!fontName) return;
+      const cleanName = fontName.trim();
+      const id = 'gfont-' + cleanName.toLowerCase().replace(/[^a-z0-9]/g, '-');
+      if (document.getElementById(id)) return;
+      
+      const link = document.createElement('link');
+      link.id = id;
+      link.rel = 'stylesheet';
+      const formattedName = cleanName.replace(/\s+/g, '+');
+      link.href = `https://fonts.googleapis.com/css2?family=${formattedName}:wght@300;400;500;600;700;800;900&display=swap`;
+      link.onerror = () => {
+        link.href = `https://fonts.googleapis.com/css2?family=${formattedName}&display=swap`;
+      };
+      document.head.appendChild(link);
+    }
+
+    // Render Type Scale Preview Rows
+    function renderTypeScale() {
+      if (!typescalePreviewStack) return;
+
+      activeFontBadge.textContent = tsCurrentFont;
+      activeRatioVal.textContent = Number(tsCurrentRatio).toFixed(3);
+      activeBaseDisplay.textContent = `${tsCurrentBase}px`;
+
+      typescalePreviewStack.innerHTML = '';
+
+      let lastCategory = null;
+
+      TYPE_SCALE_STEPS.forEach(step => {
+        // Insert category separator headers
+        if (step.category !== lastCategory) {
+          const banner = document.createElement('div');
+          banner.className = 'ts-category-banner' + (lastCategory ? ' is-second' : '');
+          if (step.category === 'heading') {
+            banner.innerHTML = `
+              <div class="ts-category-title-wrap">
+                <span class="ts-category-pill">Headings</span>
+                <span class="ts-category-hint">Display, H1 &ndash; H6 (H6 starts at Large paragraph size)</span>
+              </div>
+            `;
+          } else {
+            banner.innerHTML = `
+              <div class="ts-category-title-wrap">
+                <span class="ts-category-pill">Paragraphs</span>
+                <span class="ts-category-hint">Large (shares H6 size), Regular (Base 1rem / 16px), Small, Extra Small</span>
+              </div>
+            `;
+          }
+          typescalePreviewStack.appendChild(banner);
+          lastCategory = step.category;
+        }
+
+        const factor = Math.pow(tsCurrentRatio, step.power);
+        const px = (tsCurrentBase * factor).toFixed(2);
+        const rem = (factor * (tsCurrentBase / 16)).toFixed(3);
+
+        const card = document.createElement('div');
+        card.className = 'ts-step-card' + (step.isBase ? ' is-base-card' : '');
+
+        card.innerHTML = `
+          <div class="ts-step-meta">
+            <span class="ts-tag-pill ${step.category === 'heading' ? 'is-heading' : 'is-paragraph'} ${step.isBase ? 'is-base' : ''}">
+              ${step.tag}${step.isBase ? ' <span class="ts-base-badge">BASE</span>' : ''}
+            </span>
+            <div class="ts-dimension-text">
+              <div>${rem}rem</div>
+              <div style="opacity:0.75; font-size:0.68rem;">${px}px</div>
+            </div>
+            <button class="ts-step-copy-btn" data-rem="${rem}" data-px="${px}" data-lh="${step.lh}" title="Copy CSS for ${step.tag}">
+              ${PHOSPHOR_ICONS.copy}
+            </button>
+          </div>
+          <div class="ts-step-rendered-text"
+               contenteditable="true"
+               spellcheck="false"
+               style="font-family: '${tsCurrentFont}', sans-serif; font-size: ${rem}rem; line-height: ${step.lh}; font-weight: ${tsCurrentWeight};"
+               title="Click to edit sample text directly">${tsCurrentText}</div>
+        `;
+
+        // Copy step CSS rule on button click
+        const copyBtn = card.querySelector('.ts-step-copy-btn');
+        if (copyBtn) {
+          copyBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const cssSnippet = `font-size: ${rem}rem; /* ${px}px */\nline-height: ${step.lh};\nfont-weight: ${tsCurrentWeight};\nfont-family: '${tsCurrentFont}', sans-serif;`;
+            navigator.clipboard.writeText(cssSnippet);
+            showToast(`Copied ${step.tag} CSS (${rem}rem) to clipboard!`);
+          });
+        }
+
+        // Live edit propagation
+        const editable = card.querySelector('.ts-step-rendered-text');
+        if (editable) {
+          editable.addEventListener('input', () => {
+            tsCurrentText = editable.textContent;
+            tsSampleTextInput.value = tsCurrentText;
+          });
+        }
+
+        typescalePreviewStack.appendChild(card);
+      });
+
+      renderTypeScaleExportCode();
+    }
+
+    // Render Type Scale Export Code
+    function renderTypeScaleExportCode() {
+      if (!tsExportCodeBlock) return;
+
+      const steps = TYPE_SCALE_STEPS.map(s => {
+        const factor = Math.pow(tsCurrentRatio, s.power);
+        const rem = (factor * (tsCurrentBase / 16)).toFixed(3);
+        const px = (tsCurrentBase * factor).toFixed(1);
+        const slug = s.tag.toLowerCase().replace(/\s+/g, '-');
+        return { tag: s.tag, slug, rem, px, lh: s.lh, category: s.category, isBase: s.isBase };
+      });
+
+      const headingSteps = steps.filter(s => s.category === 'heading');
+      const paragraphSteps = steps.filter(s => s.category === 'paragraph');
+
+      let code = '';
+      if (tsActiveTab === 'tailwindV4') {
+        code = `/* Tailwind CSS v4 @theme Type Scale */
+@theme {
+  --font-heading: '${tsCurrentFont}', sans-serif;
+  --font-body: '${tsCurrentFont}', sans-serif;
+
+  /* Headings */
+${headingSteps.map(s => `  --text-${s.slug}: ${s.rem}rem; /* ${s.px}px, line-height: ${s.lh} */`).join('\n')}
+
+  /* Paragraphs (Regular is Base) */
+${paragraphSteps.map(s => `  --text-${s.slug}: ${s.rem}rem; /* ${s.px}px${s.isBase ? ' (Base)' : ''}, line-height: ${s.lh} */`).join('\n')}
+}`;
+      } else if (tsActiveTab === 'tailwindV3') {
+        code = `// Tailwind CSS v3 tailwind.config.js
+module.exports = {
+  theme: {
+    extend: {
+      fontFamily: {
+        heading: ['${tsCurrentFont}', 'sans-serif'],
+        body: ['${tsCurrentFont}', 'sans-serif'],
+      },
+      fontSize: {
+        // Headings: Display, H1 to H6
+${headingSteps.map(s => `        '${s.slug}': ['${s.rem}rem', { lineHeight: '${s.lh}' }], /* ${s.px}px */`).join('\n')}
+        // Paragraphs: Large, Regular (Base), Small, Extra Small
+${paragraphSteps.map(s => `        '${s.slug}': ['${s.rem}rem', { lineHeight: '${s.lh}' }], /* ${s.px}px${s.isBase ? ' (Base)' : ''} */`).join('\n')}
+      }
+    }
+  }
+};`;
+      } else if (tsActiveTab === 'cssVars') {
+        code = `/* CSS Custom Properties Type Scale */
+:root {
+  --font-family-base: '${tsCurrentFont}', sans-serif;
+  --type-scale-ratio: ${tsCurrentRatio};
+  --type-scale-base: ${tsCurrentBase}px;
+
+  /* Headings */
+${headingSteps.map(s => `  --font-size-${s.slug}: ${s.rem}rem; /* ${s.px}px */\n  --line-height-${s.slug}: ${s.lh};`).join('\n')}
+
+  /* Paragraphs */
+${paragraphSteps.map(s => `  --font-size-${s.slug}: ${s.rem}rem; /* ${s.px}px${s.isBase ? ' (Base)' : ''} */\n  --line-height-${s.slug}: ${s.lh};`).join('\n')}
+}`;
+      } else if (tsActiveTab === 'json') {
+        const headings = {};
+        const paragraphs = {};
+        const tokens = {};
+
+        steps.forEach(s => {
+          const item = {
+            name: s.tag,
+            rem: `${s.rem}rem`,
+            px: `${s.px}px`,
+            lineHeight: s.lh,
+            ...(s.isBase ? { isBase: true } : {})
+          };
+          tokens[s.slug] = item;
+          if (s.category === 'heading') {
+            headings[s.slug] = item;
+          } else {
+            paragraphs[s.slug] = item;
+          }
+        });
+
+        code = JSON.stringify({
+          fontFamily: tsCurrentFont,
+          ratio: tsCurrentRatio,
+          baseSize: `${tsCurrentBase}px`,
+          weight: tsCurrentWeight,
+          hierarchy: {
+            headings,
+            paragraphs
+          },
+          tokens
+        }, null, 2);
+      }
+
+      tsExportCodeBlock.textContent = code;
+    }
+
+    // Initialize Type Scale Studio Listeners
+    function setupTypeScaleStudio() {
+      // Load initial font
+      loadGoogleFont(tsCurrentFont);
+
+      // Font Select Dropdown
+      tsFontFamilySelect.addEventListener('change', (e) => {
+        tsCurrentFont = e.target.value;
+        tsCustomFontInput.value = '';
+        loadGoogleFont(tsCurrentFont);
+        renderTypeScale();
+      });
+
+      // Custom Font Input (typing any Google font)
+      let fontDebounce = null;
+      const applyFont = (val) => {
+        if (val) {
+          tsCurrentFont = val;
+          loadGoogleFont(tsCurrentFont);
+          renderTypeScale();
+        }
+      };
+
+      tsCustomFontInput.addEventListener('input', (e) => {
+        clearTimeout(fontDebounce);
+        fontDebounce = setTimeout(() => {
+          applyFont(e.target.value.trim());
+        }, 350);
+      });
+
+      tsCustomFontInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          clearTimeout(fontDebounce);
+          applyFont(e.target.value.trim());
+        }
+      });
+
+      // Ratio Select Dropdown
+      tsScaleRatioSelect.addEventListener('change', (e) => {
+        if (e.target.value === 'custom') {
+          tsCustomRatioContainer.style.display = 'block';
+          tsCurrentRatio = parseFloat(tsCustomRatioInput.value) || 1.250;
+        } else {
+          tsCustomRatioContainer.style.display = 'none';
+          tsCurrentRatio = parseFloat(e.target.value);
+        }
+        renderTypeScale();
+      });
+
+      // Custom Ratio Input
+      tsCustomRatioInput.addEventListener('input', (e) => {
+        const val = parseFloat(e.target.value);
+        if (val && val >= 1.01 && val <= 3.0) {
+          tsCurrentRatio = val;
+          renderTypeScale();
+        }
+      });
+
+      // Base Size Steppers
+      document.getElementById('btnBaseMinus').addEventListener('click', () => {
+        if (tsCurrentBase > 10) {
+          tsCurrentBase--;
+          tsBaseSizeInput.value = tsCurrentBase;
+          renderTypeScale();
+        }
+      });
+
+      document.getElementById('btnBasePlus').addEventListener('click', () => {
+        if (tsCurrentBase < 36) {
+          tsCurrentBase++;
+          tsBaseSizeInput.value = tsCurrentBase;
+          renderTypeScale();
+        }
+      });
+
+      tsBaseSizeInput.addEventListener('input', (e) => {
+        const val = parseInt(e.target.value, 10);
+        if (val >= 10 && val <= 36) {
+          tsCurrentBase = val;
+          renderTypeScale();
+        }
+      });
+
+      tsBaseSizeInput.addEventListener('change', (e) => {
+        const val = parseInt(e.target.value, 10);
+        if (val >= 10 && val <= 36) {
+          tsCurrentBase = val;
+          renderTypeScale();
+        }
+      });
+
+      // Font Weight
+      tsFontWeightSelect.addEventListener('change', (e) => {
+        tsCurrentWeight = parseInt(e.target.value, 10);
+        renderTypeScale();
+      });
+
+      // Sample Text Input
+      tsSampleTextInput.addEventListener('input', (e) => {
+        tsCurrentText = e.target.value || 'A visual type scale';
+        renderTypeScale();
+      });
+
+      // Phrase presets
+      document.querySelectorAll('.ts-preset-pill').forEach(btn => {
+        btn.addEventListener('click', () => {
+          tsCurrentText = btn.getAttribute('data-phrase');
+          tsSampleTextInput.value = tsCurrentText;
+          renderTypeScale();
+        });
+      });
+
+      // Toggle Export Drawer
+      btnToggleTypeScaleExport.addEventListener('click', () => {
+        const isHidden = typescaleExportDrawer.style.display === 'none';
+        typescaleExportDrawer.style.display = isHidden ? 'block' : 'none';
+        if (isHidden) {
+          typescaleExportDrawer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      });
+
+      // Reset Defaults
+      btnResetTypeScale.addEventListener('click', () => {
+        tsCurrentFont = 'Inter';
+        tsCurrentRatio = 1.250;
+        tsCurrentBase = 16;
+        tsCurrentWeight = 600;
+        tsCurrentText = 'A visual type scale';
+        tsFontFamilySelect.value = 'Inter';
+        tsCustomFontInput.value = '';
+        tsScaleRatioSelect.value = '1.250';
+        tsCustomRatioContainer.style.display = 'none';
+        tsBaseSizeInput.value = 16;
+        tsFontWeightSelect.value = '600';
+        tsSampleTextInput.value = 'A visual type scale';
+        
+        // Synchronize custom dropdowns
+        tsFontFamilySelect.dispatchEvent(new Event('change', { bubbles: true }));
+        tsScaleRatioSelect.dispatchEvent(new Event('change', { bubbles: true }));
+        tsFontWeightSelect.dispatchEvent(new Event('change', { bubbles: true }));
+
+        renderTypeScale();
+        showToast('Reset type scale to standard Major Third (1.250)!');
+      });
+
+      // Export Tabs
+      document.querySelectorAll('[data-tstab]').forEach(tab => {
+        tab.addEventListener('click', () => {
+          document.querySelectorAll('[data-tstab]').forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          tsActiveTab = tab.getAttribute('data-tstab');
+          renderTypeScaleExportCode();
+        });
+      });
+
+      // Copy Type Scale Code
+      btnCopyTypeScaleCode.addEventListener('click', () => {
+        if (!tsExportCodeBlock) return;
+        navigator.clipboard.writeText(tsExportCodeBlock.textContent);
+        showToast('Copied type scale tokens to clipboard!');
+      });
+
+      renderTypeScale();
+    }
+
+    function updateExportCode() {
+      if (!currentPalette) return;
+      if (activeTab === 'tailwindV4') {
+        exportCodeOutput.textContent = TypolorEngine.exporters.tailwindV4(currentPalette);
+      } else if (activeTab === 'tailwindV3') {
+        exportCodeOutput.textContent = TypolorEngine.exporters.tailwindV3(currentPalette);
+      } else if (activeTab === 'cssVariables') {
+        exportCodeOutput.textContent = TypolorEngine.exporters.cssVariables(currentPalette);
+      } else if (activeTab === 'json') {
+        exportCodeOutput.textContent = TypolorEngine.exporters.json(currentPalette);
+      }
+    }
+
+    // Global Page Theme Switcher Listener
+    globalThemeBtn.addEventListener('click', () => {
+      const nextTheme = pageTheme === 'light' ? 'dark' : 'light';
+      applyPageTheme(nextTheme);
+      
+    });
+
+    // Native Picker: Live preview on input, commit to history only on change
+    nativePicker.addEventListener('input', e => {
+      setLiveColor(e.target.value, true);
+    });
+
+    nativePicker.addEventListener('change', e => {
+      setColor(e.target.value, true);
+    });
+
+    // Universal Color Input Typing Listener
+    universalColorInput.addEventListener('input', e => {
+      const parsed = tryParseColor(e.target.value);
+      if (parsed) {
+        currentHex = parsed;
+        nativePicker.value = currentHex;
+        render(false);
+      }
+    });
+
+    universalColorInput.addEventListener('change', () => {
+      if (currentHex) {
+        universalColorInput.value = formatColorString(currentHex, selectedColorFormat);
+        addToHistory(currentHex);
+      }
+    });
+
+    universalColorInput.addEventListener('blur', () => {
+      universalColorInput.value = formatColorString(currentHex, selectedColorFormat);
+      if (currentHex) addToHistory(currentHex);
+    });
+
+    universalColorInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        universalColorInput.blur();
+      } else if (e.key === 'Escape') {
+        universalColorInput.value = formatColorString(currentHex, selectedColorFormat);
+        universalColorInput.blur();
+      }
+    });
+
+    btnClearInput.addEventListener('click', () => {
+      universalColorInput.value = '';
+      universalColorInput.focus();
+    });
+
+    // Eyedropper API
+    if (window.EyeDropper) {
+      btnEyeDropper.addEventListener('click', async () => {
+        try {
+          const eyeDropper = new EyeDropper();
+          const result = await eyeDropper.open();
+          if (result && result.sRGBHex) {
+            setColor(result.sRGBHex);
+            showToast(`Sampled ${result.sRGBHex.toUpperCase()}`);
+          }
+        } catch (e) { }
+      });
+    } else {
+      btnEyeDropper.style.display = 'none';
+    }
+
+    // Shuffle Button & Spacebar Shortcut
+    btnShuffle.addEventListener('click', () => {
+      shuffleColor();
+    });
+
+    window.addEventListener('keydown', e => {
+      if (e.code === 'Space' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+        e.preventDefault();
+        shuffleColor();
+      }
+    });
+
+    // Clear History Button
+    if (btnClearHistory) {
+      btnClearHistory.addEventListener('click', (e) => {
+        e.stopPropagation();
+        colorHistory = [currentHex];
+        try {
+          localStorage.setItem('typolor_palette_history', JSON.stringify(colorHistory));
+        } catch (e) { }
+        renderHistory();
+        showToast('Color history cleared');
+      });
+    }
+
+    // Mode Pill Buttons
+    document.querySelectorAll('.mode-pill-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.mode-pill-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentMode = btn.getAttribute('data-mode');
+        render();
+      });
+    });
+
+    // Shade Lock Select
+    lockShadeSelect.addEventListener('change', e => {
+      currentLockShade = parseInt(e.target.value, 10);
+      currentMode = 'lockInputColor';
+      document.querySelectorAll('.mode-pill-btn').forEach(b => {
+        b.classList.toggle('active', b.getAttribute('data-mode') === 'lockInputColor');
+      });
+      render();
+      showToast(`Locked exact color to shade ${currentLockShade}!`);
+    });
+
+    // Copy All Shades Button
+    btnCopyAllShades.addEventListener('click', () => {
+      if (!currentPalette) return;
+      const hexList = currentPalette.shades.map(s => `${s.number}: ${s.hexcode}`).join('\n');
+      navigator.clipboard.writeText(hexList);
+      showToast(`Copied all 11 shades to clipboard!`);
+    });
+
+    // Export Modal Listeners
+    document.getElementById('btnOpenExport').addEventListener('click', () => {
+      exportModal.classList.add('open');
+    });
+    document.getElementById('btnCloseExport').addEventListener('click', () => {
+      exportModal.classList.remove('open');
+    });
+    exportModal.addEventListener('click', e => {
+      if (e.target === exportModal) exportModal.classList.remove('open');
+    });
+
+    document.querySelectorAll('.tab-pill-btn').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.tab-pill-btn').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        activeTab = tab.getAttribute('data-tab');
+        updateExportCode();
+      });
+    });
+
+    document.getElementById('btnCopyExport').addEventListener('click', () => {
+      navigator.clipboard.writeText(exportCodeOutput.textContent);
+      showToast('Export code copied to clipboard!');
+    });
+
+    function showToast(msg) {
+      const toast = document.getElementById('toastBox');
+      document.getElementById('toastMsg').textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2500);
+    }
+
+
+    // ==========================================================================
+    // TACTILE CUSTOM DROPDOWNS ENGINE
+    // Transforms native browser selects into tactile hardware popover components
+    // ==========================================================================
+    // COLOR FORMAT SWITCHER CONTROLLER (HEX, RGB, HSB, HSL, OKLCH)
+    // ==========================================================================
+    function initFormatSwitcher() {
+      const switcherWrap = document.getElementById('formatSwitcherWrap');
+      const switcherBtn = document.getElementById('btnFormatSwitcher');
+      const formatLabel = document.getElementById('formatCurrentLabel');
+      const dropdownMenu = document.getElementById('formatDropdownMenu');
+
+      if (!switcherWrap || !switcherBtn || !dropdownMenu) return;
+
+      // Sync initial active state to selectedColorFormat
+      if (formatLabel) formatLabel.textContent = selectedColorFormat;
+      dropdownMenu.querySelectorAll('.format-dropdown-item').forEach(opt => {
+        const isMatch = opt.getAttribute('data-format') === selectedColorFormat;
+        opt.classList.toggle('is-selected', isMatch);
+        opt.setAttribute('aria-selected', isMatch ? 'true' : 'false');
+      });
+
+      function openFormatMenu() {
+        switcherWrap.classList.add('is-open');
+        switcherBtn.setAttribute('aria-expanded', 'true');
+      }
+
+      function closeFormatMenu() {
+        switcherWrap.classList.remove('is-open');
+        switcherBtn.setAttribute('aria-expanded', 'false');
+      }
+
+      switcherBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (switcherWrap.classList.contains('is-open')) {
+          closeFormatMenu();
+        } else {
+          openFormatMenu();
+        }
+      });
+
+      dropdownMenu.querySelectorAll('.format-dropdown-item').forEach(item => {
+        item.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const fmt = item.getAttribute('data-format');
+          if (!fmt) return;
+
+          selectedColorFormat = fmt;
+          try {
+            localStorage.setItem('typolor_color_format', fmt);
+          } catch (e) { }
+          if (formatLabel) formatLabel.textContent = fmt;
+
+          // Update active option styling
+          dropdownMenu.querySelectorAll('.format-dropdown-item').forEach(opt => {
+            const isMatch = opt.getAttribute('data-format') === fmt;
+            opt.classList.toggle('is-selected', isMatch);
+            opt.setAttribute('aria-selected', isMatch ? 'true' : 'false');
+          });
+
+          // Update input to reflect newly selected format
+          if (universalColorInput && currentHex) {
+            universalColorInput.value = formatColorString(currentHex, selectedColorFormat);
+          }
+
+          closeFormatMenu();
+          showToast(`Format: ${fmt}`);
+        });
+      });
+
+      // Close on Outside Click
+      document.addEventListener('pointerdown', (e) => {
+        if (!switcherWrap.classList.contains('is-open')) return;
+        if (!e.target.closest('#formatSwitcherWrap')) {
+          closeFormatMenu();
+        }
+      });
+
+      // Close on Escape Key
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && switcherWrap.classList.contains('is-open')) {
+          closeFormatMenu();
+        }
+      });
+    }
+
+    function initCustomDropdowns() {
+      const selectIds = ['lockShadeSelect', 'tsFontFamilySelect', 'tsScaleRatioSelect', 'tsFontWeightSelect'];
+      
+      selectIds.forEach(id => {
+        const select = document.getElementById(id);
+        if (!select || select.dataset.customized === 'true') return;
+        select.dataset.customized = 'true';
+
+        // Visually hide native select but retain full DOM & event capabilities
+        select.style.position = 'absolute';
+        select.style.opacity = '0';
+        select.style.pointerEvents = 'none';
+        select.style.width = '1px';
+        select.style.height = '1px';
+        select.style.overflow = 'hidden';
+        select.tabIndex = -1;
+
+        const isShadeLock = (id === 'lockShadeSelect');
+        const wrapper = document.createElement('div');
+        wrapper.className = 'tactile-select-wrapper' + (isShadeLock ? ' is-shade-lock' : '');
+
+        // Trigger Button
+        const trigger = document.createElement('button');
+        trigger.type = 'button';
+        trigger.className = 'tactile-select-trigger';
+        trigger.setAttribute('aria-haspopup', 'listbox');
+        trigger.setAttribute('aria-expanded', 'false');
+
+        const labelSpan = document.createElement('span');
+        labelSpan.className = 'tactile-select-label';
+
+        const arrowSpan = document.createElement('span');
+        arrowSpan.className = 'tactile-select-arrow';
+        arrowSpan.innerHTML = PHOSPHOR_ICONS.caretDown;
+
+        trigger.appendChild(labelSpan);
+        trigger.appendChild(arrowSpan);
+
+        // Popover Menu
+        const menu = document.createElement('div');
+        menu.className = 'tactile-select-menu';
+        menu.setAttribute('role', 'listbox');
+
+        function appendOption(opt) {
+          const item = document.createElement('div');
+          const isSelected = (opt.value === select.value);
+          item.className = 'tactile-select-option' + (isSelected ? ' is-selected' : '');
+          item.setAttribute('role', 'option');
+          item.setAttribute('data-value', opt.value);
+          item.setAttribute('aria-selected', isSelected ? 'true' : 'false');
+
+          const textSpan = document.createElement('span');
+          textSpan.textContent = opt.textContent;
+          item.appendChild(textSpan);
+
+          if (!isShadeLock) {
+            const checkSpan = document.createElement('span');
+            checkSpan.className = 'tactile-select-check';
+            checkSpan.innerHTML = PHOSPHOR_ICONS.check;
+            item.appendChild(checkSpan);
+          }
+
+          item.addEventListener('click', (e) => {
+            e.stopPropagation();
+            select.value = opt.value;
+            syncLabel();
+            closeMenu();
+            select.dispatchEvent(new Event('change', { bubbles: true }));
+            select.dispatchEvent(new Event('input', { bubbles: true }));
+          });
+
+          menu.appendChild(item);
+        }
+
+        function populateMenu() {
+          menu.innerHTML = '';
+          const children = Array.from(select.children);
+
+          children.forEach(child => {
+            if (child.tagName === 'OPTGROUP') {
+              const groupHeader = document.createElement('div');
+              groupHeader.className = 'tactile-select-group-header';
+              groupHeader.textContent = child.label;
+              menu.appendChild(groupHeader);
+
+              Array.from(child.children).forEach(opt => {
+                appendOption(opt);
+              });
+            } else if (child.tagName === 'OPTION') {
+              appendOption(child);
+            }
+          });
+          syncLabel();
+        }
+
+        function syncLabel() {
+          const selectedOpt = select.options[select.selectedIndex];
+          if (selectedOpt) {
+            labelSpan.textContent = selectedOpt.textContent;
+          }
+          menu.querySelectorAll('.tactile-select-option').forEach(el => {
+            const isSel = (el.getAttribute('data-value') === select.value);
+            el.classList.toggle('is-selected', isSel);
+            el.setAttribute('aria-selected', isSel ? 'true' : 'false');
+          });
+        }
+
+        function openMenu() {
+          document.querySelectorAll('.tactile-select-wrapper.is-open').forEach(w => {
+            if (w !== wrapper) {
+              w.classList.remove('is-open');
+              const t = w.querySelector('.tactile-select-trigger');
+              if (t) t.setAttribute('aria-expanded', 'false');
+            }
+          });
+          wrapper.classList.add('is-open');
+          trigger.setAttribute('aria-expanded', 'true');
+
+          const selItem = menu.querySelector('.tactile-select-option.is-selected');
+          if (selItem) {
+            selItem.scrollIntoView({ block: 'nearest' });
+          }
+        }
+
+        function closeMenu() {
+          wrapper.classList.remove('is-open');
+          trigger.setAttribute('aria-expanded', 'false');
+        }
+
+        trigger.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const isOpen = wrapper.classList.contains('is-open');
+          if (isOpen) closeMenu();
+          else openMenu();
+        });
+
+        trigger.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowDown') {
+            e.preventDefault();
+            openMenu();
+          } else if (e.key === 'Escape') {
+            closeMenu();
+          }
+        });
+
+        // Intercept programmatic value changes so custom label always mirrors select.value
+        try {
+          const origDescriptor = Object.getOwnPropertyDescriptor(HTMLSelectElement.prototype, 'value');
+          Object.defineProperty(select, 'value', {
+            get() {
+              return origDescriptor.get.call(this);
+            },
+            set(val) {
+              origDescriptor.set.call(this, val);
+              syncLabel();
+            }
+          });
+        } catch (err) {}
+
+        // Insert wrapper around select
+        select.parentNode.insertBefore(wrapper, select);
+        wrapper.appendChild(select);
+        wrapper.appendChild(trigger);
+        wrapper.appendChild(menu);
+
+        populateMenu();
+        select.addEventListener('change', syncLabel);
+      });
+
+      // Global click-outside listener
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('.tactile-select-wrapper')) {
+          document.querySelectorAll('.tactile-select-wrapper.is-open').forEach(w => {
+            w.classList.remove('is-open');
+            const trig = w.querySelector('.tactile-select-trigger');
+            if (trig) trig.setAttribute('aria-expanded', 'false');
+          });
+        }
+      });
+
+      // Global Escape listener
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          document.querySelectorAll('.tactile-select-wrapper.is-open').forEach(w => {
+            w.classList.remove('is-open');
+            const trig = w.querySelector('.tactile-select-trigger');
+            if (trig) trig.setAttribute('aria-expanded', 'false');
+          });
+        }
+      });
+    }
+
+    // Initialize
+    applyPageTheme(pageTheme);
+    initCustomDropdowns();
+    setupTypeScaleStudio();
+    initTactilePicker();
+    initFormatSwitcher();
+    render();
+  </script>
+
+</body>
+
+</html>
