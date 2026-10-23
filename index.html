@@ -2722,8 +2722,7 @@
 
       /* Mobile: Copy All Shades & Type Scale Reset are compact icon-only buttons */
       .palette-header-actions #btnPaletteCopyAll,
-      .typescale-header-actions #btnResetTypeScale,
-      .meta-quick-actions #btnCopyAllShades {
+      .typescale-header-actions #btnResetTypeScale {
         flex: 0 0 44px !important;
         width: 44px !important;
         height: 44px !important;
@@ -2737,14 +2736,12 @@
       }
 
       .palette-header-actions #btnPaletteCopyAll span,
-      .typescale-header-actions #btnResetTypeScale span,
-      .meta-quick-actions #btnCopyAllShades span {
+      .typescale-header-actions #btnResetTypeScale span {
         display: none !important;
       }
 
       .palette-header-actions #btnPaletteCopyAll svg,
-      .typescale-header-actions #btnResetTypeScale svg,
-      .meta-quick-actions #btnCopyAllShades svg {
+      .typescale-header-actions #btnResetTypeScale svg {
         margin: 0 !important;
         display: block !important;
       }
@@ -3464,12 +3461,8 @@
         align-items: flex-start !important;
         gap: var(--space-1) !important;
       }
-      .meta-quick-actions {
-        width: auto !important;
-      }
       .palette-meta-bar {
         display: flex !important;
-        justify-content: space-between !important;
         align-items: center !important;
         gap: var(--space-2) !important;
       }
@@ -3947,12 +3940,6 @@
         <div class="color-title-wrap">
           <h3 class="color-name-heading" id="paletteNameDisplay">Azure Radiance</h3>
           <span class="color-skeleton-ref">Base skeleton: <strong id="skeletonNameDisplay">Blue</strong> • 11 Design System Tokens</span>
-        </div>
-        <div class="meta-quick-actions">
-          <button class="btn-crystal-clear-pill" id="btnCopyAllShades" title="Copy all 11 hex codes to clipboard">
-          <svg width="14" height="14" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><polyline points="168 168 216 168 216 40 88 40 88 88" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><rect x="40" y="88" width="128" height="128" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>
-          <span>Copy All Shades</span>
-        </button>
         </div>
       </div>
 
@@ -4709,7 +4696,6 @@
     const btnClearInput = document.getElementById('btnClearInput');
     const btnEyeDropper = document.getElementById('btnEyeDropper');
     const btnShuffle = document.getElementById('btnShuffle');
-    const btnCopyAllShades = document.getElementById('btnCopyAllShades');
 
     const historyEllipsesTrack = document.getElementById('historyEllipsesTrack');
     const btnClearHistory = document.getElementById('btnClearHistory');
@@ -5942,23 +5928,19 @@ ${paragraphSteps.map(s => `  --font-size-${s.slug}: ${s.rem}rem; /* ${s.px}px${s
       showToast(`Locked exact color to shade ${currentLockShade}!`);
     });
 
-    // Copy All Shades Button
-    btnCopyAllShades.addEventListener('click', () => {
-      if (!currentPalette) return;
-      const hexList = currentPalette.shades.map(s => `${s.number}: ${s.hexcode}`).join('\n');
-      navigator.clipboard.writeText(hexList);
-      showToast(`Copied all 11 shades to clipboard!`);
-    });
-
     // Export Modal Listeners
     document.getElementById('btnOpenExport').addEventListener('click', () => {
       exportModal.classList.add('open');
     });
 
+    // Copy All Shades Button (Palette Header Action)
     const btnPaletteCopyAll = document.getElementById('btnPaletteCopyAll');
     if (btnPaletteCopyAll) {
       btnPaletteCopyAll.addEventListener('click', () => {
-        document.getElementById('btnCopyAllShades')?.click();
+        if (!currentPalette) return;
+        const hexList = currentPalette.shades.map(s => `${s.number}: ${s.hexcode}`).join('\n');
+        navigator.clipboard.writeText(hexList);
+        showToast('Copied all 11 shades to clipboard!');
       });
     }
 
