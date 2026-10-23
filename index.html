@@ -4006,12 +4006,6 @@
               <svg width="13" height="13" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><line x1="40" y1="128" x2="216" y2="128" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="128" y1="40" x2="128" y2="216" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>
             </button>
           </div>
-          <div class="ts-phrase-presets">
-            <button type="button" class="ts-preset-pill ts-base-pill" data-base="14">14px</button>
-            <button type="button" class="ts-preset-pill ts-base-pill active" data-base="16">16px (Default)</button>
-            <button type="button" class="ts-preset-pill ts-base-pill" data-base="18">18px</button>
-            <button type="button" class="ts-preset-pill ts-base-pill" data-base="20">20px</button>
-          </div>
         </div>
 
         <!-- Control 4: Font Weight (Headings) -->
@@ -5500,24 +5494,12 @@ ${paragraphSteps.map(s => `  --font-size-${s.slug}: ${s.rem}rem; /* ${s.px}px${s
         }
       });
 
-      // Base Size Presets
-      document.querySelectorAll('.ts-base-pill').forEach(btn => {
-        btn.addEventListener('click', () => {
-          tsCurrentBase = parseInt(btn.getAttribute('data-base'), 10);
-          tsBaseSizeInput.value = tsCurrentBase;
-          if (activeBaseDisplay) activeBaseDisplay.textContent = `${tsCurrentBase}px`;
-          document.querySelectorAll('.ts-base-pill').forEach(b => b.classList.toggle('active', b === btn));
-          renderTypeScale();
-        });
-      });
-
       // Reset Base Size
       if (btnResetBaseSize) {
         btnResetBaseSize.addEventListener('click', () => {
           tsCurrentBase = 16;
           tsBaseSizeInput.value = 16;
           if (activeBaseDisplay) activeBaseDisplay.textContent = '16px';
-          document.querySelectorAll('.ts-base-pill').forEach(b => b.classList.toggle('active', b.getAttribute('data-base') === '16'));
           renderTypeScale();
           showToast('Reset base size to 16px');
         });
@@ -5647,20 +5629,20 @@ ${paragraphSteps.map(s => `  --font-size-${s.slug}: ${s.rem}rem; /* ${s.px}px${s
       // Sample Text Input
       tsSampleTextInput.addEventListener('input', (e) => {
         tsCurrentText = e.target.value || 'A visual type scale';
-        document.querySelectorAll('.ts-phrase-presets .ts-preset-pill:not(.ts-base-pill)').forEach(b => {
+        document.querySelectorAll('.ts-phrase-presets .ts-preset-pill').forEach(b => {
           b.classList.toggle('active', b.getAttribute('data-phrase') === tsCurrentText);
         });
         renderTypeScale();
       });
 
       // Phrase presets (Alphabet, Pangram, Prose)
-      document.querySelectorAll('.ts-phrase-presets .ts-preset-pill:not(.ts-base-pill)').forEach(btn => {
+      document.querySelectorAll('.ts-phrase-presets .ts-preset-pill').forEach(btn => {
         btn.addEventListener('click', () => {
           const phrase = btn.getAttribute('data-phrase');
           if (phrase) {
             tsCurrentText = phrase;
             tsSampleTextInput.value = tsCurrentText;
-            document.querySelectorAll('.ts-phrase-presets .ts-preset-pill:not(.ts-base-pill)').forEach(b => {
+            document.querySelectorAll('.ts-phrase-presets .ts-preset-pill').forEach(b => {
               b.classList.toggle('active', b === btn);
             });
             renderTypeScale();
@@ -5673,7 +5655,7 @@ ${paragraphSteps.map(s => `  --font-size-${s.slug}: ${s.rem}rem; /* ${s.px}px${s
         btnResetSampleText.addEventListener('click', () => {
           tsCurrentText = 'A visual type scale';
           tsSampleTextInput.value = 'A visual type scale';
-          document.querySelectorAll('.ts-phrase-presets .ts-preset-pill:not(.ts-base-pill)').forEach(b => {
+          document.querySelectorAll('.ts-phrase-presets .ts-preset-pill').forEach(b => {
             b.classList.remove('active');
           });
           renderTypeScale();
@@ -5718,8 +5700,7 @@ ${paragraphSteps.map(s => `  --font-size-${s.slug}: ${s.rem}rem; /* ${s.px}px${s
         if (tsParagraphLetterSpacingSlider) tsParagraphLetterSpacingSlider.value = 0;
         if (activeHeadingLetterSpacingDisplay) activeHeadingLetterSpacingDisplay.textContent = '0.00em';
         if (activeParagraphLetterSpacingDisplay) activeParagraphLetterSpacingDisplay.textContent = '0.00em';
-        document.querySelectorAll('.ts-base-pill').forEach(b => b.classList.toggle('active', b.getAttribute('data-base') === '16'));
-        document.querySelectorAll('.ts-phrase-presets .ts-preset-pill:not(.ts-base-pill)').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.ts-phrase-presets .ts-preset-pill').forEach(b => b.classList.remove('active'));
         
         // Synchronize custom dropdowns
         tsFontFamilySelect.dispatchEvent(new Event('change', { bubbles: true }));
