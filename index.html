@@ -4084,6 +4084,7 @@
                 <button type="button" class="ts-preset-pill" data-phrase="The quick brown fox jumps over the lazy dog" title="Load full alphabet phrase">Alphabet</button>
                 <button type="button" class="ts-preset-pill" data-phrase="Sphinx of black quartz, judge my vow" title="Load classic pangram phrase">Pangram</button>
                 <button type="button" class="ts-preset-pill" data-phrase="Harmonious digital interfaces and typography" title="Load design prose phrase">Prose</button>
+                <button type="button" class="ts-preset-pill" data-phrase="pppppppppppo<br>bbbbbbbbbbbo" title="Load pob font rhythm & line-height test phrase">pob</button>
               </div>
               <button type="button" class="ts-reset-icon-btn" id="btnResetSampleText" title="Reset sample text to default (A visual type scale)" aria-label="Reset sample text">
                 <svg width="13" height="13" viewBox="0 0 256 256" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="18"><polyline points="24 56 24 104 72 104"/><path d="M67.59,192A88,88,0,1,0,65.77,65.77L24,104"/></svg>
@@ -5252,7 +5253,7 @@
         const editable = card.querySelector('.ts-step-rendered-text');
         if (editable) {
           editable.addEventListener('input', () => {
-            tsCurrentText = editable.textContent;
+            tsCurrentText = editable.innerHTML;
             tsSampleTextInput.value = tsCurrentText;
           });
         }
