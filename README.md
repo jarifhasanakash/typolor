@@ -29,7 +29,11 @@ Designing a cohesive digital product requires balancing **color harmony** and **
 ### 🔤 Musical Interval Typographic Scale Studio
 * **Musical Ratios**: Minor Second (1.067), Major Second (1.125), Minor Third (1.200), Major Third (1.250), Perfect Fourth (1.333), Augmented Fourth (1.414), Perfect Fifth (1.500), Golden Ratio (1.618), or custom ratio.
 * **Google Fonts Integration**: Live dropdown containing popular Sans, Serif, and Monospace fonts, plus real-time typing to load *any* Google Font on the fly.
-* **Interactive Sample Text**: Live editable preview across Display, H1&ndash;H6 headings, and Large, Regular (Base 16px), Small, Extra Small paragraphs.
+* **Independent Heading & Paragraph Typography Controls (v1.1)**:
+  * **Headings Controls**: Dedicated Font Weight selector (`300`&ndash;`900`, default `700` Bold), Line Height range slider (`0.80`&ndash;`2.00`, default `1.20`), and Letter Spacing range slider (`-0.08em`&ndash;`0.20em`, default `0.00em`) in the main station.
+  * **Paragraphs Controls**: Dedicated 3-box control station positioned directly before the Paragraphs preview rows for real-time adjusting of Body Font Weight (`300`&ndash;`700`, default `400` Regular), Line Height (`0.80`&ndash;`2.00`, default `1.50`), and Letter Spacing (`-0.08em`&ndash;`0.20em`, default `0.00em`).
+  * **One-Click Anti-Clockwise Resets**: Dedicated tactile reset buttons on every individual control card, plus global "Reset Defaults".
+* **Sample Text Presets**: Header actions with tactile hardware pills for **Alphabet** (full alphabet phrase), **Pangram**, and **Prose**, alongside custom real-time editable sample text.
 * **Category Banners & Dimensions**: Real-time REM and PX readouts with instant single-click CSS snippet copying.
 
 ### ⚡ Instant Multi-Format Token Export

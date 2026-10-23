@@ -583,19 +583,18 @@
 
     /* --------------------------------------------------------------------------
        HERO COLOR INPUT STATION (Central Tactile Hardware Console)
-       Physical ceramic chassis with sunken cavity track and tactile color orb.
+       Physical ceramic command deck with sunken cavity track and tactile color orb.
        -------------------------------------------------------------------------- */
     .hero-color-station {
-      background: linear-gradient(180deg, var(--surface-raised-top) 0%, var(--surface-raised) 100%);
-      border: 2px solid var(--rim-light);
-      border-radius: var(--radius-slab);
-      padding: var(--space-7) var(--space-9);
-      box-shadow: var(--clay-slab-shadow);
-      margin-bottom: var(--space-10);
+      border: 1.5px solid var(--surface-bezel);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-6) var(--space-7);
+      margin-bottom: var(--space-6);
       display: flex;
       flex-direction: column;
       gap: var(--space-5);
       position: relative;
+      overflow: visible;
       transition: var(--transition);
     }
 
@@ -614,6 +613,7 @@
       background: var(--surface-sunken);
       padding: 4px;
       border-radius: 50%;
+      overflow: visible;
       box-shadow: 
         inset 0 3px 6px rgba(15, 23, 42, 0.18),
         0 1.5px 2px var(--rim-light);
@@ -661,7 +661,7 @@
       background: linear-gradient(180deg, var(--surface-raised-top) 0%, var(--surface-raised) 100%);
       border: 1.5px solid var(--rim-light);
       border-radius: var(--radius-3xl);
-      padding: var(--space-4) var(--space-4_5, 1.15rem);
+      padding: var(--space-3);
       box-shadow: 
         0 24px 54px -6px rgba(15, 23, 42, 0.28),
         0 8px 22px rgba(15, 23, 42, 0.12),
@@ -1157,10 +1157,12 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
-      gap: 1.15rem;
+      flex-wrap: nowrap;
+      gap: 1rem;
       padding-top: 1.15rem;
-      border-top: 1.5px solid var(--surface-sunken);
+      border-top: 1.5px solid var(--surface-bezel);
+      width: 100%;
+      box-sizing: border-box;
     }
 
     /* --------------------------------------------------------------------------
@@ -1181,6 +1183,8 @@
       white-space: nowrap;
       transition: var(--transition);
       min-height: 42px;
+      flex: 0 1 auto;
+      min-width: 0;
     }
 
     .history-label-tag {
@@ -1211,7 +1215,8 @@
       padding: 8px 8px;
       min-height: 38px;
       box-sizing: border-box;
-      flex-shrink: 1;
+      flex: 0 1 auto;
+      min-width: 0;
     }
 
     .history-ellipses-track::-webkit-scrollbar {
@@ -1309,7 +1314,8 @@
       display: flex;
       align-items: center;
       gap: 0.75rem;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
+      flex-shrink: 0;
     }
 
     .crystal-mode-toggle {
@@ -1362,7 +1368,7 @@
       display: inline-flex;
       align-items: center;
       background: linear-gradient(180deg, var(--surface-raised-top) 0%, var(--surface-raised) 100%);
-      padding: 0 0.45rem 0 1.05rem;
+      padding: 0 5px 0 1.05rem;
       border-radius: var(--radius-pill);
       border: 1.5px solid var(--rim-light);
       gap: 0.65rem;
@@ -1512,6 +1518,10 @@
       flex-shrink: 0;
     }
 
+    .tactile-select-wrapper.is-open {
+      z-index: 1050;
+    }
+
     .tactile-select-wrapper.is-open .tactile-select-arrow {
       transform: rotate(180deg);
       color: var(--text);
@@ -1547,8 +1557,9 @@
     }
 
     .tactile-select-wrapper.is-shade-lock .tactile-select-menu {
-      min-width: 140px;
-      width: 140px;
+      min-width: 175px;
+      width: max-content;
+      max-width: min(320px, 90vw);
       max-height: 380px;
       overflow-y: auto;
       overflow-x: hidden;
@@ -1719,21 +1730,15 @@
     }
 
     /* --------------------------------------------------------------------------
-       PALETTE PRESENTATION CHASSIS: Contained, Elegant & Usable
+       PALETTE PRESENTATION SECTION: Contained, Elegant & Usable
        100% contained within layout, zero horizontal overflow,
        clean typography, high-contrast lock actions, and pure color clarity.
        -------------------------------------------------------------------------- */
-    .palette-presentation-chassis {
-      background: linear-gradient(180deg, var(--surface-raised-top) 0%, var(--surface-raised) 100%);
-      border: 1.5px solid var(--rim-light);
-      border-radius: var(--radius-slab);
-      padding: var(--space-6) var(--space-7);
-      box-shadow: var(--clay-slab-shadow);
-      margin-bottom: var(--space-10);
+    .palette-presentation-chassis,
+    .palette-presentation-section {
       width: 100%;
       box-sizing: border-box;
       position: relative;
-      overflow: hidden;
     }
 
     .palette-meta-bar {
@@ -1755,16 +1760,20 @@
     }
 
     .color-name-heading {
-      font-size: 1.55rem;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 1.15rem;
       font-weight: 800;
-      letter-spacing: -0.025em;
       color: var(--text);
+      letter-spacing: -0.025em;
       line-height: 1.2;
+      margin: 0;
     }
 
     .color-skeleton-ref {
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       color: var(--text-muted);
+      font-weight: 500;
+      letter-spacing: normal;
     }
 
     .color-skeleton-ref strong {
@@ -2082,10 +2091,12 @@
     }
 
     /* --------------------------------------------------------------------------
-       TYPE SCALE GENERATOR STUDIO (Inspired by typescale.com)
-       Tactile porcelain chassis with live Google Fonts integration,
-       musical ratio presets, editable preview hierarchy, and instant token export.
+       STUDIO CHASSIS SLABS: UNIFIED HARDWARE ARCHITECTURE
+       Both Color Palette Studio and Type Scale Studio are encapsulated in
+       identical tactile porcelain slabs with section headers, sunken hardware
+       command decks, and structured preview stacks.
        -------------------------------------------------------------------------- */
+    .palette-studio-chassis,
     .typescale-studio-chassis {
       background: linear-gradient(180deg, var(--surface-raised-top) 0%, var(--surface-raised) 100%);
       border: 2px solid var(--rim-light);
@@ -2096,9 +2107,10 @@
       position: relative;
       width: 100%;
       box-sizing: border-box;
-      overflow: hidden;
+      overflow: visible;
     }
 
+    .palette-header,
     .typescale-header {
       display: flex;
       justify-content: space-between;
@@ -2108,6 +2120,7 @@
       gap: 1.25rem;
     }
 
+    .palette-header-actions,
     .typescale-header-actions {
       display: flex;
       gap: 0.75rem;
@@ -2118,7 +2131,7 @@
     /* Controls Station (Recessed Tactile Grid) */
     .typescale-controls-station {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 1rem;
       margin-bottom: 2.25rem;
       width: 100%;
@@ -2319,56 +2332,339 @@
     }
 
     .ts-phrase-presets {
-      display: flex;
-      gap: 4px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
       flex-wrap: wrap;
+    }
+
+    .ts-control-card > .ts-phrase-presets {
       margin-top: 2px;
+    }
+
+    .ts-label-actions .ts-phrase-presets {
+      margin: 0;
     }
 
     .ts-preset-pill {
       font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-      font-size: 0.65rem;
+      font-size: 0.7rem;
       font-weight: 700;
-      padding: 2px 7px;
-      background: var(--surface-raised);
-      border: 1px solid var(--rim-light);
+      padding: 3px 9px;
+      background: linear-gradient(180deg, var(--surface-raised-top) 0%, var(--surface-raised) 100%);
+      border: 1.5px solid var(--rim-light);
       border-radius: var(--radius-pill);
       color: var(--text-muted);
       cursor: pointer;
-      transition: var(--transition);
+      transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
       line-height: 1.2;
+      box-shadow: var(--clay-puck-shadow);
+      text-transform: none;
+      letter-spacing: normal;
+      user-select: none;
     }
 
     .ts-preset-pill:hover {
       color: var(--text);
-      border-color: var(--text-muted);
+      border-color: var(--text-subtle);
       transform: translateY(-1px);
+      box-shadow: 0 3px 8px rgba(15, 23, 42, 0.12);
+    }
+
+    .ts-preset-pill:active {
+      transform: translateY(1px);
+    }
+
+    .ts-preset-pill.active {
+      background: var(--surface-obsidian);
+      color: #ffffff;
+      border-color: var(--surface-obsidian);
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
+    }
+
+    [data-theme="dark"] .ts-preset-pill.active {
+      background: #ffffff;
+      color: #0f172a;
+      border-color: #ffffff;
+      box-shadow: 0 2px 6px rgba(255, 255, 255, 0.25);
+    }
+
+    /* Tactile Range Sliders for Line Height & Letter Spacing (Headings & Paragraphs) */
+    .ts-dual-slider-col {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      width: 100%;
+    }
+
+    .ts-slider-subgroup {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      width: 100%;
+    }
+
+    .ts-subgroup-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 1px;
+    }
+
+    .ts-subgroup-title {
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: var(--text-subtle);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .ts-slider-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.15rem 0;
+      width: 100%;
+      min-height: 28px;
+      box-sizing: border-box;
+    }
+
+    .ts-range-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 8px;
+      border-radius: var(--radius-pill);
+      background: var(--surface-recessed);
+      border: 1px solid var(--surface-bezel);
+      outline: none;
+      box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.08);
+      cursor: pointer;
+      transition: border-color 0.15s ease;
+    }
+
+    .ts-range-slider:focus,
+    .ts-range-slider:focus-visible {
+      outline: none;
+    }
+
+    .ts-range-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: linear-gradient(180deg, var(--surface-raised-top) 0%, var(--surface-raised) 100%);
+      border: 1.5px solid var(--rim-light);
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.14), inset 0 1px 1px rgba(255, 255, 255, 0.9);
+      cursor: grab;
+      transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.15s ease, border-color 0.15s ease;
+    }
+
+    .ts-range-slider::-webkit-slider-thumb:hover {
+      transform: scale(1.15);
+      border-color: #ffffff;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.18), inset 0 1px 1px #ffffff;
+    }
+
+    .ts-range-slider::-webkit-slider-thumb:active {
+      cursor: grabbing;
+      transform: scale(1.05);
+    }
+
+    .ts-range-slider::-moz-range-thumb {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: linear-gradient(180deg, var(--surface-raised-top) 0%, var(--surface-raised) 100%);
+      border: 1.5px solid var(--rim-light);
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.14), inset 0 1px 1px rgba(255, 255, 255, 0.9);
+      cursor: grab;
+      transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.15s ease, border-color 0.15s ease;
+    }
+
+    .ts-range-slider::-moz-range-thumb:hover {
+      transform: scale(1.15);
+      border-color: #ffffff;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.18), inset 0 1px 1px #ffffff;
+    }
+
+    .ts-range-slider::-moz-range-thumb:active {
+      cursor: grabbing;
+      transform: scale(1.05);
+    }
+
+    [data-theme="dark"] .ts-range-slider::-webkit-slider-thumb {
+      background: linear-gradient(180deg, #323846 0%, #202430 100%);
+      border-color: rgba(255, 255, 255, 0.18);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.15);
+    }
+
+    [data-theme="dark"] .ts-range-slider::-webkit-slider-thumb:hover {
+      border-color: rgba(255, 255, 255, 0.35);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.22);
+    }
+
+    [data-theme="dark"] .ts-range-slider::-moz-range-thumb {
+      background: linear-gradient(180deg, #323846 0%, #202430 100%);
+      border-color: rgba(255, 255, 255, 0.18);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.15);
+    }
+
+    [data-theme="dark"] .ts-range-slider::-moz-range-thumb:hover {
+      border-color: rgba(255, 255, 255, 0.35);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.22);
+    }
+
+    .ts-label-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .ts-reset-icon-btn {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: linear-gradient(180deg, var(--surface-raised-top) 0%, var(--surface-raised) 100%);
+      border: 1.5px solid var(--rim-light);
+      color: var(--text-muted);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      box-shadow: var(--clay-puck-shadow);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .ts-reset-icon-btn:hover {
+      color: var(--text);
+      background: #ffffff;
+      transform: rotate(-60deg) scale(1.12);
+      border-color: var(--text-muted);
+    }
+
+    [data-theme="dark"] .ts-reset-icon-btn:hover {
+      background: rgba(255, 255, 255, 0.18);
+      color: #ffffff;
+    }
+
+    .ts-reset-icon-btn:active {
+      transform: rotate(-180deg) scale(0.92);
+    }
+
+    .ts-slider-scale-limits {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: var(--text-subtle);
+      padding: 0 2px;
+      margin-top: -2px;
+      user-select: none;
+    }
+
+    .ts-weight-dual-row {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      width: 100%;
+    }
+
+    .ts-weight-pill-box {
+      width: 100% !important;
+      height: 38px !important;
+      min-height: 38px !important;
+      justify-content: space-between !important;
+      padding: 0 3px 0 0.85rem !important;
+      box-sizing: border-box !important;
+    }
+
+    .ts-card-full-width {
+      grid-column: 1 / -1;
+    }
+
+    .ts-sample-input-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      width: 100%;
+    }
+
+    .ts-sample-input-row .ts-text-input {
+      flex: 1;
+      min-width: 260px;
     }
 
     /* Live Preview Stack */
     .typescale-preview-stack {
       display: flex;
       flex-direction: column;
-      gap: 0.65rem;
+      gap: 0;
       width: 100%;
       box-sizing: border-box;
       margin-bottom: 0;
     }
 
     .ts-step-card {
-      background: linear-gradient(180deg, var(--surface-raised-top) 0%, var(--surface-raised) 100%);
-      border: 1.5px solid var(--rim-light);
-      border-radius: var(--radius-2xl);
+      background: transparent;
+      border: 1.5px solid var(--surface-bezel);
+      border-top: none;
+      border-radius: 0;
       padding: var(--space-4) var(--space-6);
       display: flex;
       align-items: center;
       gap: var(--space-6);
-      box-shadow: var(--clay-puck-shadow);
-      transition: transform 0.18s var(--ease-out), box-shadow 0.18s var(--ease-out);
+      box-shadow: none;
+      transition: background 0.18s var(--ease-out);
       width: 100%;
       box-sizing: border-box;
       min-width: 0;
       position: relative;
+    }
+
+    .ts-category-banner + .ts-step-card,
+    .typescale-preview-stack .ts-step-card:first-child {
+      border-top: 1.5px solid var(--surface-bezel);
+      border-top-left-radius: var(--radius-2xl);
+      border-top-right-radius: var(--radius-2xl);
+    }
+
+    .ts-step-card:has(+ .ts-category-banner) {
+      border-bottom-left-radius: var(--radius-2xl);
+      border-bottom-right-radius: var(--radius-2xl);
+      margin-bottom: 1.5rem;
+    }
+
+    .ts-step-card:last-child,
+    .typescale-preview-stack .ts-step-card:last-child {
+      border-bottom-left-radius: var(--radius-2xl);
+      border-bottom-right-radius: var(--radius-2xl);
+    }
+
+    .ts-paragraph-controls-station {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-4);
+      margin-bottom: var(--space-5);
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    @media (max-width: 1080px) {
+      .ts-paragraph-controls-station {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .ts-paragraph-controls-station {
+        grid-template-columns: 1fr;
+      }
     }
 
     @media (max-width: 768px) {
@@ -2380,8 +2676,9 @@
     }
 
     .ts-step-card:hover {
-      transform: translateX(4px);
-      box-shadow: var(--shadow-pill-hover);
+      background: var(--surface-hover);
+      transform: none;
+      box-shadow: none;
     }
 
     .ts-step-meta {
@@ -2392,7 +2689,9 @@
       align-items: center;
       gap: 0.65rem;
       user-select: none;
-      align-self: center;
+      align-self: stretch;
+      border-right: 1.5px solid var(--surface-bezel);
+      padding-right: var(--space-6);
     }
 
     .ts-tag-pill {
@@ -2437,55 +2736,41 @@
       color: #ffffff;
     }
 
-    .ts-step-card.is-base-card {
-      border-color: rgba(26, 26, 26, 0.25);
-      background: linear-gradient(180deg, var(--surface-raised-top) 0%, var(--surface-raised) 100%);
-      box-shadow: 0 4px 14px -2px rgba(15, 23, 42, 0.12), inset 0 1.5px 2px var(--rim-light);
-    }
-
-    [data-theme="dark"] .ts-step-card.is-base-card {
-      border-color: rgba(255, 255, 255, 0.22);
-      background: linear-gradient(180deg, #2a2f3a 0%, var(--surface-raised) 100%);
-      box-shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.65), inset 0 1.5px 2px var(--rim-light);
-    }
-
     .ts-category-banner {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0.65rem 0.25rem 0.65rem 0.25rem;
-      border-bottom: 1px solid var(--surface-bezel);
-      margin-bottom: 0.35rem;
+      padding: 0.5rem 0.25rem 0.35rem 0.25rem;
+      border-bottom: none;
+      margin-bottom: 0.65rem;
     }
 
     .ts-category-banner.is-second {
-      margin-top: 1.25rem;
+      margin-top: 1.5rem;
     }
 
     .ts-category-title-wrap {
       display: flex;
-      align-items: center;
-      gap: 0.65rem;
+      align-items: baseline;
+      gap: 0.75rem;
+      flex-wrap: wrap;
     }
 
-    .ts-category-pill {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.68rem;
+    .ts-category-title {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 1.15rem;
       font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      padding: 2.5px 8.5px;
-      border-radius: var(--radius-pill);
-      background: var(--surface-sunken);
-      color: var(--text-muted);
-      border: 1px solid var(--surface-bezel);
-      box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.06);
+      color: var(--text);
+      letter-spacing: -0.025em;
+      line-height: 1.2;
+      margin: 0;
     }
 
     .ts-category-hint {
-      font-size: 0.78rem;
-      color: var(--text-subtle);
-      font-weight: 600;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      letter-spacing: normal;
     }
 
     .ts-dimension-text {
@@ -2712,8 +2997,9 @@
         transform: translateY(-1.5px);
       }
       .ts-step-card:hover {
-        transform: translateX(4px);
-        box-shadow: var(--shadow-pill-hover);
+        background: var(--surface-hover);
+        transform: none;
+        box-shadow: none;
       }
     }
 
@@ -2921,7 +3207,7 @@
         display: flex !important;
         justify-content: space-between !important;
         align-items: center !important;
-        padding: 0 0.5rem 0 1.15rem !important;
+        padding: 0 5px 0 1.15rem !important;
       }
       .shade-lock-label {
         font-size: 0.825rem !important;
@@ -2933,8 +3219,9 @@
         font-size: 0.9rem !important;
       }
       .tactile-select-wrapper.is-shade-lock .tactile-select-menu {
-        min-width: 160px !important;
-        width: 160px !important;
+        min-width: 175px !important;
+        width: max-content !important;
+        max-width: min(320px, 90vw) !important;
       }
       .tactile-select-wrapper.is-shade-lock .tactile-select-option {
         min-height: 38px !important;
@@ -2952,15 +3239,30 @@
         min-height: 44px !important;
       }
 
-      .palette-presentation-chassis {
-        padding: var(--space-5) var(--space-4) !important;
-        border-radius: var(--radius-2xl) !important;
-        margin-bottom: var(--space-6) !important;
-      }
+      .palette-studio-chassis,
       .typescale-studio-chassis {
         padding: var(--space-5) var(--space-4) !important;
         border-radius: var(--radius-2xl) !important;
         margin-bottom: var(--space-6) !important;
+      }
+      .palette-header,
+      .typescale-header {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: var(--space-3) !important;
+        margin-bottom: var(--space-4) !important;
+      }
+      .palette-header-actions,
+      .typescale-header-actions {
+        width: 100% !important;
+        gap: var(--space-2) !important;
+      }
+      .palette-header-actions .btn-crystal-clear-pill,
+      .palette-header-actions .btn-obsidian-crystal,
+      .typescale-header-actions .btn-crystal-clear-pill,
+      .typescale-header-actions .btn-obsidian-crystal {
+        flex: 1 !important;
+        justify-content: center !important;
       }
       .ts-step-card {
         flex-direction: column !important;
@@ -2973,6 +3275,10 @@
         min-width: 0 !important;
         justify-content: space-between !important;
         align-self: stretch !important;
+        border-right: none !important;
+        border-bottom: 1.5px solid var(--surface-bezel) !important;
+        padding-right: 0 !important;
+        padding-bottom: var(--space-2_5) !important;
       }
       .ts-step-rendered-text {
         align-self: stretch !important;
@@ -2996,15 +3302,19 @@
         grid-template-columns: 1fr !important;
         gap: var(--space-3) !important;
       }
+      .palette-header,
       .typescale-header {
         flex-direction: column !important;
         align-items: stretch !important;
         gap: var(--space-3) !important;
       }
+      .palette-header-actions,
       .typescale-header-actions {
         width: 100% !important;
         gap: var(--space-2) !important;
       }
+      .palette-header-actions .btn-crystal-clear-pill,
+      .palette-header-actions .btn-obsidian-crystal,
       .typescale-header-actions .btn-crystal-clear-pill,
       .typescale-header-actions .btn-obsidian-crystal {
         flex: 1 !important;
@@ -3049,7 +3359,7 @@
         max-height: calc(100dvh - 32px) !important;
         overflow-y: auto !important;
         overscroll-behavior: contain !important;
-        padding: var(--space-4) !important;
+        padding: var(--space-3) !important;
         gap: var(--space-3) !important;
       }
       .picker-presets-grid {
@@ -3143,7 +3453,7 @@
        TACTILE INDUSTRIAL FOOTER
        -------------------------------------------------------------------------- */
     .site-footer {
-      border-top: 1px solid var(--rim-light);
+      border-top: none;
       margin-top: var(--space-12);
       padding-top: var(--space-8);
       padding-bottom: var(--space-8);
@@ -3366,20 +3676,37 @@
           <span id="globalThemeIcon"><svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><path d="M108.11,28.11A96.09,96.09,0,0,0,227.89,147.89,96,96,0,1,1,108.11,28.11Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg></span>
           <span id="globalThemeText">Dark Theme</span>
         </button>
-
-        <!-- Primary #1A1A1A Obsidian Button / Round Mobile Button -->
-        <button class="btn-obsidian-crystal btn-header-icon-round" id="btnOpenExport" title="Export Code (Tailwind, CSS, Tokens)" aria-label="Export Code">
-          <div class="obsidian-core"></div>
-          <div class="btn-content">
-            <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><path d="M176,104h24a8,8,0,0,1,8,8v96a8,8,0,0,1-8,8H56a8,8,0,0,1-8-8V112a8,8,0,0,1,8-8H80" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><polyline points="88 64 128 24 168 64" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="128" y1="24" x2="128" y2="136" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>
-            <span>Export Code</span>
-          </div>
-        </button>
       </div>
     </header>
 
-    <!-- Hero Color Station: Prioritized Central Command Hub -->
-    <section class="hero-color-station" id="heroColorStation">
+    <!-- Color Palette Generator Studio (Unified Tactile Chassis) -->
+    <div class="palette-studio-chassis" id="paletteStudio">
+      <div class="palette-header">
+        <div>
+          <h2 style="font-size:1.6rem; font-weight:800; letter-spacing:-0.025em; color:var(--text); margin-bottom: 0.35rem;">
+            Color Palette Generator
+          </h2>
+          <p style="font-size:0.875rem; color:var(--text-muted); max-width: 600px;">
+            Generate harmonious 11-shade color scales calibrated with WCAG 2.1 &amp; APCA contrast mathematics, with instant export for Tailwind CSS and modern design systems.
+          </p>
+        </div>
+        <div class="palette-header-actions">
+          <button class="btn-crystal-clear-pill" id="btnPaletteCopyAll" title="Copy all 11 hex codes to clipboard">
+            <svg width="14" height="14" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><polyline points="168 168 216 168 216 40 88 40 88 88" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><rect x="40" y="88" width="128" height="128" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>
+            <span>Copy All Shades</span>
+          </button>
+          <button class="btn-obsidian-crystal" id="btnOpenExport" title="Export Color Palette Code">
+            <div class="obsidian-core"></div>
+            <div class="btn-content">
+              <svg width="14" height="14" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><path d="M176,104h24a8,8,0,0,1,8,8v96a8,8,0,0,1-8,8H56a8,8,0,0,1-8-8V112a8,8,0,0,1,8-8H80" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><polyline points="88 64 128 24 168 64" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="128" y1="24" x2="128" y2="136" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>
+              <span>Export Code</span>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <!-- Hero Color Station: Prioritized Central Command Hub -->
+      <section class="hero-color-station" id="heroColorStation">
       <!-- Main Input Row: Liquid Orb + Universal Input + Shuffle Button -->
       <div class="console-main-row">
         <!-- Tactile 3D Liquid Crystal Color Orb & Tactile Color Studio Popover -->
@@ -3534,11 +3861,11 @@
       </div>
     </section>
 
-    <!-- Palette Metadata Bar -->
-    <div class="palette-presentation-chassis">
+    <!-- Palette Presentation Section -->
+    <div class="palette-presentation-section">
       <div class="palette-meta-bar">
         <div class="color-title-wrap">
-          <h2 class="color-name-heading" id="paletteNameDisplay">Azure Radiance</h2>
+          <h3 class="color-name-heading" id="paletteNameDisplay">Azure Radiance</h3>
           <span class="color-skeleton-ref">Base skeleton: <strong id="skeletonNameDisplay">Blue</strong> • 11 Design System Tokens</span>
         </div>
         <div class="meta-quick-actions">
@@ -3554,6 +3881,7 @@
         <!-- Populated dynamically -->
       </div>
     </div>
+  </div>
 
     <!-- Type Scale Generator Studio (Inspired by typescale.com) -->
     <div class="typescale-studio-chassis" id="typescaleStudio">
@@ -3587,7 +3915,12 @@
         <div class="ts-control-card">
           <div class="ts-control-label">
             <span>Google Font</span>
-            <span class="ts-badge-live" id="activeFontBadge">Inter</span>
+            <div class="ts-label-actions">
+              <span class="ts-badge-live" id="activeFontBadge">Inter</span>
+              <button type="button" class="ts-reset-icon-btn" id="btnResetFontFamily" title="Reset font family to default (Inter)" aria-label="Reset font family">
+                <svg width="13" height="13" viewBox="0 0 256 256" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="18"><polyline points="24 56 24 104 72 104"/><path d="M67.59,192A88,88,0,1,0,65.77,65.77L24,104"/></svg>
+              </button>
+            </div>
           </div>
           <select id="tsFontFamilySelect" class="ts-select-dropdown" title="Choose Google Font">
             <optgroup label="Sans-Serif">
@@ -3632,7 +3965,12 @@
         <div class="ts-control-card">
           <div class="ts-control-label">
             <span>Scale Ratio</span>
-            <span class="ts-badge-ratio" id="activeRatioVal">1.250</span>
+            <div class="ts-label-actions">
+              <span class="ts-badge-ratio" id="activeRatioVal">1.250</span>
+              <button type="button" class="ts-reset-icon-btn" id="btnResetScaleRatio" title="Reset scale ratio to default (1.250 – Major Third)" aria-label="Reset scale ratio">
+                <svg width="13" height="13" viewBox="0 0 256 256" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="18"><polyline points="24 56 24 104 72 104"/><path d="M67.59,192A88,88,0,1,0,65.77,65.77L24,104"/></svg>
+              </button>
+            </div>
           </div>
           <select id="tsScaleRatioSelect" class="ts-select-dropdown" title="Musical interval ratio">
             <option value="1.067">1.067 – Minor Second (15:16)</option>
@@ -3650,11 +3988,16 @@
           </div>
         </div>
 
-        <!-- Control 3: Base Size & Weight -->
+        <!-- Control 3: Base Size -->
         <div class="ts-control-card">
           <div class="ts-control-label">
-            <span>Base Size & Weight</span>
-            <span class="ts-badge-live" id="activeBaseDisplay">16px</span>
+            <span>Base Size</span>
+            <div class="ts-label-actions">
+              <span class="ts-badge-live" id="activeBaseDisplay">16px</span>
+              <button type="button" class="ts-reset-icon-btn" id="btnResetBaseSize" title="Reset base size to default (16px)" aria-label="Reset base size">
+                <svg width="13" height="13" viewBox="0 0 256 256" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="18"><polyline points="24 56 24 104 72 104"/><path d="M67.59,192A88,88,0,1,0,65.77,65.77L24,104"/></svg>
+              </button>
+            </div>
           </div>
           <div class="ts-stepper-row">
             <button class="ts-stepper-btn" id="btnBaseMinus" title="Decrease base size by 1px" aria-label="Decrease base size">
@@ -3666,35 +4009,193 @@
               <svg width="13" height="13" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><line x1="40" y1="128" x2="216" y2="128" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="128" y1="40" x2="128" y2="216" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>
             </button>
           </div>
-          <select id="tsFontWeightSelect" class="ts-select-dropdown" title="Select font weight">
-            <option value="300">Light (300)</option>
-            <option value="400">Regular (400)</option>
-            <option value="500">Medium (500)</option>
-            <option value="600" selected>SemiBold (600)</option>
-            <option value="700">Bold (700)</option>
-            <option value="800">ExtraBold (800)</option>
-          </select>
+          <div class="ts-phrase-presets">
+            <button type="button" class="ts-preset-pill ts-base-pill" data-base="14">14px</button>
+            <button type="button" class="ts-preset-pill ts-base-pill active" data-base="16">16px (Default)</button>
+            <button type="button" class="ts-preset-pill ts-base-pill" data-base="18">18px</button>
+            <button type="button" class="ts-preset-pill ts-base-pill" data-base="20">20px</button>
+          </div>
         </div>
 
-        <!-- Control 4: Live Preview Sample Text -->
+        <!-- Control 4: Font Weight (Headings) -->
         <div class="ts-control-card">
           <div class="ts-control-label">
+            <span>Font Weight</span>
+            <div class="ts-label-actions">
+              <span style="font-size:0.7rem; color:var(--text-muted); margin-right:2px;">Headings</span>
+              <button type="button" class="ts-reset-icon-btn" id="btnResetFontWeights" title="Reset headings font weight to default (Bold 700)" aria-label="Reset font weight">
+                <svg width="13" height="13" viewBox="0 0 256 256" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="18"><polyline points="24 56 24 104 72 104"/><path d="M67.59,192A88,88,0,1,0,65.77,65.77L24,104"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="shade-lock-pill-container ts-weight-pill-box" title="Select font weight for headings">
+            <span class="shade-lock-label">Weight:</span>
+            <select id="tsHeadingWeightSelect" class="shade-select-dropdown" title="Heading font weight">
+              <option value="300">Light (300)</option>
+              <option value="400">Regular (400)</option>
+              <option value="500">Medium (500)</option>
+              <option value="600">SemiBold (600)</option>
+              <option value="700" selected>Bold (700)</option>
+              <option value="800">ExtraBold (800)</option>
+              <option value="900">Black (900)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Control 5: Line Height (Headings) -->
+        <div class="ts-control-card">
+          <div class="ts-control-label">
+            <span>Line Height</span>
+            <div class="ts-label-actions">
+              <span class="ts-badge-live" id="activeHeadingLineHeightDisplay">1.20</span>
+              <button type="button" class="ts-reset-icon-btn" id="btnResetLineHeight" title="Reset headings line height to default (1.20)" aria-label="Reset line height">
+                <svg width="13" height="13" viewBox="0 0 256 256" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="18"><polyline points="24 56 24 104 72 104"/><path d="M67.59,192A88,88,0,1,0,65.77,65.77L24,104"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="ts-slider-wrap">
+            <input type="range" id="tsHeadingLineHeightSlider" class="ts-range-slider" min="0.8" max="2.0" step="0.05" value="1.2" title="Adjust headings line height (0.8 to 2.0)">
+          </div>
+          <div class="ts-slider-scale-limits">
+            <span>0.80</span>
+            <span>Default: 1.20</span>
+            <span>2.00</span>
+          </div>
+        </div>
+
+        <!-- Control 6: Letter Spacing (Headings) -->
+        <div class="ts-control-card">
+          <div class="ts-control-label">
+            <span>Letter Spacing</span>
+            <div class="ts-label-actions">
+              <span class="ts-badge-live" id="activeHeadingLetterSpacingDisplay">0.00em</span>
+              <button type="button" class="ts-reset-icon-btn" id="btnResetLetterSpacing" title="Reset headings letter spacing to default (0.00em)" aria-label="Reset letter spacing">
+                <svg width="13" height="13" viewBox="0 0 256 256" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="18"><polyline points="24 56 24 104 72 104"/><path d="M67.59,192A88,88,0,1,0,65.77,65.77L24,104"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="ts-slider-wrap">
+            <input type="range" id="tsHeadingLetterSpacingSlider" class="ts-range-slider" min="-0.08" max="0.20" step="0.005" value="0" title="Adjust headings letter spacing (-0.08em to 0.20em)">
+          </div>
+          <div class="ts-slider-scale-limits">
+            <span>-0.08em</span>
+            <span>Default: 0.00em</span>
+            <span>+0.20em</span>
+          </div>
+        </div>
+
+        <!-- Control 7: Sample Text (Alphabet, Pangram, Prose in Header Actions) -->
+        <div class="ts-control-card ts-card-full-width">
+          <div class="ts-control-label">
             <span>Sample Text</span>
-            <span style="font-size:0.7rem; color:var(--text-muted);">Live Preview</span>
+            <div class="ts-label-actions">
+              <div class="ts-phrase-presets">
+                <button type="button" class="ts-preset-pill" data-phrase="The quick brown fox jumps over the lazy dog" title="Load full alphabet phrase">Alphabet</button>
+                <button type="button" class="ts-preset-pill" data-phrase="Sphinx of black quartz, judge my vow" title="Load classic pangram phrase">Pangram</button>
+                <button type="button" class="ts-preset-pill" data-phrase="Harmonious digital interfaces and typography" title="Load design prose phrase">Prose</button>
+              </div>
+              <button type="button" class="ts-reset-icon-btn" id="btnResetSampleText" title="Reset sample text to default (A visual type scale)" aria-label="Reset sample text">
+                <svg width="13" height="13" viewBox="0 0 256 256" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="18"><polyline points="24 56 24 104 72 104"/><path d="M67.59,192A88,88,0,1,0,65.77,65.77L24,104"/></svg>
+              </button>
+            </div>
           </div>
-          <input type="text" id="tsSampleTextInput" class="ts-text-input" value="A visual type scale" placeholder="Type sample phrase..." spellcheck="false">
-          <div class="ts-phrase-presets">
-            <button class="ts-preset-pill" data-phrase="A visual type scale">Title</button>
-            <button class="ts-preset-pill" data-phrase="The quick brown fox jumps over the lazy dog">Alphabet</button>
-            <button class="ts-preset-pill" data-phrase="Sphinx of black quartz, judge my vow">Pangram</button>
-            <button class="ts-preset-pill" data-phrase="Harmonious digital interfaces and typography">Prose</button>
-          </div>
+          <input type="text" id="tsSampleTextInput" class="ts-text-input" value="A visual type scale" placeholder="Type sample phrase..." spellcheck="false" title="Type custom phrase to preview across all type scale steps">
         </div>
       </div>
 
       <!-- Type Scale Live Rendering Stack -->
-      <div class="typescale-preview-stack" id="typescalePreviewStack">
-        <!-- Populated dynamically: 11 scale steps (Headings: Display, H1-H6; Paragraphs: Large, Regular [Base], Small, Extra Small) -->
+      <div class="typescale-preview-station" id="typescalePreviewStack">
+        <!-- Headings Category Banner -->
+        <div class="ts-category-banner">
+          <div class="ts-category-title-wrap">
+            <h3 class="ts-category-title">Headings</h3>
+            <span class="ts-category-hint">Display, H1 &ndash; H6 (H6 starts at Large paragraph size)</span>
+          </div>
+        </div>
+        <div class="typescale-preview-stack" id="typescaleHeadingsStack">
+          <!-- Populated dynamically: Display, H1 to H6 -->
+        </div>
+
+        <!-- Paragraphs Category Banner -->
+        <div class="ts-category-banner is-second">
+          <div class="ts-category-title-wrap">
+            <h3 class="ts-category-title">Paragraphs</h3>
+            <span class="ts-category-hint">Large (shares H6 size), Regular (Base 1rem / 16px), Small, Extra Small</span>
+          </div>
+        </div>
+
+        <!-- Paragraph Controls Station (3 Boxes before the Paragraphs to control the Paragraph) -->
+        <div class="ts-paragraph-controls-station">
+          <!-- Paragraph Box 1: Font Weight -->
+          <div class="ts-control-card">
+            <div class="ts-control-label">
+              <span>Font Weight</span>
+              <div class="ts-label-actions">
+                <span style="font-size:0.7rem; color:var(--text-muted); margin-right:2px;">Paragraphs</span>
+                <button type="button" class="ts-reset-icon-btn" id="btnResetParagraphWeight" title="Reset paragraphs font weight to default (Regular 400)" aria-label="Reset font weight">
+                  <svg width="13" height="13" viewBox="0 0 256 256" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="18"><polyline points="24 56 24 104 72 104"/><path d="M67.59,192A88,88,0,1,0,65.77,65.77L24,104"/></svg>
+                </button>
+              </div>
+            </div>
+            <div class="shade-lock-pill-container ts-weight-pill-box" title="Select font weight for paragraphs">
+              <span class="shade-lock-label">Weight:</span>
+              <select id="tsParagraphWeightSelect" class="shade-select-dropdown" title="Paragraph font weight">
+                <option value="300">Light (300)</option>
+                <option value="400" selected>Regular (400)</option>
+                <option value="500">Medium (500)</option>
+                <option value="600">SemiBold (600)</option>
+                <option value="700">Bold (700)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Paragraph Box 2: Line Height -->
+          <div class="ts-control-card">
+            <div class="ts-control-label">
+              <span>Line Height</span>
+              <div class="ts-label-actions">
+                <span class="ts-badge-live" id="activeParagraphLineHeightDisplay">1.50</span>
+                <button type="button" class="ts-reset-icon-btn" id="btnResetParagraphLineHeight" title="Reset paragraphs line height to default (1.50)" aria-label="Reset line height">
+                  <svg width="13" height="13" viewBox="0 0 256 256" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="18"><polyline points="24 56 24 104 72 104"/><path d="M67.59,192A88,88,0,1,0,65.77,65.77L24,104"/></svg>
+                </button>
+              </div>
+            </div>
+            <div class="ts-slider-wrap">
+              <input type="range" id="tsParagraphLineHeightSlider" class="ts-range-slider" min="0.8" max="2.0" step="0.05" value="1.5" title="Adjust paragraphs line height (0.8 to 2.0)">
+            </div>
+            <div class="ts-slider-scale-limits">
+              <span>0.80</span>
+              <span>Default: 1.50</span>
+              <span>2.00</span>
+            </div>
+          </div>
+
+          <!-- Paragraph Box 3: Letter Spacing -->
+          <div class="ts-control-card">
+            <div class="ts-control-label">
+              <span>Letter Spacing</span>
+              <div class="ts-label-actions">
+                <span class="ts-badge-live" id="activeParagraphLetterSpacingDisplay">0.00em</span>
+                <button type="button" class="ts-reset-icon-btn" id="btnResetParagraphLetterSpacing" title="Reset paragraphs letter spacing to default (0.00em)" aria-label="Reset letter spacing">
+                  <svg width="13" height="13" viewBox="0 0 256 256" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="18"><polyline points="24 56 24 104 72 104"/><path d="M67.59,192A88,88,0,1,0,65.77,65.77L24,104"/></svg>
+                </button>
+              </div>
+            </div>
+            <div class="ts-slider-wrap">
+              <input type="range" id="tsParagraphLetterSpacingSlider" class="ts-range-slider" min="-0.08" max="0.20" step="0.005" value="0" title="Adjust paragraphs letter spacing (-0.08em to 0.20em)">
+            </div>
+            <div class="ts-slider-scale-limits">
+              <span>-0.08em</span>
+              <span>Default: 0.00em</span>
+              <span>+0.20em</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Paragraphs Stack -->
+        <div class="typescale-preview-stack" id="typescaleParagraphsStack">
+          <!-- Populated dynamically: Large, Regular, Small, Extra Small -->
+        </div>
       </div>
 
       <!-- Type Scale Export Code Drawer -->
@@ -3735,7 +4236,7 @@
               </svg>
             </div>
             <span class="footer-brand-name">Typolor Studio</span>
-            <span class="footer-version-badge">v1.0</span>
+            <span class="footer-version-badge">v1.1</span>
           </div>
           <p class="footer-desc">
             Harmonic 11-step color palettes and proportional typographic scales with instant export for Tailwind CSS and modern design systems.
@@ -3744,11 +4245,6 @@
 
         <!-- Quick Actions & Links Column -->
         <div class="footer-links-col">
-          <div class="footer-kbd-pill" title="Press Space on desktop to shuffle color palette">
-            <kbd class="footer-kbd">Space</kbd>
-            <span>Shuffle palette</span>
-          </div>
-          
           <div class="footer-links-group">
             <a href="https://github.com/jarifhasanakash/typolor" target="_blank" rel="noopener noreferrer" class="footer-link" title="Source code on GitHub">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
@@ -4608,9 +5104,12 @@
     const tsCustomRatioContainer = document.getElementById('tsCustomRatioContainer');
     const tsCustomRatioInput = document.getElementById('tsCustomRatioInput');
     const tsBaseSizeInput = document.getElementById('tsBaseSizeInput');
-    const tsFontWeightSelect = document.getElementById('tsFontWeightSelect');
+    const tsHeadingWeightSelect = document.getElementById('tsHeadingWeightSelect');
+    const tsParagraphWeightSelect = document.getElementById('tsParagraphWeightSelect');
     const tsSampleTextInput = document.getElementById('tsSampleTextInput');
     const typescalePreviewStack = document.getElementById('typescalePreviewStack');
+    const typescaleHeadingsStack = document.getElementById('typescaleHeadingsStack');
+    const typescaleParagraphsStack = document.getElementById('typescaleParagraphsStack');
     const activeFontBadge = document.getElementById('activeFontBadge');
     const activeRatioVal = document.getElementById('activeRatioVal');
     const activeBaseDisplay = document.getElementById('activeBaseDisplay');
@@ -4619,11 +5118,34 @@
     const btnResetTypeScale = document.getElementById('btnResetTypeScale');
     const tsExportCodeBlock = document.getElementById('tsExportCodeBlock');
     const btnCopyTypeScaleCode = document.getElementById('btnCopyTypeScaleCode');
+    const tsHeadingLineHeightSlider = document.getElementById('tsHeadingLineHeightSlider');
+    const tsParagraphLineHeightSlider = document.getElementById('tsParagraphLineHeightSlider');
+    const activeHeadingLineHeightDisplay = document.getElementById('activeHeadingLineHeightDisplay');
+    const activeParagraphLineHeightDisplay = document.getElementById('activeParagraphLineHeightDisplay');
+    const btnResetFontFamily = document.getElementById('btnResetFontFamily');
+    const btnResetScaleRatio = document.getElementById('btnResetScaleRatio');
+    const btnResetBaseSize = document.getElementById('btnResetBaseSize');
+    const btnResetFontWeights = document.getElementById('btnResetFontWeights');
+    const btnResetParagraphWeight = document.getElementById('btnResetParagraphWeight');
+    const btnResetLineHeight = document.getElementById('btnResetLineHeight');
+    const btnResetParagraphLineHeight = document.getElementById('btnResetParagraphLineHeight');
+    const tsHeadingLetterSpacingSlider = document.getElementById('tsHeadingLetterSpacingSlider');
+    const tsParagraphLetterSpacingSlider = document.getElementById('tsParagraphLetterSpacingSlider');
+    const activeHeadingLetterSpacingDisplay = document.getElementById('activeHeadingLetterSpacingDisplay');
+    const activeParagraphLetterSpacingDisplay = document.getElementById('activeParagraphLetterSpacingDisplay');
+    const btnResetLetterSpacing = document.getElementById('btnResetLetterSpacing');
+    const btnResetParagraphLetterSpacing = document.getElementById('btnResetParagraphLetterSpacing');
+    const btnResetSampleText = document.getElementById('btnResetSampleText');
 
     let tsCurrentFont = 'Inter';
     let tsCurrentRatio = 1.250;
     let tsCurrentBase = 16;
-    let tsCurrentWeight = 600;
+    let tsHeadingWeight = 700;
+    let tsParagraphWeight = 400;
+    let tsHeadingLineHeight = 1.2;
+    let tsParagraphLineHeight = 1.5;
+    let tsHeadingLetterSpacing = 0;
+    let tsParagraphLetterSpacing = 0;
     let tsCurrentText = 'A visual type scale';
     let tsActiveTab = 'tailwindV4';
 
@@ -4683,64 +5205,45 @@
 
     // Render Type Scale Preview Rows
     function renderTypeScale() {
-      if (!typescalePreviewStack) return;
+      if (!typescaleHeadingsStack || !typescaleParagraphsStack) return;
 
       activeFontBadge.textContent = tsCurrentFont;
       activeRatioVal.textContent = Number(tsCurrentRatio).toFixed(3);
       activeBaseDisplay.textContent = `${tsCurrentBase}px`;
 
-      typescalePreviewStack.innerHTML = '';
-
-      let lastCategory = null;
+      typescaleHeadingsStack.innerHTML = '';
+      typescaleParagraphsStack.innerHTML = '';
 
       TYPE_SCALE_STEPS.forEach(step => {
-        // Insert category separator headers
-        if (step.category !== lastCategory) {
-          const banner = document.createElement('div');
-          banner.className = 'ts-category-banner' + (lastCategory ? ' is-second' : '');
-          if (step.category === 'heading') {
-            banner.innerHTML = `
-              <div class="ts-category-title-wrap">
-                <span class="ts-category-pill">Headings</span>
-                <span class="ts-category-hint">Display, H1 &ndash; H6 (H6 starts at Large paragraph size)</span>
-              </div>
-            `;
-          } else {
-            banner.innerHTML = `
-              <div class="ts-category-title-wrap">
-                <span class="ts-category-pill">Paragraphs</span>
-                <span class="ts-category-hint">Large (shares H6 size), Regular (Base 1rem / 16px), Small, Extra Small</span>
-              </div>
-            `;
-          }
-          typescalePreviewStack.appendChild(banner);
-          lastCategory = step.category;
-        }
-
         const factor = Math.pow(tsCurrentRatio, step.power);
         const px = (tsCurrentBase * factor).toFixed(2);
         const rem = (factor * (tsCurrentBase / 16)).toFixed(3);
 
         const card = document.createElement('div');
-        card.className = 'ts-step-card' + (step.isBase ? ' is-base-card' : '');
+        card.className = 'ts-step-card';
+
+        const isHeading = (step.category === 'heading');
+        const weight = isHeading ? tsHeadingWeight : tsParagraphWeight;
+        const lh = isHeading ? tsHeadingLineHeight : tsParagraphLineHeight;
+        const ls = isHeading ? tsHeadingLetterSpacing : tsParagraphLetterSpacing;
 
         card.innerHTML = `
           <div class="ts-step-meta">
-            <span class="ts-tag-pill ${step.category === 'heading' ? 'is-heading' : 'is-paragraph'} ${step.isBase ? 'is-base' : ''}">
+            <span class="ts-tag-pill ${isHeading ? 'is-heading' : 'is-paragraph'} ${step.isBase ? 'is-base' : ''}">
               ${step.tag}${step.isBase ? ' <span class="ts-base-badge">BASE</span>' : ''}
             </span>
             <div class="ts-dimension-text">
               <div>${rem}rem</div>
               <div style="opacity:0.75; font-size:0.68rem;">${px}px</div>
             </div>
-            <button class="ts-step-copy-btn" data-rem="${rem}" data-px="${px}" data-lh="${step.lh}" title="Copy CSS for ${step.tag}">
+            <button class="ts-step-copy-btn" data-rem="${rem}" data-px="${px}" data-lh="${lh}" data-ls="${ls}" data-weight="${weight}" title="Copy CSS for ${step.tag}">
               ${PHOSPHOR_ICONS.copy}
             </button>
           </div>
           <div class="ts-step-rendered-text"
                contenteditable="true"
                spellcheck="false"
-               style="font-family: '${tsCurrentFont}', sans-serif; font-size: ${rem}rem; line-height: ${step.lh}; font-weight: ${tsCurrentWeight};"
+               style="font-family: '${tsCurrentFont}', sans-serif; font-size: ${rem}rem; line-height: ${lh}; letter-spacing: ${ls}em; font-weight: ${weight};"
                title="Click to edit sample text directly">${tsCurrentText}</div>
         `;
 
@@ -4749,7 +5252,7 @@
         if (copyBtn) {
           copyBtn.addEventListener('click', (e) => {
             e.stopPropagation();
-            const cssSnippet = `font-size: ${rem}rem; /* ${px}px */\nline-height: ${step.lh};\nfont-weight: ${tsCurrentWeight};\nfont-family: '${tsCurrentFont}', sans-serif;`;
+            const cssSnippet = `font-size: ${rem}rem; /* ${px}px */\nline-height: ${lh};\nletter-spacing: ${ls}em;\nfont-weight: ${weight};\nfont-family: '${tsCurrentFont}', sans-serif;`;
             navigator.clipboard.writeText(cssSnippet);
             showToast(`Copied ${step.tag} CSS (${rem}rem) to clipboard!`);
           });
@@ -4764,7 +5267,11 @@
           });
         }
 
-        typescalePreviewStack.appendChild(card);
+        if (isHeading) {
+          typescaleHeadingsStack.appendChild(card);
+        } else {
+          typescaleParagraphsStack.appendChild(card);
+        }
       });
 
       renderTypeScaleExportCode();
@@ -4779,7 +5286,11 @@
         const rem = (factor * (tsCurrentBase / 16)).toFixed(3);
         const px = (tsCurrentBase * factor).toFixed(1);
         const slug = s.tag.toLowerCase().replace(/\s+/g, '-');
-        return { tag: s.tag, slug, rem, px, lh: s.lh, category: s.category, isBase: s.isBase };
+        const isHeading = (s.category === 'heading');
+        const weight = isHeading ? tsHeadingWeight : tsParagraphWeight;
+        const lh = isHeading ? tsHeadingLineHeight : tsParagraphLineHeight;
+        const ls = isHeading ? tsHeadingLetterSpacing : tsParagraphLetterSpacing;
+        return { tag: s.tag, slug, rem, px, lh, ls, weight, category: s.category, isBase: s.isBase };
       });
 
       const headingSteps = steps.filter(s => s.category === 'heading');
@@ -4791,12 +5302,18 @@
 @theme {
   --font-heading: '${tsCurrentFont}', sans-serif;
   --font-body: '${tsCurrentFont}', sans-serif;
+  --font-weight-heading: ${tsHeadingWeight};
+  --font-weight-body: ${tsParagraphWeight};
+  --leading-heading: ${tsHeadingLineHeight};
+  --leading-body: ${tsParagraphLineHeight};
+  --tracking-heading: ${tsHeadingLetterSpacing}em;
+  --tracking-body: ${tsParagraphLetterSpacing}em;
 
   /* Headings */
-${headingSteps.map(s => `  --text-${s.slug}: ${s.rem}rem; /* ${s.px}px, line-height: ${s.lh} */`).join('\n')}
+${headingSteps.map(s => `  --text-${s.slug}: ${s.rem}rem; /* ${s.px}px, weight: ${s.weight}, line-height: ${s.lh}, letter-spacing: ${s.ls}em */`).join('\n')}
 
   /* Paragraphs (Regular is Base) */
-${paragraphSteps.map(s => `  --text-${s.slug}: ${s.rem}rem; /* ${s.px}px${s.isBase ? ' (Base)' : ''}, line-height: ${s.lh} */`).join('\n')}
+${paragraphSteps.map(s => `  --text-${s.slug}: ${s.rem}rem; /* ${s.px}px${s.isBase ? ' (Base)' : ''}, weight: ${s.weight}, line-height: ${s.lh}, letter-spacing: ${s.ls}em */`).join('\n')}
 }`;
       } else if (tsActiveTab === 'tailwindV3') {
         code = `// Tailwind CSS v3 tailwind.config.js
@@ -4807,11 +5324,23 @@ module.exports = {
         heading: ['${tsCurrentFont}', 'sans-serif'],
         body: ['${tsCurrentFont}', 'sans-serif'],
       },
+      fontWeight: {
+        heading: '${tsHeadingWeight}',
+        body: '${tsParagraphWeight}',
+      },
+      lineHeight: {
+        heading: '${tsHeadingLineHeight}',
+        body: '${tsParagraphLineHeight}',
+      },
+      letterSpacing: {
+        heading: '${tsHeadingLetterSpacing}em',
+        body: '${tsParagraphLetterSpacing}em',
+      },
       fontSize: {
         // Headings: Display, H1 to H6
-${headingSteps.map(s => `        '${s.slug}': ['${s.rem}rem', { lineHeight: '${s.lh}' }], /* ${s.px}px */`).join('\n')}
+${headingSteps.map(s => `        '${s.slug}': ['${s.rem}rem', { lineHeight: '${s.lh}', letterSpacing: '${s.ls}em', fontWeight: '${s.weight}' }], /* ${s.px}px */`).join('\n')}
         // Paragraphs: Large, Regular (Base), Small, Extra Small
-${paragraphSteps.map(s => `        '${s.slug}': ['${s.rem}rem', { lineHeight: '${s.lh}' }], /* ${s.px}px${s.isBase ? ' (Base)' : ''} */`).join('\n')}
+${paragraphSteps.map(s => `        '${s.slug}': ['${s.rem}rem', { lineHeight: '${s.lh}', letterSpacing: '${s.ls}em', fontWeight: '${s.weight}' }], /* ${s.px}px${s.isBase ? ' (Base)' : ''} */`).join('\n')}
       }
     }
   }
@@ -4822,12 +5351,18 @@ ${paragraphSteps.map(s => `        '${s.slug}': ['${s.rem}rem', { lineHeight: '$
   --font-family-base: '${tsCurrentFont}', sans-serif;
   --type-scale-ratio: ${tsCurrentRatio};
   --type-scale-base: ${tsCurrentBase}px;
+  --font-weight-heading: ${tsHeadingWeight};
+  --font-weight-body: ${tsParagraphWeight};
+  --line-height-heading: ${tsHeadingLineHeight};
+  --line-height-body: ${tsParagraphLineHeight};
+  --letter-spacing-heading: ${tsHeadingLetterSpacing}em;
+  --letter-spacing-body: ${tsParagraphLetterSpacing}em;
 
   /* Headings */
-${headingSteps.map(s => `  --font-size-${s.slug}: ${s.rem}rem; /* ${s.px}px */\n  --line-height-${s.slug}: ${s.lh};`).join('\n')}
+${headingSteps.map(s => `  --font-size-${s.slug}: ${s.rem}rem; /* ${s.px}px */\n  --font-weight-${s.slug}: var(--font-weight-heading);\n  --line-height-${s.slug}: ${s.lh};\n  --letter-spacing-${s.slug}: ${s.ls}em;`).join('\n')}
 
   /* Paragraphs */
-${paragraphSteps.map(s => `  --font-size-${s.slug}: ${s.rem}rem; /* ${s.px}px${s.isBase ? ' (Base)' : ''} */\n  --line-height-${s.slug}: ${s.lh};`).join('\n')}
+${paragraphSteps.map(s => `  --font-size-${s.slug}: ${s.rem}rem; /* ${s.px}px${s.isBase ? ' (Base)' : ''} */\n  --font-weight-${s.slug}: var(--font-weight-body);\n  --line-height-${s.slug}: ${s.lh};\n  --letter-spacing-${s.slug}: ${s.ls}em;`).join('\n')}
 }`;
       } else if (tsActiveTab === 'json') {
         const headings = {};
@@ -4839,7 +5374,9 @@ ${paragraphSteps.map(s => `  --font-size-${s.slug}: ${s.rem}rem; /* ${s.px}px${s
             name: s.tag,
             rem: `${s.rem}rem`,
             px: `${s.px}px`,
+            weight: s.weight,
             lineHeight: s.lh,
+            letterSpacing: `${s.ls}em`,
             ...(s.isBase ? { isBase: true } : {})
           };
           tokens[s.slug] = item;
@@ -4854,7 +5391,18 @@ ${paragraphSteps.map(s => `  --font-size-${s.slug}: ${s.rem}rem; /* ${s.px}px${s
           fontFamily: tsCurrentFont,
           ratio: tsCurrentRatio,
           baseSize: `${tsCurrentBase}px`,
-          weight: tsCurrentWeight,
+          fontWeights: {
+            heading: tsHeadingWeight,
+            paragraph: tsParagraphWeight
+          },
+          lineHeights: {
+            heading: tsHeadingLineHeight,
+            paragraph: tsParagraphLineHeight
+          },
+          letterSpacings: {
+            heading: `${tsHeadingLetterSpacing}em`,
+            paragraph: `${tsParagraphLetterSpacing}em`
+          },
           hierarchy: {
             headings,
             paragraphs
@@ -4878,6 +5426,19 @@ ${paragraphSteps.map(s => `  --font-size-${s.slug}: ${s.rem}rem; /* ${s.px}px${s
         loadGoogleFont(tsCurrentFont);
         renderTypeScale();
       });
+
+      // Reset Font Family
+      if (btnResetFontFamily) {
+        btnResetFontFamily.addEventListener('click', () => {
+          tsCurrentFont = 'Inter';
+          tsFontFamilySelect.value = 'Inter';
+          tsCustomFontInput.value = '';
+          tsFontFamilySelect.dispatchEvent(new Event('change', { bubbles: true }));
+          loadGoogleFont('Inter');
+          renderTypeScale();
+          showToast('Reset font family to Inter');
+        });
+      }
 
       // Custom Font Input (typing any Google font name or pasting fonts.google.com URL)
       let fontDebounce = null;
@@ -4946,6 +5507,18 @@ ${paragraphSteps.map(s => `  --font-size-${s.slug}: ${s.rem}rem; /* ${s.px}px${s
         }
       });
 
+      // Reset Scale Ratio
+      if (btnResetScaleRatio) {
+        btnResetScaleRatio.addEventListener('click', () => {
+          tsCurrentRatio = 1.250;
+          tsScaleRatioSelect.value = '1.250';
+          tsCustomRatioContainer.style.display = 'none';
+          tsScaleRatioSelect.dispatchEvent(new Event('change', { bubbles: true }));
+          renderTypeScale();
+          showToast('Reset scale ratio to 1.250 (Major Third)');
+        });
+      }
+
       // Base Size Steppers
       document.getElementById('btnBaseMinus').addEventListener('click', () => {
         if (tsCurrentBase > 10) {
@@ -4979,26 +5552,186 @@ ${paragraphSteps.map(s => `  --font-size-${s.slug}: ${s.rem}rem; /* ${s.px}px${s
         }
       });
 
-      // Font Weight
-      tsFontWeightSelect.addEventListener('change', (e) => {
-        tsCurrentWeight = parseInt(e.target.value, 10);
-        renderTypeScale();
+      // Base Size Presets
+      document.querySelectorAll('.ts-base-pill').forEach(btn => {
+        btn.addEventListener('click', () => {
+          tsCurrentBase = parseInt(btn.getAttribute('data-base'), 10);
+          tsBaseSizeInput.value = tsCurrentBase;
+          if (activeBaseDisplay) activeBaseDisplay.textContent = `${tsCurrentBase}px`;
+          document.querySelectorAll('.ts-base-pill').forEach(b => b.classList.toggle('active', b === btn));
+          renderTypeScale();
+        });
       });
+
+      // Reset Base Size
+      if (btnResetBaseSize) {
+        btnResetBaseSize.addEventListener('click', () => {
+          tsCurrentBase = 16;
+          tsBaseSizeInput.value = 16;
+          if (activeBaseDisplay) activeBaseDisplay.textContent = '16px';
+          document.querySelectorAll('.ts-base-pill').forEach(b => b.classList.toggle('active', b.getAttribute('data-base') === '16'));
+          renderTypeScale();
+          showToast('Reset base size to 16px');
+        });
+      }
+
+      // Headings & Paragraphs Font Weights
+      if (tsHeadingWeightSelect) {
+        tsHeadingWeightSelect.addEventListener('change', (e) => {
+          tsHeadingWeight = parseInt(e.target.value, 10);
+          renderTypeScale();
+        });
+      }
+
+      if (tsParagraphWeightSelect) {
+        tsParagraphWeightSelect.addEventListener('change', (e) => {
+          tsParagraphWeight = parseInt(e.target.value, 10);
+          renderTypeScale();
+        });
+      }
+
+      // Reset Headings Font Weight
+      if (btnResetFontWeights) {
+        btnResetFontWeights.addEventListener('click', () => {
+          tsHeadingWeight = 700;
+          if (tsHeadingWeightSelect) {
+            tsHeadingWeightSelect.value = '700';
+            tsHeadingWeightSelect.dispatchEvent(new Event('change', { bubbles: true }));
+          }
+          renderTypeScale();
+          showToast('Reset headings font weight to Bold (700)');
+        });
+      }
+
+      // Reset Paragraphs Font Weight
+      if (btnResetParagraphWeight) {
+        btnResetParagraphWeight.addEventListener('click', () => {
+          tsParagraphWeight = 400;
+          if (tsParagraphWeightSelect) {
+            tsParagraphWeightSelect.value = '400';
+            tsParagraphWeightSelect.dispatchEvent(new Event('change', { bubbles: true }));
+          }
+          renderTypeScale();
+          showToast('Reset paragraphs font weight to Regular (400)');
+        });
+      }
+
+      // Line Height Sliders (Headings & Paragraphs)
+      if (tsHeadingLineHeightSlider) {
+        tsHeadingLineHeightSlider.addEventListener('input', (e) => {
+          tsHeadingLineHeight = parseFloat(e.target.value);
+          if (activeHeadingLineHeightDisplay) activeHeadingLineHeightDisplay.textContent = tsHeadingLineHeight.toFixed(2);
+          renderTypeScale();
+        });
+      }
+
+      if (tsParagraphLineHeightSlider) {
+        tsParagraphLineHeightSlider.addEventListener('input', (e) => {
+          tsParagraphLineHeight = parseFloat(e.target.value);
+          if (activeParagraphLineHeightDisplay) activeParagraphLineHeightDisplay.textContent = tsParagraphLineHeight.toFixed(2);
+          renderTypeScale();
+        });
+      }
+
+      // Reset Headings Line Height
+      if (btnResetLineHeight) {
+        btnResetLineHeight.addEventListener('click', () => {
+          tsHeadingLineHeight = 1.2;
+          if (tsHeadingLineHeightSlider) tsHeadingLineHeightSlider.value = 1.2;
+          if (activeHeadingLineHeightDisplay) activeHeadingLineHeightDisplay.textContent = '1.20';
+          renderTypeScale();
+          showToast('Reset headings line height to 1.20');
+        });
+      }
+
+      // Reset Paragraphs Line Height
+      if (btnResetParagraphLineHeight) {
+        btnResetParagraphLineHeight.addEventListener('click', () => {
+          tsParagraphLineHeight = 1.5;
+          if (tsParagraphLineHeightSlider) tsParagraphLineHeightSlider.value = 1.5;
+          if (activeParagraphLineHeightDisplay) activeParagraphLineHeightDisplay.textContent = '1.50';
+          renderTypeScale();
+          showToast('Reset paragraphs line height to 1.50');
+        });
+      }
+
+      // Letter Spacing Sliders (Headings & Paragraphs)
+      if (tsHeadingLetterSpacingSlider) {
+        tsHeadingLetterSpacingSlider.addEventListener('input', (e) => {
+          tsHeadingLetterSpacing = parseFloat(e.target.value);
+          const sign = tsHeadingLetterSpacing > 0 ? '+' : '';
+          if (activeHeadingLetterSpacingDisplay) activeHeadingLetterSpacingDisplay.textContent = `${sign}${tsHeadingLetterSpacing.toFixed(2)}em`;
+          renderTypeScale();
+        });
+      }
+
+      if (tsParagraphLetterSpacingSlider) {
+        tsParagraphLetterSpacingSlider.addEventListener('input', (e) => {
+          tsParagraphLetterSpacing = parseFloat(e.target.value);
+          const sign = tsParagraphLetterSpacing > 0 ? '+' : '';
+          if (activeParagraphLetterSpacingDisplay) activeParagraphLetterSpacingDisplay.textContent = `${sign}${tsParagraphLetterSpacing.toFixed(2)}em`;
+          renderTypeScale();
+        });
+      }
+
+      // Reset Headings Letter Spacing
+      if (btnResetLetterSpacing) {
+        btnResetLetterSpacing.addEventListener('click', () => {
+          tsHeadingLetterSpacing = 0;
+          if (tsHeadingLetterSpacingSlider) tsHeadingLetterSpacingSlider.value = 0;
+          if (activeHeadingLetterSpacingDisplay) activeHeadingLetterSpacingDisplay.textContent = '0.00em';
+          renderTypeScale();
+          showToast('Reset headings letter spacing to 0.00em');
+        });
+      }
+
+      // Reset Paragraphs Letter Spacing
+      if (btnResetParagraphLetterSpacing) {
+        btnResetParagraphLetterSpacing.addEventListener('click', () => {
+          tsParagraphLetterSpacing = 0;
+          if (tsParagraphLetterSpacingSlider) tsParagraphLetterSpacingSlider.value = 0;
+          if (activeParagraphLetterSpacingDisplay) activeParagraphLetterSpacingDisplay.textContent = '0.00em';
+          renderTypeScale();
+          showToast('Reset paragraphs letter spacing to 0.00em');
+        });
+      }
 
       // Sample Text Input
       tsSampleTextInput.addEventListener('input', (e) => {
         tsCurrentText = e.target.value || 'A visual type scale';
+        document.querySelectorAll('.ts-phrase-presets .ts-preset-pill:not(.ts-base-pill)').forEach(b => {
+          b.classList.toggle('active', b.getAttribute('data-phrase') === tsCurrentText);
+        });
         renderTypeScale();
       });
 
-      // Phrase presets
-      document.querySelectorAll('.ts-preset-pill').forEach(btn => {
+      // Phrase presets (Alphabet, Pangram, Prose)
+      document.querySelectorAll('.ts-phrase-presets .ts-preset-pill:not(.ts-base-pill)').forEach(btn => {
         btn.addEventListener('click', () => {
-          tsCurrentText = btn.getAttribute('data-phrase');
-          tsSampleTextInput.value = tsCurrentText;
-          renderTypeScale();
+          const phrase = btn.getAttribute('data-phrase');
+          if (phrase) {
+            tsCurrentText = phrase;
+            tsSampleTextInput.value = tsCurrentText;
+            document.querySelectorAll('.ts-phrase-presets .ts-preset-pill:not(.ts-base-pill)').forEach(b => {
+              b.classList.toggle('active', b === btn);
+            });
+            renderTypeScale();
+          }
         });
       });
+
+      // Reset Sample Text
+      if (btnResetSampleText) {
+        btnResetSampleText.addEventListener('click', () => {
+          tsCurrentText = 'A visual type scale';
+          tsSampleTextInput.value = 'A visual type scale';
+          document.querySelectorAll('.ts-phrase-presets .ts-preset-pill:not(.ts-base-pill)').forEach(b => {
+            b.classList.remove('active');
+          });
+          renderTypeScale();
+          showToast('Reset sample text to default');
+        });
+      }
 
       // Toggle Export Drawer
       btnToggleTypeScaleExport.addEventListener('click', () => {
@@ -5014,20 +5747,38 @@ ${paragraphSteps.map(s => `  --font-size-${s.slug}: ${s.rem}rem; /* ${s.px}px${s
         tsCurrentFont = 'Inter';
         tsCurrentRatio = 1.250;
         tsCurrentBase = 16;
-        tsCurrentWeight = 600;
+        tsHeadingWeight = 700;
+        tsParagraphWeight = 400;
+        tsHeadingLineHeight = 1.2;
+        tsParagraphLineHeight = 1.5;
+        tsHeadingLetterSpacing = 0;
+        tsParagraphLetterSpacing = 0;
         tsCurrentText = 'A visual type scale';
         tsFontFamilySelect.value = 'Inter';
         tsCustomFontInput.value = '';
         tsScaleRatioSelect.value = '1.250';
         tsCustomRatioContainer.style.display = 'none';
         tsBaseSizeInput.value = 16;
-        tsFontWeightSelect.value = '600';
+        if (activeBaseDisplay) activeBaseDisplay.textContent = '16px';
+        if (tsHeadingWeightSelect) tsHeadingWeightSelect.value = '700';
+        if (tsParagraphWeightSelect) tsParagraphWeightSelect.value = '400';
         tsSampleTextInput.value = 'A visual type scale';
+        if (tsHeadingLineHeightSlider) tsHeadingLineHeightSlider.value = 1.2;
+        if (tsParagraphLineHeightSlider) tsParagraphLineHeightSlider.value = 1.5;
+        if (activeHeadingLineHeightDisplay) activeHeadingLineHeightDisplay.textContent = '1.20';
+        if (activeParagraphLineHeightDisplay) activeParagraphLineHeightDisplay.textContent = '1.50';
+        if (tsHeadingLetterSpacingSlider) tsHeadingLetterSpacingSlider.value = 0;
+        if (tsParagraphLetterSpacingSlider) tsParagraphLetterSpacingSlider.value = 0;
+        if (activeHeadingLetterSpacingDisplay) activeHeadingLetterSpacingDisplay.textContent = '0.00em';
+        if (activeParagraphLetterSpacingDisplay) activeParagraphLetterSpacingDisplay.textContent = '0.00em';
+        document.querySelectorAll('.ts-base-pill').forEach(b => b.classList.toggle('active', b.getAttribute('data-base') === '16'));
+        document.querySelectorAll('.ts-phrase-presets .ts-preset-pill:not(.ts-base-pill)').forEach(b => b.classList.remove('active'));
         
         // Synchronize custom dropdowns
         tsFontFamilySelect.dispatchEvent(new Event('change', { bubbles: true }));
         tsScaleRatioSelect.dispatchEvent(new Event('change', { bubbles: true }));
-        tsFontWeightSelect.dispatchEvent(new Event('change', { bubbles: true }));
+        if (tsHeadingWeightSelect) tsHeadingWeightSelect.dispatchEvent(new Event('change', { bubbles: true }));
+        if (tsParagraphWeightSelect) tsParagraphWeightSelect.dispatchEvent(new Event('change', { bubbles: true }));
 
         renderTypeScale();
         showToast('Reset type scale to standard Major Third (1.250)!');
@@ -5193,6 +5944,13 @@ ${paragraphSteps.map(s => `  --font-size-${s.slug}: ${s.rem}rem; /* ${s.px}px${s
       exportModal.classList.add('open');
     });
 
+    const btnPaletteCopyAll = document.getElementById('btnPaletteCopyAll');
+    if (btnPaletteCopyAll) {
+      btnPaletteCopyAll.addEventListener('click', () => {
+        document.getElementById('btnCopyAllShades')?.click();
+      });
+    }
+
     const btnFooterExport = document.getElementById('btnFooterExport');
     if (btnFooterExport) {
       btnFooterExport.addEventListener('click', () => {
@@ -5324,7 +6082,7 @@ ${paragraphSteps.map(s => `  --font-size-${s.slug}: ${s.rem}rem; /* ${s.px}px${s
     }
 
     function initCustomDropdowns() {
-      const selectIds = ['lockShadeSelect', 'tsFontFamilySelect', 'tsScaleRatioSelect', 'tsFontWeightSelect'];
+      const selectIds = ['lockShadeSelect', 'tsFontFamilySelect', 'tsScaleRatioSelect', 'tsHeadingWeightSelect', 'tsParagraphWeightSelect'];
       
       selectIds.forEach(id => {
         const select = document.getElementById(id);
@@ -5340,7 +6098,7 @@ ${paragraphSteps.map(s => `  --font-size-${s.slug}: ${s.rem}rem; /* ${s.px}px${s
         select.style.overflow = 'hidden';
         select.tabIndex = -1;
 
-        const isShadeLock = (id === 'lockShadeSelect');
+        const isShadeLock = (id === 'lockShadeSelect' || id === 'tsHeadingWeightSelect' || id === 'tsParagraphWeightSelect');
         const wrapper = document.createElement('div');
         wrapper.className = 'tactile-select-wrapper' + (isShadeLock ? ' is-shade-lock' : '');
 
