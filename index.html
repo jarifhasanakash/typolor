@@ -371,22 +371,31 @@
     }
 
     /* --------------------------------------------------------------------------
-       HEADER & TACTILE INDUSTRIAL BADGE
+       HEADER & TACTILE INDUSTRIAL TOP BAR
        -------------------------------------------------------------------------- */
-    header {
-      margin-bottom: 2.5rem;
+    header,
+    header.site-header {
+      margin-bottom: 2rem;
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
-      flex-wrap: wrap;
-      gap: 1.5rem;
+      align-items: center;
+      gap: 1.25rem;
+      padding: 0.25rem 0;
     }
 
     .header-brand-block {
       display: flex;
-      align-items: flex-start;
-      gap: 0.95rem;
+      align-items: center;
+      gap: 0.85rem;
       min-width: 0;
+    }
+
+    .brand-logo-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.85rem;
+      text-decoration: none;
+      color: inherit;
     }
 
     .brand-logo-mark {
@@ -395,62 +404,67 @@
       justify-content: center;
       flex-shrink: 0;
       border-radius: 9px;
-      margin-top: 4px;
       box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15), inset 0 1px 1px rgba(255, 255, 255, 0.3);
       transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .brand-logo-mark:hover {
+    .brand-logo-link:hover .brand-logo-mark {
       transform: scale(1.06);
     }
 
     .brand-text-content {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
       min-width: 0;
     }
 
-    .tactile-badge-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.55rem;
-      padding: 0.45rem 1.15rem;
-      background: linear-gradient(180deg, var(--surface-raised-top) 0%, var(--surface-raised) 100%);
-      border: 1.5px solid var(--rim-light);
-      border-radius: var(--radius-pill);
-      box-shadow: var(--clay-puck-shadow);
-      font-size: 0.75rem;
+    h1,
+    h1.brand-title {
+      font-size: 1.35rem;
       font-weight: 800;
-      color: var(--text);
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      margin-bottom: 0.75rem;
-      position: relative;
-      user-select: none;
-    }
-
-    
-
-    h1 {
-      font-size: 2.45rem;
-      font-weight: 800;
-      letter-spacing: -0.035em;
+      letter-spacing: -0.025em;
       line-height: 1.2;
+      margin: 0;
       background: var(--header-gradient);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      white-space: nowrap;
+    }
+
+    .header-badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      background: var(--surface-recessed);
+      border: 1px solid var(--rim-light);
+      padding: 0.2rem 0.6rem;
+      border-radius: var(--radius-pill);
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+      user-select: none;
     }
 
     .header-desc {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      margin-top: 0.4rem;
-      max-width: 640px;
-      line-height: 1.55;
+      display: none;
     }
 
     .header-actions {
       display: flex;
-      gap: 0.85rem;
+      gap: 0.75rem;
       align-items: center;
+      flex-shrink: 0;
+    }
+
+    #btnHeaderGithub {
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    #btnHeaderGithub .btn-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
     }
 
     /* --------------------------------------------------------------------------
@@ -2718,7 +2732,8 @@
     }
 
     @media (max-width: 768px) {
-      header {
+      header,
+      header.site-header {
         display: flex !important;
         flex-direction: row !important;
         justify-content: space-between !important;
@@ -2734,6 +2749,9 @@
         min-width: 0 !important;
         flex: 1 1 auto !important;
       }
+      .brand-logo-link {
+        gap: 0.65rem !important;
+      }
       .brand-logo-mark {
         width: 32px !important;
         height: 32px !important;
@@ -2746,11 +2764,15 @@
       .brand-text-content {
         min-width: 0 !important;
       }
-      .brand-text-content h1 {
-        font-size: clamp(1.15rem, 4.8vw, 1.45rem) !important;
+      .brand-text-content h1,
+      h1.brand-title {
+        font-size: clamp(1.1rem, 4.2vw, 1.35rem) !important;
         line-height: 1.15 !important;
         white-space: nowrap !important;
         margin: 0 !important;
+      }
+      .header-badge {
+        display: none !important;
       }
       .header-desc {
         display: none !important;
@@ -2765,6 +2787,7 @@
         flex-shrink: 0 !important;
       }
       .header-actions .btn-header-icon-round,
+      .header-actions #btnHeaderGithub,
       .header-actions #globalThemeBtn,
       .header-actions #btnOpenExport {
         width: 40px !important;
@@ -2778,6 +2801,7 @@
         justify-content: center !important;
         flex-shrink: 0 !important;
       }
+      .header-actions #btnHeaderGithub .btn-text,
       .header-actions #globalThemeText,
       .header-actions #btnOpenExport .btn-content span {
         display: none !important;
@@ -2785,6 +2809,7 @@
       .header-actions #btnOpenExport .btn-content {
         gap: 0 !important;
       }
+      .header-actions #btnHeaderGithub .btn-icon,
       .header-actions #globalThemeIcon,
       .header-actions #btnOpenExport .btn-content svg {
         display: flex !important;
@@ -3114,36 +3139,228 @@
       opacity: 1;
     }
 
+    /* --------------------------------------------------------------------------
+       TACTILE INDUSTRIAL FOOTER
+       -------------------------------------------------------------------------- */
+    .site-footer {
+      border-top: 1px solid var(--rim-light);
+      margin-top: var(--space-12);
+      padding-top: var(--space-8);
+      padding-bottom: var(--space-8);
+      position: relative;
+      z-index: 1;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: var(--space-8);
+      flex-wrap: wrap;
+    }
+
+    .footer-brand-col {
+      flex: 1 1 380px;
+      min-width: 280px;
+    }
+
+    .footer-brand-title {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .footer-brand-name {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+
+    .footer-version-badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      background: var(--surface-recessed);
+      border: 1px solid var(--rim-light);
+      padding: 0.15rem 0.5rem;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-mono);
+      letter-spacing: 0.03em;
+    }
+
+    .footer-desc {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      line-height: 1.55;
+      max-width: 480px;
+      margin-top: 0.65rem;
+    }
+
+    .footer-links-col {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: var(--space-3_5);
+      flex: 0 1 auto;
+    }
+
+    .footer-kbd-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-size: 0.775rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: linear-gradient(180deg, var(--surface-raised-top) 0%, var(--surface-raised) 100%);
+      border: 1px solid var(--rim-light);
+      padding: 0.35rem 0.85rem;
+      border-radius: var(--radius-pill);
+      box-shadow: var(--clay-puck-shadow);
+      user-select: none;
+    }
+
+    .footer-kbd {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 700;
+      background: var(--canvas-bg);
+      border: 1px solid var(--rim-light);
+      border-radius: 4px;
+      padding: 0.12rem 0.42rem;
+      color: var(--text);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 2px rgba(0, 0, 0, 0.08);
+    }
+
+    .footer-links-group {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-link,
+    .footer-link-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.825rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      padding: 0.35rem 0.65rem;
+      border-radius: var(--radius-pill);
+      transition: color var(--dur-fast) ease, background-color var(--dur-fast) ease;
+    }
+
+    .footer-link:hover,
+    .footer-link-btn:hover {
+      color: var(--text);
+      background-color: var(--surface-raised);
+    }
+
+    .footer-bottom-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--surface-bezel);
+      margin-top: var(--space-6);
+      padding-top: var(--space-4);
+      font-size: 0.775rem;
+      color: var(--text-subtle);
+      flex-wrap: wrap;
+      gap: var(--space-2);
+    }
+
+    .footer-status-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .status-indicator-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #10B981;
+      box-shadow: 0 0 6px #10B981;
+      display: inline-block;
+    }
+
+    @media (max-width: 768px) {
+      .site-footer {
+        margin-top: var(--space-8);
+        padding-top: var(--space-6);
+        padding-bottom: var(--space-6);
+      }
+      .footer-inner {
+        flex-direction: column;
+        gap: var(--space-4);
+      }
+      .footer-brand-col {
+        flex: 1 1 auto;
+        min-width: 0;
+        width: 100%;
+      }
+      .footer-links-col {
+        align-items: flex-start;
+        width: 100%;
+        gap: var(--space-3);
+      }
+      .footer-links-group {
+        gap: 0.5rem;
+      }
+      .footer-bottom-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-2);
+      }
+    }
+
   </style>
 </head>
 
 <body>
 
   <div class="container">
-    <!-- Header -->
-    <header>
+    <!-- Simple Header Bar -->
+    <header class="site-header">
       <div class="header-brand-block">
-        <div class="brand-logo-mark" aria-hidden="true" title="Typolor Studio">
-          <svg width="34" height="34" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <linearGradient id="brandLogoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#3B82F6"/>
-                <stop offset="100%" stop-color="#10B981"/>
-              </linearGradient>
-            </defs>
-            <rect width="32" height="32" rx="8" fill="#14161a"/>
-            <circle cx="12" cy="16" r="6" fill="url(#brandLogoGrad)"/>
-            <path d="M19 11h7m-3.5 0v10m-3 0h6" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <div class="brand-text-content">
-          <h1>Typolor Studio</h1>
-          <p class="header-desc">
-            Generate harmonious, accessible color palettes and proportional typographic scales with instant export for Tailwind CSS and modern design systems.
-          </p>
-        </div>
+        <a href="#" class="brand-logo-link" aria-label="Typolor Studio">
+          <div class="brand-logo-mark" aria-hidden="true" title="Typolor Studio">
+            <svg width="34" height="34" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="brandLogoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#3B82F6"/>
+                  <stop offset="100%" stop-color="#10B981"/>
+                </linearGradient>
+              </defs>
+              <rect width="32" height="32" rx="8" fill="#14161a"/>
+              <circle cx="12" cy="16" r="6" fill="url(#brandLogoGrad)"/>
+              <path d="M19 11h7m-3.5 0v10m-3 0h6" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="brand-text-content">
+            <h1 class="brand-title">Typolor Studio</h1>
+            <span class="header-badge">Color &amp; Typography</span>
+          </div>
+        </a>
       </div>
       <div class="header-actions">
+        <!-- GitHub Link Button -->
+        <a href="https://github.com/jarifhasanakash/typolor" target="_blank" rel="noopener noreferrer" class="btn-crystal-clear-pill btn-header-icon-round" id="btnHeaderGithub" title="View Typolor on GitHub" aria-label="GitHub Repository">
+          <span class="btn-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+          </span>
+          <span class="btn-text">GitHub</span>
+        </a>
+
         <!-- Theme Switcher Pill / Round Mobile Button -->
         <button class="btn-crystal-clear-pill btn-header-icon-round" id="globalThemeBtn" title="Toggle Page Theme (Light / Dark)" aria-label="Toggle Page Theme">
           <span id="globalThemeIcon"><svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><path d="M108.11,28.11A96.09,96.09,0,0,0,227.89,147.89,96,96,0,1,1,108.11,28.11Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg></span>
@@ -3503,6 +3720,64 @@
         <div class="code-glass-terminal" id="tsExportCodeBlock" style="max-height: 220px;"></div>
       </div>
     </div>
+
+    <!-- Simple Tactile Footer -->
+    <footer class="site-footer" id="siteFooter">
+      <div class="footer-inner">
+        <!-- Brand & Description Block -->
+        <div class="footer-brand-col">
+          <div class="footer-brand-title">
+            <div class="brand-logo-mark" aria-hidden="true" style="width:26px; height:26px; margin:0; box-shadow:none;">
+              <svg width="26" height="26" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="32" height="32" rx="8" fill="#14161a"/>
+                <circle cx="12" cy="16" r="6" fill="url(#brandLogoGrad)"/>
+                <path d="M19 11h7m-3.5 0v10m-3 0h6" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <span class="footer-brand-name">Typolor Studio</span>
+            <span class="footer-version-badge">v1.0</span>
+          </div>
+          <p class="footer-desc">
+            Harmonic 11-step color palettes and proportional typographic scales with instant export for Tailwind CSS and modern design systems.
+          </p>
+        </div>
+
+        <!-- Quick Actions & Links Column -->
+        <div class="footer-links-col">
+          <div class="footer-kbd-pill" title="Press Space on desktop to shuffle color palette">
+            <kbd class="footer-kbd">Space</kbd>
+            <span>Shuffle palette</span>
+          </div>
+          
+          <div class="footer-links-group">
+            <a href="https://github.com/jarifhasanakash/typolor" target="_blank" rel="noopener noreferrer" class="footer-link" title="Source code on GitHub">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+              <span>GitHub</span>
+            </a>
+            <button type="button" class="footer-link-btn" id="btnFooterExport" title="Open Export Modal">
+              <svg width="14" height="14" viewBox="0 0 256 256" fill="currentColor"><path d="M176,104h24a8,8,0,0,1,8,8v96a8,8,0,0,1-8,8H56a8,8,0,0,1-8-8V112a8,8,0,0,1,8-8H80" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><polyline points="88 64 128 24 168 64" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="128" y1="24" x2="128" y2="136" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>
+              <span>Export Code</span>
+            </button>
+            <a href="https://github.com/jarifhasanakash/typolor/blob/main/LICENSE" target="_blank" rel="noopener noreferrer" class="footer-link" title="MIT License">
+              <span>MIT License</span>
+            </a>
+            <button type="button" class="footer-link-btn" id="btnFooterScrollTop" title="Scroll to top">
+              <svg width="14" height="14" viewBox="0 0 256 256" fill="currentColor"><polyline points="48 160 128 80 208 160" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"/></svg>
+              <span>Top</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer Bottom Baseline -->
+      <div class="footer-bottom-bar">
+        <span class="footer-copyright">&copy; 2026 Typolor Studio. Open source software.</span>
+        <span class="footer-status-tag">
+          <span class="status-indicator-dot"></span>
+          <span>Tactile Engine Active</span>
+        </span>
+      </div>
+    </footer>
 
       </div>
 
@@ -4873,6 +5148,20 @@ ${paragraphSteps.map(s => `  --font-size-${s.slug}: ${s.rem}rem; /* ${s.px}px${s
     document.getElementById('btnOpenExport').addEventListener('click', () => {
       exportModal.classList.add('open');
     });
+
+    const btnFooterExport = document.getElementById('btnFooterExport');
+    if (btnFooterExport) {
+      btnFooterExport.addEventListener('click', () => {
+        document.getElementById('btnOpenExport')?.click();
+      });
+    }
+
+    const btnFooterScrollTop = document.getElementById('btnFooterScrollTop');
+    if (btnFooterScrollTop) {
+      btnFooterScrollTop.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
     document.getElementById('btnCloseExport').addEventListener('click', () => {
       exportModal.classList.remove('open');
     });
