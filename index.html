@@ -3956,7 +3956,6 @@
               <option value="Geist Mono">Geist Mono</option>
             </optgroup>
           </select>
-          <input type="text" id="tsCustomFontInput" class="ts-text-input" placeholder="Type font name or paste fonts.google.com URL..." spellcheck="false" title="Type any Google Font name or paste a fonts.google.com URL to load and showcase it live">
         </div>
 
         <!-- Control 2: Scale Ratio -->
@@ -5097,7 +5096,6 @@
     // TYPE SCALE STUDIO ENGINE & CONTROLLER (typescale.com inspiration)
     // ==========================================================================
     const tsFontFamilySelect = document.getElementById('tsFontFamilySelect');
-    const tsCustomFontInput = document.getElementById('tsCustomFontInput');
     const tsScaleRatioSelect = document.getElementById('tsScaleRatioSelect');
     const tsCustomRatioContainer = document.getElementById('tsCustomRatioContainer');
     const tsCustomRatioInput = document.getElementById('tsCustomRatioInput');
@@ -5420,7 +5418,6 @@ ${paragraphSteps.map(s => `  --font-size-${s.slug}: ${s.rem}rem; /* ${s.px}px${s
       // Font Select Dropdown
       tsFontFamilySelect.addEventListener('change', (e) => {
         tsCurrentFont = e.target.value;
-        tsCustomFontInput.value = '';
         loadGoogleFont(tsCurrentFont);
         renderTypeScale();
       });
@@ -5430,59 +5427,12 @@ ${paragraphSteps.map(s => `  --font-size-${s.slug}: ${s.rem}rem; /* ${s.px}px${s
         btnResetFontFamily.addEventListener('click', () => {
           tsCurrentFont = 'Inter';
           tsFontFamilySelect.value = 'Inter';
-          tsCustomFontInput.value = '';
           tsFontFamilySelect.dispatchEvent(new Event('change', { bubbles: true }));
           loadGoogleFont('Inter');
           renderTypeScale();
           showToast('Reset font family to Inter');
         });
       }
-
-      // Custom Font Input (typing any Google font name or pasting fonts.google.com URL)
-      let fontDebounce = null;
-      const applyFont = (rawVal) => {
-        const cleanVal = extractGoogleFontName(rawVal);
-        if (cleanVal) {
-          tsCurrentFont = cleanVal;
-          if (rawVal !== cleanVal) {
-            tsCustomFontInput.value = cleanVal;
-          }
-          // Sync with select dropdown if font is present in the curated list
-          let found = false;
-          for (let i = 0; i < tsFontFamilySelect.options.length; i++) {
-            if (tsFontFamilySelect.options[i].value.toLowerCase() === cleanVal.toLowerCase()) {
-              tsFontFamilySelect.selectedIndex = i;
-              found = true;
-              break;
-            }
-          }
-          if (!found) {
-            tsFontFamilySelect.selectedIndex = -1;
-          }
-          loadGoogleFont(tsCurrentFont);
-          renderTypeScale();
-        }
-      };
-
-      tsCustomFontInput.addEventListener('input', (e) => {
-        clearTimeout(fontDebounce);
-        fontDebounce = setTimeout(() => {
-          applyFont(e.target.value);
-        }, 300);
-      });
-
-      tsCustomFontInput.addEventListener('paste', () => {
-        setTimeout(() => {
-          applyFont(tsCustomFontInput.value);
-        }, 20);
-      });
-
-      tsCustomFontInput.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
-          clearTimeout(fontDebounce);
-          applyFont(e.target.value);
-        }
-      });
 
       // Ratio Select Dropdown
       tsScaleRatioSelect.addEventListener('change', (e) => {
@@ -5753,7 +5703,6 @@ ${paragraphSteps.map(s => `  --font-size-${s.slug}: ${s.rem}rem; /* ${s.px}px${s
         tsParagraphLetterSpacing = 0;
         tsCurrentText = 'A visual type scale';
         tsFontFamilySelect.value = 'Inter';
-        tsCustomFontInput.value = '';
         tsScaleRatioSelect.value = '1.250';
         tsCustomRatioContainer.style.display = 'none';
         tsBaseSizeInput.value = 16;
