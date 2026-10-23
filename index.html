@@ -382,6 +382,32 @@
       gap: 1.5rem;
     }
 
+    .header-brand-block {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.95rem;
+      min-width: 0;
+    }
+
+    .brand-logo-mark {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      border-radius: 9px;
+      margin-top: 4px;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .brand-logo-mark:hover {
+      transform: scale(1.06);
+    }
+
+    .brand-text-content {
+      min-width: 0;
+    }
+
     .tactile-badge-pill {
       display: inline-flex;
       align-items: center;
@@ -2626,20 +2652,174 @@
 
     @media (max-width: 768px) {
       header {
-        margin-bottom: var(--space-6) !important;
-        gap: var(--space-4) !important;
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        margin-bottom: var(--space-4) !important;
+        gap: var(--space-3) !important;
+        width: 100% !important;
+      }
+      .header-brand-block {
+        display: flex !important;
+        align-items: center !important;
+        gap: 0.65rem !important;
+        min-width: 0 !important;
+        flex: 1 1 auto !important;
+      }
+      .brand-logo-mark {
+        width: 32px !important;
+        height: 32px !important;
+        margin-top: 0 !important;
+      }
+      .brand-logo-mark svg {
+        width: 32px !important;
+        height: 32px !important;
+      }
+      .brand-text-content {
+        min-width: 0 !important;
+      }
+      .brand-text-content h1 {
+        font-size: clamp(1.15rem, 4.8vw, 1.45rem) !important;
+        line-height: 1.15 !important;
+        white-space: nowrap !important;
+        margin: 0 !important;
+      }
+      .header-desc {
+        display: none !important;
       }
       .header-actions {
-        width: 100% !important;
-        justify-content: flex-start !important;
-        flex-wrap: wrap !important;
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: flex-end !important;
+        gap: 0.5rem !important;
+        width: auto !important;
+        flex-shrink: 0 !important;
+      }
+      .header-actions .btn-header-icon-round,
+      .header-actions #globalThemeBtn,
+      .header-actions #btnOpenExport {
+        width: 40px !important;
+        height: 40px !important;
+        min-width: 40px !important;
+        max-width: 40px !important;
+        padding: 0 !important;
+        border-radius: 50% !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        flex-shrink: 0 !important;
+      }
+      .header-actions #globalThemeText,
+      .header-actions #btnOpenExport .btn-content span {
+        display: none !important;
+      }
+      .header-actions #btnOpenExport .btn-content {
+        gap: 0 !important;
+      }
+      .header-actions #globalThemeIcon,
+      .header-actions #btnOpenExport .btn-content svg {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        margin: 0 !important;
       }
       .hero-color-station {
-        padding: var(--space-5) var(--space-4) !important;
+        padding: var(--space-4) var(--space-3_5) !important;
         border-radius: var(--radius-2xl) !important;
-        margin-bottom: var(--space-6) !important;
-        gap: var(--space-4) !important;
+        margin-bottom: var(--space-5) !important;
+        gap: var(--space-3_5) !important;
       }
+
+      /* Console Main Row: Liquid orb + Shuffle button beside each other on top; Input capsule underneath full width */
+      .console-main-row {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        align-items: center !important;
+        gap: var(--space-3) !important;
+        width: 100% !important;
+      }
+      .hero-orb-wrap {
+        order: 1 !important;
+        flex-shrink: 0 !important;
+      }
+      .hero-liquid-orb {
+        width: 48px !important;
+        height: 48px !important;
+      }
+      .btn-hero-shuffle {
+        order: 2 !important;
+        flex: 1 1 0% !important;
+        min-width: 0 !important;
+        height: 56px !important;
+        display: inline-flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        border-radius: var(--radius-pill) !important;
+      }
+      .btn-hero-shuffle .btn-content {
+        font-size: 0.925rem !important;
+        gap: 0.5rem !important;
+      }
+      .btn-hero-shuffle .key-hint {
+        display: none !important;
+      }
+      .hero-input-capsule {
+        order: 3 !important;
+        width: 100% !important;
+        min-width: 100% !important;
+        flex-basis: 100% !important;
+        box-sizing: border-box !important;
+        padding: 0.45rem 0.65rem 0.45rem 0.85rem !important;
+        gap: var(--space-2) !important;
+        margin-top: 0 !important;
+      }
+      .universal-color-input {
+        width: 100% !important;
+        min-width: 0 !important;
+        flex: 1 !important;
+        font-size: 0.95rem !important;
+      }
+
+      /* Console Metrics Row & Full-Width Lock Shade */
+      .console-metrics-row {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: var(--space-3) !important;
+      }
+      .color-history-chassis {
+        width: 100% !important;
+        justify-content: space-between !important;
+      }
+      .console-controls-cluster {
+        width: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: var(--space-2_5) !important;
+      }
+      .crystal-mode-toggle {
+        width: 100% !important;
+        display: flex !important;
+        box-sizing: border-box !important;
+      }
+      .mode-pill-btn {
+        flex: 1 !important;
+        text-align: center !important;
+        justify-content: center !important;
+        padding: var(--space-2) var(--space-2) !important;
+        font-size: 0.8rem !important;
+      }
+      .shade-lock-pill-container {
+        width: 100% !important;
+        box-sizing: border-box !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        padding: 8px 14px !important;
+      }
+
       .palette-presentation-chassis {
         padding: var(--space-5) var(--space-4) !important;
         border-radius: var(--radius-2xl) !important;
@@ -2677,58 +2857,8 @@
       .container {
         padding: 0 var(--space-1) !important;
       }
-      h1 {
-        font-size: clamp(1.65rem, 6.5vw, 2.15rem) !important;
-      }
-      .header-actions {
-        flex-direction: column !important;
-        width: 100% !important;
-        gap: var(--space-2) !important;
-      }
-      .header-actions .btn-crystal-clear-pill,
-      .header-actions .btn-obsidian-crystal {
-        width: 100% !important;
-        justify-content: center !important;
-      }
       .hero-color-station {
-        padding: var(--space-4) var(--space-3) !important;
-      }
-      .console-main-row {
-        gap: var(--space-2_5) !important;
-      }
-      .hero-input-capsule {
-        min-width: 0 !important;
-        padding: var(--space-2) var(--space-2_5) var(--space-2) var(--space-3) !important;
-        gap: var(--space-2) !important;
-      }
-      .universal-color-input {
-        font-size: 1rem !important;
-      }
-      .console-metrics-row {
-        flex-direction: column !important;
-        align-items: stretch !important;
-        gap: var(--space-3) !important;
-      }
-      .color-history-chassis {
-        width: 100% !important;
-        justify-content: space-between !important;
-      }
-      .console-controls-cluster {
-        width: 100% !important;
-        justify-content: space-between !important;
-      }
-      .crystal-mode-toggle {
-        flex: 1 !important;
-        justify-content: space-between !important;
-      }
-      .mode-pill-btn {
-        flex: 1 !important;
-        justify-content: center !important;
-        padding: var(--space-2) var(--space-2) !important;
-        font-size: 0.78rem !important;
-      }
-      .shade-lock-pill-container {
-        justify-content: space-between !important;
+        padding: var(--space-3_5) var(--space-3) !important;
       }
       .typescale-controls-station {
         grid-template-columns: 1fr !important;
@@ -2802,11 +2932,6 @@
     }
 
     @media (max-width: 480px) {
-      .btn-hero-shuffle {
-        width: 100% !important;
-        justify-content: center !important;
-        height: 44px !important;
-      }
       .picker-presets-grid {
         grid-template-columns: repeat(6, 1fr) !important;
         gap: 8px !important;
@@ -2890,29 +3015,44 @@
   <div class="container">
     <!-- Header -->
     <header>
-    <div>
-      <h1>Typolor Studio</h1>
-      <p class="header-desc">
-        Generate harmonious, accessible color palettes and proportional typographic scales with instant export for Tailwind CSS and modern design systems.
-      </p>
-    </div>
-    <div class="header-actions">
-      <!-- Theme Switcher Pill -->
-      <button class="btn-crystal-clear-pill" id="globalThemeBtn" title="Toggle Page Theme (Light / Dark)">
-        <span id="globalThemeIcon"><svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><path d="M108.11,28.11A96.09,96.09,0,0,0,227.89,147.89,96,96,0,1,1,108.11,28.11Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg></span>
-        <span id="globalThemeText">Dark Theme</span>
-      </button>
-
-      <!-- Primary #1A1A1A Obsidian Button -->
-      <button class="btn-obsidian-crystal" id="btnOpenExport">
-        <div class="obsidian-core"></div>
-        <div class="btn-content">
-          <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><path d="M176,104h24a8,8,0,0,1,8,8v96a8,8,0,0,1-8,8H56a8,8,0,0,1-8-8V112a8,8,0,0,1,8-8H80" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><polyline points="88 64 128 24 168 64" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="128" y1="24" x2="128" y2="136" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>
-          <span>Export Code</span>
+      <div class="header-brand-block">
+        <div class="brand-logo-mark" aria-hidden="true" title="Typolor Studio">
+          <svg width="34" height="34" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="brandLogoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#3B82F6"/>
+                <stop offset="100%" stop-color="#10B981"/>
+              </linearGradient>
+            </defs>
+            <rect width="32" height="32" rx="8" fill="#14161a"/>
+            <circle cx="12" cy="16" r="6" fill="url(#brandLogoGrad)"/>
+            <path d="M19 11h7m-3.5 0v10m-3 0h6" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
         </div>
-      </button>
-    </div>
-  </header>
+        <div class="brand-text-content">
+          <h1>Typolor Studio</h1>
+          <p class="header-desc">
+            Generate harmonious, accessible color palettes and proportional typographic scales with instant export for Tailwind CSS and modern design systems.
+          </p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <!-- Theme Switcher Pill / Round Mobile Button -->
+        <button class="btn-crystal-clear-pill btn-header-icon-round" id="globalThemeBtn" title="Toggle Page Theme (Light / Dark)" aria-label="Toggle Page Theme">
+          <span id="globalThemeIcon"><svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><path d="M108.11,28.11A96.09,96.09,0,0,0,227.89,147.89,96,96,0,1,1,108.11,28.11Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg></span>
+          <span id="globalThemeText">Dark Theme</span>
+        </button>
+
+        <!-- Primary #1A1A1A Obsidian Button / Round Mobile Button -->
+        <button class="btn-obsidian-crystal btn-header-icon-round" id="btnOpenExport" title="Export Code (Tailwind, CSS, Tokens)" aria-label="Export Code">
+          <div class="obsidian-core"></div>
+          <div class="btn-content">
+            <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><path d="M176,104h24a8,8,0,0,1,8,8v96a8,8,0,0,1-8,8H56a8,8,0,0,1-8-8V112a8,8,0,0,1,8-8H80" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><polyline points="88 64 128 24 168 64" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="128" y1="24" x2="128" y2="136" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>
+            <span>Export Code</span>
+          </div>
+        </button>
+      </div>
+    </header>
 
     <!-- Hero Color Station: Prioritized Central Command Hub -->
     <section class="hero-color-station" id="heroColorStation">
