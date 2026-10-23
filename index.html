@@ -3625,7 +3625,7 @@
               <option value="Geist Mono">Geist Mono</option>
             </optgroup>
           </select>
-          <input type="text" id="tsCustomFontInput" class="ts-text-input" placeholder="Or enter ANY Google Font name..." spellcheck="false" title="Type any Google Font to load and apply it live">
+          <input type="text" id="tsCustomFontInput" class="ts-text-input" placeholder="Type font name or paste fonts.google.com URL..." spellcheck="false" title="Type any Google Font name or paste a fonts.google.com URL to load and showcase it live">
         </div>
 
         <!-- Control 2: Scale Ratio -->
@@ -4641,10 +4641,32 @@
       { category: 'paragraph', tag: 'Extra Small', label: 'Paragraph Extra Small', power: -2, lh: 1.45 }
     ];
 
+    // Helper: Extract clean font family name from raw text or Google Fonts URL
+    function extractGoogleFontName(input) {
+      if (!input) return '';
+      let str = input.trim();
+      // Handle https://fonts.google.com/specimen/Font+Name or https://fonts.google.com/specimen/Font+Name?preview.text=...
+      if (/fonts\.google\.com\/specimen\//i.test(str)) {
+        const match = str.match(/fonts\.google\.com\/specimen\/([^\/\?#&]+)/i);
+        if (match && match[1]) {
+          return decodeURIComponent(match[1]).replace(/\+/g, ' ').replace(/_/g, ' ').trim();
+        }
+      }
+      // Handle https://fonts.googleapis.com/css2?family=Font+Name:...
+      if (/family=/i.test(str)) {
+        const match = str.match(/family=([^:&?#]+)/i);
+        if (match && match[1]) {
+          return decodeURIComponent(match[1]).replace(/\+/g, ' ').replace(/_/g, ' ').trim();
+        }
+      }
+      return str.replace(/^['"]|['"]$/g, '').trim();
+    }
+
     // Dynamically load any Google font
     function loadGoogleFont(fontName) {
       if (!fontName) return;
-      const cleanName = fontName.trim();
+      const cleanName = extractGoogleFontName(fontName);
+      if (!cleanName) return;
       const id = 'gfont-' + cleanName.toLowerCase().replace(/[^a-z0-9]/g, '-');
       if (document.getElementById(id)) return;
       
@@ -4857,11 +4879,27 @@ ${paragraphSteps.map(s => `  --font-size-${s.slug}: ${s.rem}rem; /* ${s.px}px${s
         renderTypeScale();
       });
 
-      // Custom Font Input (typing any Google font)
+      // Custom Font Input (typing any Google font name or pasting fonts.google.com URL)
       let fontDebounce = null;
-      const applyFont = (val) => {
-        if (val) {
-          tsCurrentFont = val;
+      const applyFont = (rawVal) => {
+        const cleanVal = extractGoogleFontName(rawVal);
+        if (cleanVal) {
+          tsCurrentFont = cleanVal;
+          if (rawVal !== cleanVal) {
+            tsCustomFontInput.value = cleanVal;
+          }
+          // Sync with select dropdown if font is present in the curated list
+          let found = false;
+          for (let i = 0; i < tsFontFamilySelect.options.length; i++) {
+            if (tsFontFamilySelect.options[i].value.toLowerCase() === cleanVal.toLowerCase()) {
+              tsFontFamilySelect.selectedIndex = i;
+              found = true;
+              break;
+            }
+          }
+          if (!found) {
+            tsFontFamilySelect.selectedIndex = -1;
+          }
           loadGoogleFont(tsCurrentFont);
           renderTypeScale();
         }
@@ -4870,14 +4908,20 @@ ${paragraphSteps.map(s => `  --font-size-${s.slug}: ${s.rem}rem; /* ${s.px}px${s
       tsCustomFontInput.addEventListener('input', (e) => {
         clearTimeout(fontDebounce);
         fontDebounce = setTimeout(() => {
-          applyFont(e.target.value.trim());
-        }, 350);
+          applyFont(e.target.value);
+        }, 300);
+      });
+
+      tsCustomFontInput.addEventListener('paste', () => {
+        setTimeout(() => {
+          applyFont(tsCustomFontInput.value);
+        }, 20);
       });
 
       tsCustomFontInput.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
           clearTimeout(fontDebounce);
-          applyFont(e.target.value.trim());
+          applyFont(e.target.value);
         }
       });
 
