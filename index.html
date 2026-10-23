@@ -1983,15 +1983,36 @@
     .swatch-copy-icon {
       opacity: 0.55;
       display: inline-flex;
+      align-items: center;
+      justify-content: center;
       flex-shrink: 0;
       color: var(--text-muted);
       transition: opacity 0.15s, transform 0.15s, color 0.15s;
     }
 
     .swatch-info-card:hover .swatch-copy-icon {
-      opacity: 1;
-      color: var(--primary-accent, var(--text));
+      opacity: 0.95;
+      color: var(--text);
       transform: scale(1.15);
+    }
+
+    .swatch-copy-icon:hover {
+      opacity: 1 !important;
+      color: var(--text) !important;
+      transform: scale(1.22) !important;
+    }
+
+    /* On desktop light mode, hovering over copy button is always deep dark (#0f172a), never white */
+    :root:not([data-theme="dark"]) .swatch-info-card:hover .swatch-copy-icon,
+    :root:not([data-theme="dark"]) .swatch-copy-icon:hover,
+    [data-theme="light"] .swatch-info-card:hover .swatch-copy-icon,
+    [data-theme="light"] .swatch-copy-icon:hover {
+      color: #0f172a !important;
+    }
+
+    [data-theme="dark"] .swatch-info-card:hover .swatch-copy-icon,
+    [data-theme="dark"] .swatch-copy-icon:hover {
+      color: #f8fafc !important;
     }
 
     .swatch-contrast-line {
