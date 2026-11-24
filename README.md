@@ -2,7 +2,7 @@
 
 > **Typolor** turns a few brand colors and fonts into a complete design-token set — color roles, a fluid type scale, spacing, radius and buttons — previews it on a real website, and exports a `branding.md` file you can hand to an AI before it designs anything.
 
-[![Version](https://img.shields.io/badge/version-2.0.1-4F46E5.svg)](#changelog)
+[![Version](https://img.shields.io/badge/version-2.1.0-4F46E5.svg)](#changelog)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Zero Dependencies](https://img.shields.io/badge/Dependencies-Zero%20Build-emerald.svg)](index.html)
 
@@ -93,7 +93,7 @@ python -m http.server 8000
 ├── app.js              # State, the six steps, preview site and exporters
 ├── styles.css          # App styles (light and dark)
 ├── typolor-engine.js   # Standalone color engine (shade generation, APCA, naming)
-├── favicon.svg
+├── typolor.png         # Logo and app icon
 ├── README.md
 └── LICENSE
 ```
@@ -111,6 +111,14 @@ python -m http.server 8000
 ---
 
 ## Changelog
+
+### 2.1.0
+* **Mobile-optimised**: bottom step bar (back · step list · next / download), pickers open as bottom sheets, 16px fields so phones don't zoom, larger tap targets, tap-to-show token labels in the preview.
+* **New color picker**: saturation/brightness area, hue slider, eyedropper (where supported), original/new chip, HEX plus RGB/HSL fields and quick picks.
+* **Styled dropdowns**: every select opens a Typolor menu (bottom sheet on phones) with full keyboard support.
+* Shade picker: Base row lines up with the palette swatches.
+* Color cards: one-line header; the name field fits its text.
+* Slim, translucent scrollbars; square icon-only buttons; new PNG logo.
 
 ### 2.0.1
 * Shade picker: larger swatches; the selected shade turns into a circle; a small centre dot marks the color you entered (the "main" shade).

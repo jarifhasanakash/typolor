@@ -8,7 +8,7 @@
   const E = window.TypolorEngine;
   const chroma = E.chroma;
   const SHADES = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
-  const VERSION = '2.0.1';
+  const VERSION = '2.1.0';
   const STORE_KEY = 'typolor-studio-v2';
   const THEME_KEY = 'typolor-theme';
 
@@ -104,6 +104,18 @@ Content rhythm
 Other weights: replace "regular" with light, bold or fill.
 Usage: <i class="ph ph-arrow-right"></i>`;
 
+  // Size a text field to exactly fit its text (measured in its own font), so labels like "Primary" don't leave a gap.
+  const measureCtx = document.createElement('canvas').getContext('2d');
+  function fitToText(el) {
+    const cs = getComputedStyle(el);
+    measureCtx.font = `${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
+    const w = measureCtx.measureText(el.value || el.placeholder || ' ').width;
+    el.style.width = Math.ceil(w + parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight) + 4) + 'px';
+  }
+
+  // phone layout (matches the 720px breakpoint in styles.css): bottom step bar, pickers as bottom sheets
+  const isPhone = () => window.matchMedia('(max-width: 720px)').matches;
+
   // the file name is typed without an extension; the export tab decides it on download
   const mdBase = f => String(f || '').trim().replace(/(\.(md|css|json))+$/i, '').trim() || 'Branding';
   const FILE_EXT = { md: '.md', css: '.css', tw: '-tailwind.css', json: '.json' };
@@ -186,7 +198,7 @@ Usage: <i class="ph ph-arrow-right"></i>`;
       tokens: [], type: defaultType(), spacing: defaultSpacing(), radius: defaultRadius(),
       rules: DEFAULT_RULES, icons: DEFAULT_ICONS,
       export: { palettes: true, contrast: true, rules: true, icons: true, css: true, file: 'Branding' },
-      preview: { device: 'desktop', labels: false },
+      preview: { device: isPhone() ? 'mobile' : 'desktop', labels: false },
       button: defaultButton(),
       layout: { maxWidth: DEFAULT_MAX_WIDTH }
     };
@@ -605,6 +617,8 @@ ${role('overline')}
   const DEMO_STYLE = `
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-text-size-adjust:100%}
+::-webkit-scrollbar{width:10px;height:10px}::-webkit-scrollbar-track,::-webkit-scrollbar-corner{background:transparent}::-webkit-scrollbar-thumb{background-color:rgba(120,120,130,.35);border:3px solid transparent;background-clip:content-box;border-radius:999px}::-webkit-scrollbar-thumb:hover{background-color:rgba(120,120,130,.55);border-width:2px}
+@supports not selector(::-webkit-scrollbar){*{scrollbar-width:thin;scrollbar-color:rgba(120,120,130,.4) transparent}}
 body{font-family:var(--ff-p);font-weight:var(--fw-p);line-height:var(--lh-p);letter-spacing:var(--ls-p);text-transform:var(--tt-p);font-size:var(--fs-p-rg);color:var(--t-paragraph-dark);background:var(--t-bg-light);-webkit-font-smoothing:antialiased;overflow-x:hidden}
 a{color:inherit;text-decoration:none;cursor:pointer}
 ul{list-style:none}
@@ -1002,7 +1016,8 @@ html.labels #tlabel.on{display:block}
 </div></footer>`;
   }
 
-  const LABEL_SCRIPT = `document.addEventListener('mousemove',function(e){var l=document.getElementById('tlabel');if(!l)return;var t=e.target.closest&&e.target.closest('[data-t]');if(!t||!document.documentElement.classList.contains('labels')){l.classList.remove('on');return;}l.textContent=t.getAttribute('data-t');l.classList.add('on');var x=e.clientX+14,y=e.clientY+16;if(x+l.offsetWidth>innerWidth-8)x=innerWidth-l.offsetWidth-8;if(y+l.offsetHeight>innerHeight-8)y=e.clientY-l.offsetHeight-10;l.style.left=x+'px';l.style.top=y+'px';});`;
+  // token labels: follow the mouse on desktop; on touch screens, tap an element to show its label
+  const LABEL_SCRIPT = `(function(){function show(e){var l=document.getElementById('tlabel');if(!l)return;var t=e.target.closest&&e.target.closest('[data-t]');if(!t||!document.documentElement.classList.contains('labels')){l.classList.remove('on');return;}l.textContent=t.getAttribute('data-t');l.classList.add('on');var x=e.clientX+14,y=e.clientY+16;if(x+l.offsetWidth>innerWidth-8)x=innerWidth-l.offsetWidth-8;if(x<8)x=8;if(y+l.offsetHeight>innerHeight-8)y=e.clientY-l.offsetHeight-10;l.style.left=x+'px';l.style.top=y+'px';}document.addEventListener('mousemove',show);document.addEventListener('click',function(e){if(document.documentElement.classList.contains('labels')){e.preventDefault();show(e);}},true);})();`;
 
   function demoShell(full) {
     const fonts = full ? Object.keys(fontFamilies()).map(f => `<link rel="stylesheet" href="${fontHref(f, true)}">`).join('') : '';
@@ -1274,15 +1289,14 @@ html.labels #tlabel.on{display:block}
     return `
       <article class="card pcard" data-pid="${p.id}">
         <div class="pcard-head">
-          <label class="pick" title="Pick a color"><span data-region="pickbg" data-arg="${p.id}"></span><input type="color" value="${p.hex.toLowerCase()}" data-pal-color="${p.id}" aria-label="Color picker for ${esc(p.role)}"></label>
+          <button class="pick" data-act="color-pick" data-pid="${p.id}" title="Edit color" aria-label="Edit ${esc(p.role)} color" aria-haspopup="dialog"><span data-region="pickbg" data-arg="${p.id}"></span><i class="ph ph-pencil-simple pick-ico" aria-hidden="true"></i></button>
           <div class="pcard-id">
-            <div class="pcard-title">
-              <input class="role-input" value="${esc(p.role)}" data-bind="palettes.${i}.role" spellcheck="false" aria-label="Color name">
-              ${i === 0 ? '<span class="pill">Primary</span>' : ''}${p.kind === 'neutral' ? '<span class="pill">Neutral</span>' : ''}
-            </div>
-            <div class="pcard-meta"><input class="hex-input" value="${p.hex}" data-pal-hex="${p.id}" maxlength="7" spellcheck="false" aria-label="Hex value"><span class="meta" data-region="palmeta" data-arg="${p.id}"></span></div>
+            <input class="role-input" value="${esc(p.role)}" style="width:${Math.max(4, p.role.length + 1)}ch" data-bind="palettes.${i}.role" spellcheck="false" aria-label="Color name">
+            <input class="hex-input" value="${p.hex}" data-pal-hex="${p.id}" maxlength="7" spellcheck="false" aria-label="Hex value">
+            <span class="pcard-meta meta" data-region="palmeta" data-arg="${p.id}"></span>
           </div>
           <div class="pcard-tools">
+            ${i === 0 ? '<span class="pill">Primary</span>' : ''}${p.kind === 'neutral' ? '<span class="pill">Neutral</span>' : ''}
             <div class="seg" role="group" aria-label="Shade algorithm">${Object.keys(MODES).map(m => `<button class="${p.mode === m ? 'on' : ''}" data-act="mode" data-pid="${p.id}" data-val="${m}" title="${{ original: 'Match the nearest hand-tuned scale', lockInputColor: 'Pin your exact color to a chosen shade', apca: 'Lightness tuned for APCA text contrast' }[m]}">${MODES[m]}</button>`).join('')}</div>
             ${p.mode === 'lockInputColor' ? `<label class="lock-at">at <select class="sel sm" data-bind="palettes.${i}.lockShade" data-num>${SHADES.map(s => `<option value="${s}" ${s == p.lockShade ? 'selected' : ''}>${s}</option>`).join('')}</select></label>` : ''}
             ${i === 0 ? '' : `<button class="icon-btn ${p.kind === 'neutral' ? 'on' : ''}" data-act="neutral" data-pid="${p.id}" title="${p.kind === 'neutral' ? 'Neutral color' : 'Use as neutral (text, backgrounds, borders)'}" aria-pressed="${p.kind === 'neutral'}"><i class="ph ph-drop-half"></i></button>`}
@@ -1464,7 +1478,7 @@ html.labels #tlabel.on{display:block}
 
   function viewPreview() {
     const d = state.preview.device;
-    return `${head('Website preview', 'A sample website painted only with your variables. Switch devices to see the fluid type, or turn on labels and hover to see each variable.',
+    return `${head('Website preview', 'A sample website painted only with your variables. Switch devices to see the fluid type, or turn on labels and hover or tap to see each variable.',
       `<div class="seg" id="deviceSeg">${Object.keys(DEVICES).map(k => `<button class="${d === k ? 'on' : ''}" data-act="device" data-val="${k}"><i class="ph ph-${k === 'desktop' ? 'desktop' : k === 'tablet' ? 'device-tablet' : 'device-mobile'}"></i>${k[0].toUpperCase() + k.slice(1)}</button>`).join('')}</div>
        <button class="btn ghost ${state.preview.labels ? 'on' : ''}" data-act="labels" aria-pressed="${!!state.preview.labels}"><i class="ph ph-tag"></i>Token labels</button>
        <button class="btn ghost" data-act="open-demo"><i class="ph ph-arrow-square-out"></i>New tab</button>`)}
@@ -1528,6 +1542,28 @@ html.labels #tlabel.on{display:block}
     $('#stepper').innerHTML = STEPS.map((s, i) => `<button class="step ${i === cur ? 'on' : ''} ${i < cur ? 'done' : ''}" data-go="${s.id}" ${i === cur ? 'aria-current="step"' : ''}>
       <span class="step-n">${i < cur ? '<i class="ph ph-check"></i>' : i + 1}</span><span class="step-l">${s.label}</span></button>`).join('');
     const on = $('#stepper .on'); if (on) on.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+
+    // phone: bottom bar with back, current step (opens the step list) and next / download
+    const prev = STEPS[cur - 1], next = STEPS[cur + 1];
+    $('#mnav').innerHTML = `<span class="mnav-progress" style="--p:${(cur + 1) / STEPS.length}"></span>
+      <button class="mnav-btn" ${prev ? `data-go="${prev.id}" aria-label="Back to ${prev.label}"` : 'disabled aria-label="Back"'}><i class="ph ph-arrow-left"></i></button>
+      <button class="mnav-cur" data-act="mnav-steps" aria-haspopup="dialog" aria-label="All steps, current: ${STEPS[cur].label}">
+        <span class="mnav-n">${cur + 1}/${STEPS.length}</span><b>${STEPS[cur].label}</b><i class="ph ph-caret-up"></i></button>
+      ${next
+        ? `<button class="btn primary mnav-next" data-go="${next.id}">Next<i class="ph ph-arrow-right"></i></button>`
+        : `<button class="btn primary mnav-next" data-act="download" data-kind="${ui.exportTab}"><i class="ph ph-download-simple"></i>Download</button>`}`;
+  }
+
+  function openStepSheet(anchor) {
+    const cur = stepIndex(state.step);
+    pop.classList.remove('font-pop', 'cp-pop'); ui.cp = null;
+    pop.innerHTML = `<div class="pop-head"><span>Steps</span>
+        <button class="icon-btn sm" data-act="pop-close" aria-label="Close"><i class="ph ph-x"></i></button></div>
+      <div class="step-list">${STEPS.map((s, i) => `<button class="step-item ${i === cur ? 'on' : ''} ${i < cur ? 'done' : ''}" data-go="${s.id}">
+        <span class="step-n">${i < cur ? '<i class="ph ph-check"></i>' : i + 1}</span><i class="ph ${s.icon}"></i><span>${s.label}</span>${i === cur ? '<em>Current</em>' : ''}</button>`).join('')}</div>`;
+    pop.hidden = false;
+    ui.pop = 'steps';
+    placePopover(anchor);
   }
 
   function renderView() {
@@ -1540,6 +1576,7 @@ html.labels #tlabel.on{display:block}
     renderStepper();
     if (state.step === 'roles') mountStage($('#miniStage'), 'desktop');
     if (state.step === 'preview') mountStage($('#fullStage'));
+    $$('.role-input').forEach(fitToText);
     softRefresh();
   }
   function setStep(id) {
@@ -1576,10 +1613,10 @@ html.labels #tlabel.on{display:block}
       }).join('')}
       <div class="pop-row base"><span class="pop-label">Base</span><div class="pop-sw">
         ${swatchBtn('#FFFFFF', t.src.c === '#FFFFFF', false, 'data-c="#FFFFFF" title="White"', tid)}
-        ${swatchBtn('#000000', t.src.c === '#000000', false, 'data-c="#000000" title="Black"', tid)}</div>
-        <input class="hex-input" placeholder="#HEX" value="${t.src.c && t.src.c !== '#FFFFFF' && t.src.c !== '#000000' ? t.src.c : ''}" data-custom-src="${tid}" maxlength="7" aria-label="Custom hex"></div>
+        ${swatchBtn('#000000', t.src.c === '#000000', false, 'data-c="#000000" title="Black"', tid)}
+        <input class="hex-input" placeholder="#HEX" value="${t.src.c && t.src.c !== '#FFFFFF' && t.src.c !== '#000000' ? t.src.c : ''}" data-custom-src="${tid}" maxlength="7" aria-label="Custom hex"></div></div>
       <div class="pop-scale"><span>50</span><span>500</span><span>950</span></div>`;
-    pop.classList.remove('font-pop');
+    pop.classList.remove('font-pop', 'cp-pop'); ui.cp = null;
     pop.hidden = false;
     placePopover(anchor);
     ui.pop = tid;
@@ -1587,11 +1624,20 @@ html.labels #tlabel.on{display:block}
   function closePopover() {
     pop.hidden = true; ui.pop = null; ui.fontRole = null;
     $$('.font-field[aria-expanded="true"]').forEach(b => b.setAttribute('aria-expanded', 'false'));
-    pop.classList.remove('font-pop');
+    pop.classList.remove('font-pop', 'sheet', 'cp-pop', 'sel-pop'); ui.cp = null; ui.selEl = null; pop.style.width = '';
+    pop.style.bottom = '';
     if (fontObserver) fontObserver.disconnect();
   }
   function placePopover(anchor) {
     ui.popAnchor = anchor;
+    // phones: a full-width bottom sheet instead of a small floating box
+    if (isPhone()) {
+      pop.classList.add('sheet');
+      pop.style.left = pop.style.top = '';
+      keepSheetAboveKeyboard();
+      return;
+    }
+    pop.classList.remove('sheet');
     const r = anchor.getBoundingClientRect();
     const pw = pop.offsetWidth, ph = pop.offsetHeight;
     const left = Math.min(Math.max(8, r.left), innerWidth - pw - 8);
@@ -1600,6 +1646,138 @@ html.labels #tlabel.on{display:block}
     pop.style.left = left + 'px';
     pop.style.top = top + 'px';
   }
+
+  /* ------------------------------------------------------------------ color picker (palette base color) */
+  // Works in HSV so the hue is kept while dragging through greys; every change is written straight to the palette.
+  const cpHex = c => chroma.hsv(c.h, c.s, c.v).hex().toUpperCase();
+  function openColorPicker(pid, anchor) {
+    const p = pal(pid); if (!p) return;
+    const [h, s, v] = chroma(p.hex).hsv();
+    ui.cp = { pid, h: isNaN(h) ? 0 : h, s, v, orig: p.hex, fmt: ui.cpFmt || 'rgb' };
+    pop.classList.remove('font-pop');
+    pop.classList.add('cp-pop');
+    const eye = 'EyeDropper' in window;
+    pop.innerHTML = `<div class="pop-head"><span>${esc(p.role)} color</span>
+        <button class="icon-btn sm" data-act="pop-close" aria-label="Close" title="Close"><i class="ph ph-x"></i></button></div>
+      <div class="cp-sv" data-cp="sv" tabindex="0" role="slider" aria-label="Saturation and brightness" aria-valuetext=""><span class="cp-thumb"></span></div>
+      <div class="cp-row">
+        ${eye ? '<button class="icon-btn cp-eye" data-act="cp-eyedrop" title="Pick a color from the screen" aria-label="Pick a color from the screen"><i class="ph ph-eyedropper"></i></button>' : ''}
+        <div class="cp-hue" data-cp="hue" tabindex="0" role="slider" aria-label="Hue" aria-valuemin="0" aria-valuemax="360"><span class="cp-thumb"></span></div>
+      </div>
+      <div class="cp-fields">
+        <span class="cp-chip" title="Original / new"><button class="cp-old" data-act="cp-revert" style="background:${p.hex}" title="Back to ${p.hex}" aria-label="Back to the original color"></button><i class="cp-new"></i></span>
+        <label class="cp-hex"><span>#</span><input data-cp-hex maxlength="7" spellcheck="false" aria-label="Hex"></label>
+        <div class="seg cp-fmt" role="group" aria-label="Number format">${['rgb', 'hsl'].map(f => `<button class="${ui.cp.fmt === f ? 'on' : ''}" data-act="cp-fmt" data-val="${f}">${f.toUpperCase()}</button>`).join('')}</div>
+      </div>
+      <div class="cp-ch">${[0, 1, 2].map(i => `<label><input type="number" inputmode="numeric" data-cp-ch="${i}" aria-label=""><span></span></label>`).join('')}</div>
+      <div class="cp-seeds">${SEEDS.map(c => `<button style="background:${c}" data-act="cp-seed" data-hex="${c}" title="${c}" aria-label="Use ${c}"></button>`).join('')}</div>`;
+    pop.hidden = false;
+    ui.pop = 'color';
+    placePopover(anchor);
+    cpSync();
+  }
+  // Redraw the picker from ui.cp. Inputs being typed in are left alone.
+  function cpSync() {
+    const c = ui.cp; if (!c || pop.hidden) return;
+    const hex = cpHex(c), active = document.activeElement;
+    const sv = $('.cp-sv', pop), hue = $('.cp-hue', pop);
+    sv.style.setProperty('--hue', chroma.hsv(c.h, 1, 1).hex());
+    Object.assign($('.cp-thumb', sv).style, { left: c.s * 100 + '%', top: (1 - c.v) * 100 + '%', background: hex });
+    sv.setAttribute('aria-valuetext', `saturation ${Math.round(c.s * 100)}%, brightness ${Math.round(c.v * 100)}%`);
+    Object.assign($('.cp-thumb', hue).style, { left: c.h / 360 * 100 + '%', background: chroma.hsv(c.h, 1, 1).hex() });
+    hue.setAttribute('aria-valuenow', Math.round(c.h));
+    $('.cp-new', pop).style.background = hex;
+    const hx = $('[data-cp-hex]', pop); if (hx !== active) hx.value = hex.slice(1);
+    const vals = c.fmt === 'rgb' ? chroma(hex).rgb()
+      : (([h, s, l]) => [Math.round(isNaN(h) ? c.h : h), Math.round(s * 100), Math.round(l * 100)])(chroma(hex).hsl());
+    const labels = c.fmt === 'rgb' ? ['R', 'G', 'B'] : ['H', 'S', 'L'];
+    $$('[data-cp-ch]', pop).forEach((inp, i) => {
+      inp.max = c.fmt === 'rgb' ? 255 : i === 0 ? 360 : 100; inp.min = 0;
+      inp.setAttribute('aria-label', labels[i]);
+      inp.nextElementSibling.textContent = labels[i];
+      if (inp !== active) inp.value = vals[i];
+    });
+  }
+  // Write the picker color to the palette (throttled to one update per frame).
+  let cpRaf = 0;
+  function cpApply() {
+    const c = ui.cp; if (!c) return;
+    const p = pal(c.pid); if (!p) return;
+    p.hex = cpHex(c);
+    const hi = $(`.pcard[data-pid="${p.id}"] [data-pal-hex]`); if (hi && hi !== document.activeElement) hi.value = p.hex;
+    if (!cpRaf) cpRaf = requestAnimationFrame(() => { cpRaf = 0; softRefresh(); });
+  }
+  function cpFromHex(hex, external) {
+    const c = ui.cp; const h = normHex(hex); if (!c || !h) return;
+    const [hh, s, v] = chroma(h).hsv();
+    c.h = isNaN(hh) ? c.h : hh; c.s = s; c.v = v;
+    cpSync();
+    if (!external) cpApply();
+  }
+  // dragging on the saturation/brightness area or the hue bar
+  let cpDrag = null;
+  function cpPoint(e) {
+    const r = cpDrag.el.getBoundingClientRect();
+    const x = Math.min(1, Math.max(0, (e.clientX - r.left) / r.width));
+    const y = Math.min(1, Math.max(0, (e.clientY - r.top) / r.height));
+    if (cpDrag.kind === 'sv') { ui.cp.s = x; ui.cp.v = 1 - y; } else ui.cp.h = x * 360;
+    cpSync(); cpApply();
+  }
+  document.addEventListener('pointerdown', e => {
+    const el = e.target.closest('[data-cp]');
+    if (!el || !ui.cp) return;
+    e.preventDefault();
+    el.focus({ preventScroll: true });
+    cpDrag = { el, kind: el.dataset.cp, id: e.pointerId };
+    el.setPointerCapture(e.pointerId);
+    cpPoint(e);
+  });
+  document.addEventListener('pointermove', e => { if (cpDrag && e.pointerId === cpDrag.id) cpPoint(e); });
+  const cpEnd = () => { cpDrag = null; };
+  document.addEventListener('pointerup', cpEnd);
+  document.addEventListener('pointercancel', cpEnd);
+
+  /* ------------------------------------------------------------------ dropdown menus */
+  // Every <select class="sel"> opens this styled menu instead of the browser's own list. The real <select>
+  // stays in place and keeps its value, so data binding and saving work exactly as before.
+  function openSelectMenu(sel) {
+    pop.classList.remove('font-pop', 'cp-pop'); ui.cp = null;
+    pop.classList.add('sel-pop');
+    const field = sel.closest('.field, .lock-at');
+    const label = (field && field.querySelector(':scope > span') ? field.querySelector(':scope > span').childNodes[0].textContent : sel.getAttribute('aria-label') || 'Choose').trim();
+    pop.innerHTML = `<div class="sel-head">${esc(label || 'Choose')}</div>
+      <div class="sel-list" role="listbox" aria-label="${esc(label)}">${[...sel.options].map((o, i) =>
+        `<button class="opt ${o.selected ? 'on' : ''}" role="option" aria-selected="${o.selected}" data-act="sel-opt" data-i="${i}"><span>${esc(o.textContent)}</span><i class="ph ph-check" aria-hidden="true"></i></button>`).join('')}</div>`;
+    pop.hidden = false;
+    ui.pop = 'select'; ui.selEl = sel;
+    pop.style.width = isPhone() ? '' : Math.max(sel.offsetWidth, 140) + 'px';
+    placePopover(sel);
+    const on = $('.opt.on', pop) || $('.opt', pop);
+    if (on) {
+      pop.scrollTop = Math.max(0, on.offsetTop - pop.clientHeight / 2 + on.offsetHeight / 2);
+      on.focus({ preventScroll: true });
+    }
+  }
+  function chooseSelectOption(i) {
+    const sel = ui.selEl; if (!sel) return;
+    sel.selectedIndex = i;
+    sel.dispatchEvent(new Event('input', { bubbles: true }));
+    sel.dispatchEvent(new Event('change', { bubbles: true }));
+    closePopover();
+    if (sel.isConnected) sel.focus({ preventScroll: true });
+  }
+  const isMenuSelect = t => t && t.closest && t.closest('select.sel');
+  // stop the browser's own list from opening (mouse, pen and touch) and open ours instead
+  document.addEventListener('mousedown', e => { if (isMenuSelect(e.target)) e.preventDefault(); });
+  document.addEventListener('touchstart', e => { if (isMenuSelect(e.target)) e.preventDefault(); }, { passive: false });
+  document.addEventListener('pointerdown', e => {
+    const sel = isMenuSelect(e.target);
+    if (!sel || e.button > 0) return;
+    e.preventDefault();
+    if (ui.pop === 'select' && ui.selEl === sel) { closePopover(); return; }
+    sel.focus({ preventScroll: true });
+    openSelectMenu(sel);
+  });
 
   /* ------------------------------------------------------------------ font picker */
   // Each preview loads only the glyphs of the font's own name (Google's `text=` subset) under a private
@@ -1622,9 +1800,10 @@ html.labels #tlabel.on{display:block}
     ui.fontRole = role; ui.fontQ = ''; ui.fontIdx = 0;
     if (!ui.fontCat) ui.fontCat = 'all';
     const cats = [['all', 'All'], ...Object.keys(CAT_LABEL).map(k => [k, CAT_LABEL[k]])];
+    pop.classList.remove('cp-pop'); ui.cp = null;
     pop.classList.add('font-pop');
     pop.innerHTML = `
-      <div class="font-search"><i class="ph ph-magnifying-glass"></i><input data-font-search placeholder="Search ${FONT_DB.length} Google Fonts or type any name" spellcheck="false" aria-label="Search fonts"></div>
+      <div class="font-search"><i class="ph ph-magnifying-glass"></i><input data-font-search placeholder="Search ${FONT_DB.length} Google Fonts" spellcheck="false" aria-label="Search fonts"><button class="icon-btn sm" data-act="pop-close" aria-label="Close" title="Close"><i class="ph ph-x"></i></button></div>
       <div class="font-cats">${cats.map(([k, l]) => `<button class="${ui.fontCat === k ? 'on' : ''}" data-act="font-cat" data-val="${k}">${l}</button>`).join('')}</div>
       <div class="font-list" role="listbox" aria-label="Fonts"></div>`;
     pop.hidden = false;
@@ -1799,6 +1978,20 @@ html.labels #tlabel.on{display:block}
       softRefresh();
     },
     'pop-close'() { closePopover(); },
+    'mnav-steps'(el) { if (ui.pop === 'steps') closePopover(); else openStepSheet(el); },
+    'color-pick'(el) { if (ui.pop === 'color' && ui.cp && ui.cp.pid === el.dataset.pid) closePopover(); else openColorPicker(el.dataset.pid, el); },
+    'cp-seed'(el) { cpFromHex(el.dataset.hex); },
+    'sel-opt'(el) { chooseSelectOption(+el.dataset.i); },
+    'cp-revert'() { if (ui.cp) cpFromHex(ui.cp.orig); },
+    'cp-fmt'(el) {
+      ui.cp.fmt = ui.cpFmt = el.dataset.val;
+      $$('.cp-fmt button', pop).forEach(b => b.classList.toggle('on', b === el));
+      cpSync();
+    },
+    'cp-eyedrop'() {
+      if (!('EyeDropper' in window)) return;
+      new window.EyeDropper().open().then(r => cpFromHex(r.sRGBHex)).catch(() => { /* cancelled */ });
+    },
     'auto-roles'() {
       if (!confirm('Re-assign every core variable to a suggested shade? Names, notes and custom variables are kept.')) return;
       const fresh = coreTokens(state);
@@ -1907,7 +2100,7 @@ html.labels #tlabel.on{display:block}
     if (el.matches('[data-pal-hex]')) {
       const h = normHex(el.value); if (!h) return;
       const p = pal(el.dataset.palHex); p.hex = h;
-      const ci = el.closest('.pcard').querySelector('[data-pal-color]'); if (ci) ci.value = h.toLowerCase();
+      if (ui.pop === "color" && ui.cp && ui.cp.pid === p.id) cpFromHex(h, true); // keep an open picker in step
       softRefresh(); return;
     }
     if (el.matches('[data-pal-color]')) {
@@ -1939,6 +2132,16 @@ html.labels #tlabel.on{display:block}
       return;
     }
     if (el.matches('[data-font-search]')) { ui.fontQ = el.value; ui.fontIdx = 0; renderFontList(); return; }
+    if (el.matches('[data-cp-hex]')) { if (normHex(el.value)) cpFromHex(el.value); return; }
+    if (el.matches('[data-cp-ch]')) {
+      const v = $$('[data-cp-ch]', pop).map(i => parseFloat(i.value));
+      if (v.some(isNaN)) return;
+      const col = ui.cp.fmt === 'rgb'
+        ? chroma(v.map(x => Math.min(255, Math.max(0, x))))
+        : chroma.hsl(((v[0] % 360) + 360) % 360, Math.min(100, Math.max(0, v[1])) / 100, Math.min(100, Math.max(0, v[2])) / 100);
+      cpFromHex(col.hex());
+      return;
+    }
     if (el.matches('[data-custom-src]')) {
       const h = normHex(el.value); if (!h) return;
       tok(el.dataset.customSrc).src = { c: h };
@@ -1962,6 +2165,7 @@ html.labels #tlabel.on{display:block}
         if (from !== to && el.value.trim() && !taken) state.rules = renameRef(state.rules, from, to);
       }
       setPath(state, b, readVal(el));
+      if (el.classList.contains("role-input")) fitToText(el); // grow with the name
       // a hand-edited variable name stops following its color's name
       if (/^tokens\.\d+\.name$/.test(b)) delete state.tokens[+b.split('.')[1]].autoName;
       // renaming a color renames its linked Brand variable (until that variable is renamed by hand)
@@ -1997,7 +2201,7 @@ html.labels #tlabel.on{display:block}
   });
 
   document.addEventListener('click', e => {
-    if (!pop.hidden && !e.target.closest('#popover') && !e.target.closest('[data-act="pick"],[data-act="font-pick"]')) closePopover();
+    if (!pop.hidden && !e.target.closest('#popover') && !e.target.closest('[data-act="pick"],[data-act="font-pick"],[data-act="mnav-steps"],[data-act="color-pick"],select.sel')) closePopover();
     const go = e.target.closest('[data-go]');
     if (go) { setStep(go.dataset.go); return; }
     const cp = e.target.closest('[data-copy]');
@@ -2098,8 +2302,41 @@ html.labels #tlabel.on{display:block}
       return;
     }
     if (e.key === 'Escape' && !pop.hidden) {
-      const back = ui.fontRole && $(`[data-act="font-pick"][data-role="${ui.fontRole}"]`);
+      const back = ui.selEl || (ui.fontRole && $(`[data-act="font-pick"][data-role="${ui.fontRole}"]`));
       closePopover(); if (back) back.focus();
+      return;
+    }
+    // dropdowns: Enter / Space / Alt+↓ open our menu; inside it ↑ ↓ Home End move, Tab closes
+    const selEl = isMenuSelect(e.target);
+    if (selEl && (e.key === 'Enter' || e.key === ' ' || e.key === 'F4' || (e.altKey && (e.key === 'ArrowDown' || e.key === 'ArrowUp')))) {
+      e.preventDefault(); openSelectMenu(selEl); return;
+    }
+    const opt = e.target.closest && e.target.closest('.opt');
+    if (opt && ui.pop === 'select') {
+      const opts = $$('.opt', pop), i = opts.indexOf(opt);
+      const go = j => { // scroll only the menu, never the page behind it
+        const o = opts[Math.max(0, Math.min(opts.length - 1, j))]; o.focus({ preventScroll: true });
+        if (o.offsetTop < pop.scrollTop) pop.scrollTop = o.offsetTop - 6;
+        else if (o.offsetTop + o.offsetHeight > pop.scrollTop + pop.clientHeight) pop.scrollTop = o.offsetTop + o.offsetHeight - pop.clientHeight + 6;
+      };
+      if (e.key === 'ArrowDown') { e.preventDefault(); go(i + 1); return; }
+      if (e.key === 'ArrowUp') { e.preventDefault(); go(i - 1); return; }
+      if (e.key === 'Home') { e.preventDefault(); go(0); return; }
+      if (e.key === 'End') { e.preventDefault(); go(opts.length - 1); return; }
+      if (e.key === 'Tab') { const s = ui.selEl; closePopover(); if (s) s.focus(); return; }
+    }
+    // color picker sliders: arrows move 1% (hue 1°), Shift for 10
+    const cpEl = e.target.closest && e.target.closest('[data-cp]');
+    if (cpEl && ui.cp && ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(e.key)) {
+      e.preventDefault();
+      const c = ui.cp, big = e.shiftKey ? 10 : 1;
+      const dx = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+      const dy = e.key === 'ArrowUp' ? 1 : e.key === 'ArrowDown' ? -1 : 0;
+      if (cpEl.dataset.cp === 'sv') {
+        c.s = Math.min(1, Math.max(0, c.s + dx * big / 100));
+        c.v = Math.min(1, Math.max(0, c.v + dy * big / 100));
+      } else c.h = (c.h + (dx || dy) * big + 360) % 360;
+      cpSync(); cpApply();
       return;
     }
     if (ui.pop === 'font' && e.target.matches('[data-font-search]')) {
@@ -2108,8 +2345,20 @@ html.labels #tlabel.on{display:block}
     }
   });
   // An open picker follows its button while the page scrolls or resizes; it closes only once the button is gone or off-screen.
+  // iOS keeps fixed elements behind the on-screen keyboard; lift the sheet by the hidden amount
+  function keepSheetAboveKeyboard() {
+    const vv = window.visualViewport;
+    if (!vv || !pop.classList.contains('sheet')) return;
+    pop.style.bottom = Math.max(0, innerHeight - vv.height - vv.offsetTop) + 'px';
+  }
+  if (window.visualViewport) {
+    visualViewport.addEventListener('resize', keepSheetAboveKeyboard);
+    visualViewport.addEventListener('scroll', keepSheetAboveKeyboard);
+  }
+
   function followAnchor() {
     if (pop.hidden) return;
+    if (pop.classList.contains('sheet')) { if (!isPhone()) closePopover(); return; } // sheets stay put while the page scrolls
     const a = ui.popAnchor;
     if (!a || !a.isConnected) { closePopover(); return; }
     const r = a.getBoundingClientRect();
@@ -2124,6 +2373,7 @@ html.labels #tlabel.on{display:block}
   applyTheme(document.documentElement.dataset.theme || 'light');
   Object.keys(fontFamilies()).forEach(f => ensureFontIn(document, f));
   renderView();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => $$('.role-input').forEach(fitToText)); // re-measure once the UI font loads
 
   $('#appVersion').textContent = 'v' + VERSION;
   window.Typolor = { version: VERSION, get state() { return state; }, buildMarkdown, buildCss, buildTailwind };

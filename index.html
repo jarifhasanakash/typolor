@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content">
   <meta name="theme-color" content="#F7F8FA">
   <title>Typolor Studio</title>
   <meta name="description" content="Build a complete brand token set — color roles, fluid type scale, spacing, radius and buttons — preview it on a real website and export branding.md for AI design tools.">
@@ -19,7 +19,8 @@
   <meta name="twitter:title" content="Typolor Studio — brand tokens for AI design">
   <meta name="twitter:description" content="Colors, roles, fluid typography, spacing and buttons in one flow. Export branding.md, CSS or Tailwind v4.">
 
-  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" href="typolor.png">
+  <link rel="apple-touch-icon" href="typolor.png">
   <script>
     (function () {
       try {
@@ -38,7 +39,7 @@
 <body>
   <header class="topbar">
     <a class="brand" href="./" aria-label="Typolor Studio home">
-      <img src="favicon.svg" alt="" width="26" height="26">
+      <img src="typolor.png" alt="" width="32" height="32">
       <span>Typolor</span>
     </a>
     <label class="project">
@@ -55,7 +56,7 @@
   <main id="view" class="view"></main>
 
   <footer class="app-footer">
-    <span class="foot-brand"><img src="favicon.svg" alt="" width="18" height="18">Typolor Studio <span class="ver" id="appVersion">v2.0.1</span></span>
+    <span class="foot-brand"><img src="typolor.png" alt="" width="18" height="18">Typolor Studio <span class="ver" id="appVersion">v2.1.0</span></span>
     <nav aria-label="Footer">
       <a href="https://github.com/jarifhasanakash/typolor" target="_blank" rel="noopener"><i class="ph ph-github-logo"></i>GitHub</a>
       <a href="https://github.com/jarifhasanakash/typolor/blob/main/LICENSE" target="_blank" rel="noopener"><i class="ph ph-scales"></i>MIT License</a>
@@ -63,6 +64,7 @@
     </nav>
   </footer>
 
+  <nav id="mnav" class="mnav" aria-label="Steps"></nav>
   <div id="popover" class="popover" hidden></div>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
