@@ -8,7 +8,7 @@
   const E = window.TypolorEngine;
   const chroma = E.chroma;
   const SHADES = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
-  const VERSION = '2.0.0';
+  const VERSION = '2.0.1';
   const STORE_KEY = 'typolor-studio-v2';
   const THEME_KEY = 'typolor-theme';
 
@@ -1551,18 +1551,32 @@ html.labels #tlabel.on{display:block}
 
   /* ------------------------------------------------------------------ popover (shade picker) */
   const pop = $('#popover');
+  // The shade that is the color the user typed: the pinned shade, or (APCA mode) the closest one.
+  function mainShade(p) {
+    const sh = shadesFor(p);
+    if (sh.locked) return Number(sh.locked);
+    return SHADES.reduce((best, s) => chroma.deltaE(p.hex, sh.map[s]) < chroma.deltaE(p.hex, sh.map[best]) ? s : best, 500);
+  }
+  // One picker swatch: square, a circle when selected, and a tiny centre dot when it is the main color.
+  function swatchBtn(hex, on, main, attrs, tid) {
+    const ink = chroma.contrast(hex, '#FFFFFF') >= chroma.contrast(hex, '#000000') ? '#FFFFFF' : '#000000';
+    return `<button style="background:${hex};color:${ink}" class="${on ? 'on' : ''}${main ? ' main' : ''}" data-act="set-src" data-tid="${tid}" ${attrs}>` +
+      `${main ? '<span class="main-dot" aria-hidden="true"></span>' : ''}</button>`;
+  }
   function openPicker(tid, anchor) {
     const t = tok(tid); if (!t) return;
     const slugs = paletteSlugs();
     pop.innerHTML = `<div class="pop-head"><span>Color for <code>--${esc(clean(t.name))}</code></span>
         <button class="icon-btn sm" data-act="pop-close" aria-label="Close" title="Close"><i class="ph ph-x"></i></button></div>
       ${state.palettes.map(p => {
-        const sh = shadesFor(p);
-        return `<div class="pop-row"><span class="pop-label">${esc(p.role)}</span><div class="pop-sw">${SHADES.map(s => `<button style="background:${sh.map[s]}" class="${t.src.p === p.id && t.src.s == s ? 'on' : ''}" data-act="set-src" data-tid="${tid}" data-p="${p.id}" data-s="${s}" title="${slugs[p.id]}-${s} · ${sh.map[s]}"></button>`).join('')}</div></div>`;
+        const sh = shadesFor(p), main = mainShade(p);
+        return `<div class="pop-row"><span class="pop-label">${esc(p.role)}</span><div class="pop-sw">${SHADES.map(s => swatchBtn(sh.map[s],
+          t.src.p === p.id && t.src.s == s, s === main,
+          `data-p="${p.id}" data-s="${s}" title="${slugs[p.id]}-${s} · ${sh.map[s]}${s === main ? ' · your color' : ''}"`, tid)).join('')}</div></div>`;
       }).join('')}
       <div class="pop-row base"><span class="pop-label">Base</span><div class="pop-sw">
-        <button style="background:#FFFFFF" class="${t.src.c === '#FFFFFF' ? 'on' : ''}" data-act="set-src" data-tid="${tid}" data-c="#FFFFFF" title="White"></button>
-        <button style="background:#000000" class="${t.src.c === '#000000' ? 'on' : ''}" data-act="set-src" data-tid="${tid}" data-c="#000000" title="Black"></button></div>
+        ${swatchBtn('#FFFFFF', t.src.c === '#FFFFFF', false, 'data-c="#FFFFFF" title="White"', tid)}
+        ${swatchBtn('#000000', t.src.c === '#000000', false, 'data-c="#000000" title="Black"', tid)}</div>
         <input class="hex-input" placeholder="#HEX" value="${t.src.c && t.src.c !== '#FFFFFF' && t.src.c !== '#000000' ? t.src.c : ''}" data-custom-src="${tid}" maxlength="7" aria-label="Custom hex"></div>
       <div class="pop-scale"><span>50</span><span>500</span><span>950</span></div>`;
     pop.classList.remove('font-pop');

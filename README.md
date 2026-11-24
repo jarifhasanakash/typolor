@@ -2,7 +2,7 @@
 
 > **Typolor** turns a few brand colors and fonts into a complete design-token set — color roles, a fluid type scale, spacing, radius and buttons — previews it on a real website, and exports a `branding.md` file you can hand to an AI before it designs anything.
 
-[![Version](https://img.shields.io/badge/version-2.0.0-4F46E5.svg)](#changelog)
+[![Version](https://img.shields.io/badge/version-2.0.1-4F46E5.svg)](#changelog)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Zero Dependencies](https://img.shields.io/badge/Dependencies-Zero%20Build-emerald.svg)](index.html)
 
@@ -111,6 +111,11 @@ python -m http.server 8000
 ---
 
 ## Changelog
+
+### 2.0.1
+* Shade picker: larger swatches; the selected shade turns into a circle; a small centre dot marks the color you entered (the "main" shade).
+* Open pickers now follow their button while the page scrolls instead of closing.
+* Phone layout fixes on the Typography toolbar and the Container setting.
 
 ### 2.0.0
 A rebuild around one goal: producing a `branding.md` an AI can design from.
