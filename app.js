@@ -132,6 +132,7 @@ Usage: <i class="ph ph-arrow-right"></i>`;
   function makePalette(role, hex, kind = 'brand') {
     return { id: uid(), role, hex: normHex(hex) || '#3B82F6', mode: 'original', lockShade: 500, kind };
   }
+  const DEFAULT_NEUTRAL = '#808080'; // pure grey; the Neutral card's re-tint button can still tint it from the primary
   function tintNeutral(hex) {
     return chroma(hex).set('hsl.s', 0.1).set('hsl.l', 0.42).hex().toUpperCase();
   }
@@ -194,7 +195,7 @@ Usage: <i class="ph ph-arrow-right"></i>`;
   function defaultState() {
     const s = {
       v: 2, name: 'Untitled brand', step: 'colors',
-      palettes: [makePalette('Primary', '#E283A7'), makePalette('Secondary', '#F1BA08'), makePalette('Neutral', tintNeutral('#E283A7'), 'neutral')],
+      palettes: [makePalette('Primary', '#E283A7'), makePalette('Secondary', '#F1BA08'), makePalette('Neutral', DEFAULT_NEUTRAL, 'neutral')],
       tokens: [], type: defaultType(), spacing: defaultSpacing(), radius: defaultRadius(),
       rules: DEFAULT_RULES, icons: DEFAULT_ICONS,
       export: { palettes: true, contrast: true, rules: true, icons: true, css: true, file: 'Branding' },
@@ -1275,7 +1276,7 @@ html.labels #tlabel.on{display:block}
       ${ui.addOpen ? `<div class="card addcard">
         <div class="add-row"><span class="add-label">Harmony</span>${hues.map(([l, h]) => `<button class="chip" data-act="add-pal" data-hex="${h}"><span class="chip-dot" style="background:${h}"></span>${l}</button>`).join('')}</div>
         <div class="add-row"><span class="add-label">Status</span>${status.map(([l, h]) => `<button class="chip" data-act="add-pal" data-hex="${h}" data-role="${l}"><span class="chip-dot" style="background:${h}"></span>${l}</button>`).join('')}
-          ${hasNeutral ? '' : `<button class="chip" data-act="add-neutral"><span class="chip-dot" style="background:${tintNeutral(state.palettes[0].hex)}"></span>Neutral</button>`}</div>
+          ${hasNeutral ? '' : `<button class="chip" data-act="add-neutral"><span class="chip-dot" style="background:${DEFAULT_NEUTRAL}"></span>Neutral</button>`}</div>
       </div>` : ''}` : '';
         return brand.map(([p, i]) => card(p, i)).join('') + adder + neutral.map(([p, i]) => card(p, i)).join('');
       })()}
@@ -1967,7 +1968,7 @@ html.labels #tlabel.on{display:block}
       renderView();
       const card = $(`[data-pid="${p.id}"] .role-input`); if (card) { card.focus(); card.select(); }
     },
-    'add-neutral'() { state.palettes.push(makePalette('Neutral', tintNeutral(state.palettes[0].hex), 'neutral')); renderView(); },
+    'add-neutral'() { state.palettes.push(makePalette('Neutral', DEFAULT_NEUTRAL, 'neutral')); renderView(); },
     pick(el) { if (ui.pop === el.dataset.tid) closePopover(); else openPicker(el.dataset.tid, el); },
     'set-src'(el) {
       const t = tok(el.dataset.tid);
