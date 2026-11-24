@@ -8,7 +8,7 @@
   const E = window.TypolorEngine;
   const chroma = E.chroma;
   const SHADES = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
-  const VERSION = '2.1.0';
+  const VERSION = '2.2.0';
   const STORE_KEY = 'typolor-studio-v2';
   const THEME_KEY = 'typolor-theme';
 
@@ -50,6 +50,8 @@
     [1.414, 'Augmented fourth'], [1.5, 'Perfect fifth'], [1.618, 'Golden ratio']];
   const MODES = { original: 'Original', lockInputColor: 'Lock', apca: 'APCA' };
   const GROUPS = ['Brand', 'Text on light', 'Text on dark', 'Backgrounds', 'Borders', 'Custom'];
+  // on a dark website the dark text roles are the main ones, so they come first
+  const groupsFor = () => (state.appearance === 'dark' ? ['Brand', 'Text on dark', 'Text on light', 'Backgrounds', 'Borders', 'Custom'] : GROUPS);
   const DEVICES = { desktop: 1440, tablet: 820, mobile: 390 };
 
   const STEPS = [
@@ -76,7 +78,7 @@
     { key: 'ol', label: 'Overline', role: 'overline', fixed: 0.75, note: 'Overline (eyebrow) text only' }
   ];
 
-  const CHECKS = [
+  const CHECKS_LIGHT = [
     ['heading-dark', 'bg-light', 'Headings on light'],
     ['paragraph-dark', 'bg-light', 'Body on light'],
     ['paragraph-dark', 'bg-1', 'Body on bg-1'],
@@ -87,6 +89,29 @@
     ['paragraph-light', 'bg-dark', 'Body on dark'],
     ['on-primary', 'primary', 'Button label']
   ];
+  // dark website: light text on every dark surface, brand colors on the dark page, dark text on light sections
+  const CHECKS_DARK = [
+    ['heading-light', 'bg-dark', 'Headings on page'],
+    ['paragraph-light', 'bg-dark', 'Body on page'],
+    ['paragraph-light', 'bg-dark-1', 'Body on bg-dark-1'],
+    ['paragraph-light', 'bg-dark-2', 'Body on bg-dark-2'],
+    ['placeholder-light', 'bg-dark', 'Placeholder on page'],
+    ['overline', 'bg-dark', 'Overline on page'],
+    ['primary', 'bg-dark', 'Primary / links on page'],
+    ['heading-dark', 'bg-light', 'Headings on light sections'],
+    ['on-primary', 'primary', 'Button label']
+  ];
+  const isDarkSite = () => state.appearance === 'dark';
+  // On a dark website the "page" roles swap to their dark counterparts (used by the base CSS, the sample site and its labels).
+  const DARK_SITE_MAP = {
+    'bg-light': 'bg-dark', 'bg-1': 'bg-dark-1', 'bg-2': 'bg-dark-1', 'bg-dark': 'bg-dark-2',
+    'heading-dark': 'heading-light', 'paragraph-dark': 'paragraph-light', 'placeholder-dark': 'placeholder-light', 'br-light': 'br-dark'
+  };
+  const siteKey = k => (isDarkSite() && DARK_SITE_MAP[k]) || k;
+  // every color role the sample website reads
+  const DEMO_KEYS = ['primary', 'secondary', 'accent', 'overline', 'on-primary', 'heading-dark', 'paragraph-dark', 'placeholder-dark',
+    'heading-light', 'paragraph-light', 'placeholder-light', 'bg-light', 'bg-1', 'bg-2', 'bg-dark', 'br-light', 'br-dark'];
+  const checksFor = () => (isDarkSite() ? CHECKS_DARK : CHECKS_LIGHT);
 
   const DEFAULT_RULES = `Container
 - Page content sits in a centered container: max-width: var(--max-width); margin-inline: auto.
@@ -171,6 +196,30 @@ Usage: <i class="ph ph-arrow-right"></i>`;
     // first shade from 600 down that reads on white (4.5:1), so overline text passes by default
     const readable = p => r(p, [600, 700, 800, 900].find(s => chroma.contrast(shadesFor(p).map[s], '#FFFFFF') >= 4.5) || 900);
     const onPrimary = { auto: 'primary' }; // heading-light or heading-dark, whichever contrasts more with --primary (live)
+    if (s.appearance === 'dark') {
+      // dark website: the page is neutral 950; brand colors use the first shade that reads on it (4.5:1)
+      const page = shadesFor(N).map[950];
+      const onDark = (p, order) => r(p, order.find(sh => chroma.contrast(shadesFor(p).map[sh], page) >= 4.5) || order[order.length - 1]);
+      return [
+        ['primary', 'Brand', onDark(P, [500, 400, 300, 200]), 100, 'Main brand color: primary buttons, links, key highlights'],
+        ['secondary', 'Brand', others[0] ? onDark(others[0], [500, 400, 300, 200]) : r(P, 300), 100, 'Secondary accents, tags, illustrations'],
+        ['accent', 'Brand', others[1] ? onDark(others[1], [400, 300, 200]) : r(P, 300), 100, 'Small highlights, badges, decorative details'],
+        ['overline', 'Brand', onDark(others[0] || P, [400, 300, 200, 100]), 100, 'Overline / eyebrow text above headings'],
+        ['on-primary', 'Brand', onPrimary, 100, 'Text and icons placed on the primary color'],
+        ['heading-light', 'Text on dark', W, 100, 'Headings on the dark page and dark surfaces'],
+        ['paragraph-light', 'Text on dark', W, 75, 'Paragraphs on the dark page and dark surfaces'],
+        ['placeholder-light', 'Text on dark', W, 50, 'Placeholders, captions, muted text on dark surfaces'],
+        ['heading-dark', 'Text on light', r(N, 950), 100, 'Headings on light sections'],
+        ['paragraph-dark', 'Text on light', r(N, 950), 75, 'Paragraphs on light sections'],
+        ['placeholder-dark', 'Text on light', r(N, 950), 50, 'Placeholders and muted text on light sections'],
+        ['bg-dark', 'Backgrounds', r(N, 950), 100, 'Default page background (dark website)'],
+        ['bg-dark-1', 'Backgrounds', r(N, 900), 100, 'Cards, inputs and alternate sections'],
+        ['bg-dark-2', 'Backgrounds', r(P, 950), 100, 'Brand-tinted dark sections, highlighted cards, footer'],
+        ['bg-light', 'Backgrounds', W, 100, 'Occasional light section'],
+        ['br-dark', 'Borders', W, 12, 'Borders and dividers on dark surfaces'],
+        ['br-light', 'Borders', r(N, 950), 20, 'Borders and dividers on light sections']
+      ].map(([key, group, src, alpha, note]) => ({ id: uid(), key, name: key, group, src, alpha, note }));
+    }
     return [
       ['primary', 'Brand', r(P, 500), 100, 'Main brand color: primary buttons, links, key highlights'],
       ['secondary', 'Brand', others[0] ? r(others[0], 500) : r(P, 300), 100, 'Secondary accents, tags, illustrations'],
@@ -194,7 +243,7 @@ Usage: <i class="ph ph-arrow-right"></i>`;
 
   function defaultState() {
     const s = {
-      v: 2, name: 'Untitled brand', step: 'colors',
+      v: 2, name: 'Untitled brand', step: 'colors', appearance: 'light',
       palettes: [makePalette('Primary', '#E283A7'), makePalette('Secondary', '#F1BA08'), makePalette('Neutral', DEFAULT_NEUTRAL, 'neutral')],
       tokens: [], type: defaultType(), spacing: defaultSpacing(), radius: defaultRadius(),
       rules: DEFAULT_RULES, icons: DEFAULT_ICONS,
@@ -219,6 +268,7 @@ Usage: <i class="ph ph-arrow-right"></i>`;
     const onP = s.tokens.find(t => t.key === 'on-primary');
     if (onP && (onP.src.c === '#FFFFFF' || onP.src.c === '#000000')) onP.src = { auto: 'primary' };
     s.preview = Object.assign({ device: 'desktop', labels: false }, saved.preview || {});
+    if (s.appearance !== 'dark') s.appearance = 'light'; // projects from before this setting are light websites
     s.button = Object.assign(defaultButton(), saved.button || {});
     s.layout = Object.assign({ maxWidth: DEFAULT_MAX_WIDTH }, saved.layout || {});
     // move projects still on the old default spacing names (sp-00 … sp-1000) to sp-0 … sp-x40
@@ -401,7 +451,7 @@ Usage: <i class="ph ph-arrow-right"></i>`;
     const slugs = paletteSlugs(); const L = [];
     L.push(`${indent}/* Palettes */`);
     state.palettes.forEach(p => SHADES.forEach(s => L.push(`${indent}--${slugs[p.id]}-${s}: ${shadesFor(p).map[s]};`)));
-    GROUPS.forEach(g => {
+    groupsFor().forEach(g => {
       const ts = state.tokens.filter(t => t.group === g); if (!ts.length) return;
       L.push('', `${indent}/* ${g} */`);
       ts.forEach(t => L.push(`${indent}--${clean(t.name)}: ${tokValue(t)};`));
@@ -457,13 +507,13 @@ ${cssVarsBlock()}
 body {
 ${role('paragraph')}
   font-size: var(--fs-p-rg);
-  color: var(--${nameOf('paragraph-dark')});
-  background: var(--${nameOf('bg-light')});
+  color: var(--${nameOf(siteKey('paragraph-dark'))});
+  background: var(--${nameOf(siteKey('bg-light'))});
 }
 
 h1, h2, h3, h4, h5, h6, .display {
 ${role('heading')}
-  color: var(--${nameOf('heading-dark')});
+  color: var(--${nameOf(siteKey('heading-dark'))});
 }
 .display { font-size: var(--fs-dis); }
 ${['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].map(h => `${h} { font-size: var(--fs-${h}); }`).join('\n')}
@@ -485,7 +535,7 @@ ${role('overline')}
   line-height: var(--btn-line-height); letter-spacing: var(--btn-letter-spacing);
   background: var(--${nameOf('primary')}); color: var(--${nameOf('on-primary')}); border: 1px solid transparent;
 }
-.btn-secondary { background: transparent; color: var(--${nameOf('heading-dark')}); border-color: var(--${nameOf('br-light')}); }
+.btn-secondary { background: transparent; color: var(--${nameOf(siteKey('heading-dark'))}); border-color: var(--${nameOf(siteKey('br-light'))}); }
 `;
   }
 
@@ -522,14 +572,17 @@ ${role('overline')}
     L.push(`# ${state.name} — Branding`, '',
       `> Design tokens for ${state.name}. Generated with Typolor Studio v${VERSION} on ${today}.`, '',
       '## How to use this file', '',
+      isDarkSite()
+        ? `- **This is a dark website.** Use \`--${nameOf('bg-dark')}\` as the default page background, \`--${nameOf('bg-dark-1')}\` for cards, inputs and alternate sections, and \`--${nameOf('bg-dark-2')}\` for highlighted sections. Use the \`-light\` text variables on these surfaces. Light sections (\`--${nameOf('bg-light')}\`) are the exception and use the \`-dark\` text variables.`
+        : `- **This is a light website.** Use \`--${nameOf('bg-light')}\` as the default page background. Dark sections use \`--${nameOf('bg-dark')}\` with the \`-light\` text variables.`,
       '- Use **only** the CSS variables in this file for color, font, font size, spacing and radius. Do not invent new values.',
-      '- Prefer the semantic color variables (for example `--' + nameOf('heading-dark') + '`) over raw palette shades. Use palette shades only when no semantic variable fits.',
+      '- Prefer the semantic color variables (for example `--' + nameOf(isDarkSite() ? 'heading-light' : 'heading-dark') + '`) over raw palette shades. Use palette shades only when no semantic variable fits.',
       '- Every variable has a "Use for" note. Follow it.',
       x.css ? '- The complete `:root` block at the end of this file can be pasted into the global stylesheet as is.' : '',
       '');
 
     L.push('## Colors', '');
-    GROUPS.forEach(g => {
+    groupsFor().forEach(g => {
       const ts = state.tokens.filter(tk => tk.group === g); if (!ts.length) return;
       L.push(`### ${g}`, '', '| Variable | Value | Source | Use for |', '|---|---|---|---|');
       ts.forEach(tk => L.push(`| \`--${clean(tk.name)}\` | \`${tokValue(tk)}\` | ${srcLabel(tk)}${tk.alpha < 100 ? ` @ ${tk.alpha}%` : ''} | ${cell(tk.note)} |`));
@@ -538,7 +591,7 @@ ${role('overline')}
 
     if (x.contrast) {
       L.push('### Contrast (WCAG 2.1)', '', '| Pair | Ratio | Result |', '|---|---|---|');
-      CHECKS.forEach(([fg, bg, label]) => {
+      checksFor().forEach(([fg, bg, label]) => {
         if (!tokKey(fg) || !tokKey(bg)) return;
         const c = contrastOf(fg, bg);
         L.push(`| ${label}: \`--${nameOf(fg)}\` on \`--${nameOf(bg)}\` | ${c.ratio.toFixed(2)}:1 | ${grade(c.ratio).label} |`);
@@ -588,7 +641,7 @@ ${role('overline')}
       `| Line height | ${bt.lh}% |`,
       `| Letter spacing | ${bt.ls}em |`,
       `| Primary button | background \`--${nameOf('primary')}\`, text \`--${nameOf('on-primary')}\` |`,
-      `| Secondary button | transparent background, 1px border \`--${nameOf('br-light')}\`, text \`--${nameOf('heading-dark')}\` |`,
+      `| Secondary button | transparent background, 1px border \`--${nameOf(siteKey('br-light'))}\`, text \`--${nameOf(siteKey('heading-dark'))}\` |`,
       '', '```css',
       `.btn {`,
       `  padding: ${bt.py.css} ${bt.px.css};`,
@@ -702,11 +755,11 @@ section{padding:var(--sec) 0;position:relative}
 .ring::before{content:"";grid-area:1/1;width:72px;height:72px;border-radius:50%;background:var(--t-bg-dark)}
 .ring b{grid-area:1/1;position:relative;font-family:var(--ff-h);color:var(--t-heading-light);font-size:var(--fs-h5)}
 .task{display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:var(--r2);border:1px solid var(--t-br-light);font-size:var(--fs-p-sm)}
-.task i{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;background:var(--t-accent);color:var(--t-heading-dark);font-size:15px;flex:none}
+.task i{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;background:var(--t-accent);color:var(--t-bg-dark);font-size:15px;flex:none}
 .float{position:absolute;display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:var(--r2);background:var(--t-bg-light);border:1px solid var(--t-br-light);box-shadow:0 20px 40px -18px rgba(0,0,0,.35);font-size:var(--fs-p-sm);color:var(--t-heading-dark);font-weight:600}
 .float i{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--t-primary);color:var(--t-on-primary)}
 .f1{left:-34px;top:38%}.f2{right:-26px;top:-22px}
-.f2 i{background:var(--t-secondary);color:var(--t-heading-dark)}
+.f2 i{background:var(--t-secondary);color:var(--t-bg-dark)}
 /* logos */
 .logos{padding:var(--s6) 0;border-top:1px solid var(--t-br-light);border-bottom:1px solid var(--t-br-light)}
 .logos-in{display:flex;align-items:center;justify-content:space-between;gap:var(--s5);flex-wrap:wrap}
@@ -766,7 +819,7 @@ section{padding:var(--sec) 0;position:relative}
 .plan{border-radius:var(--r3);padding:var(--s5);background:var(--t-bg-light);border:1px solid var(--t-br-light);display:flex;flex-direction:column}
 .plan.hot{background:var(--t-bg-dark);border-color:var(--t-bg-dark);padding:calc(var(--s5) + 12px) var(--s5);box-shadow:0 40px 80px -40px rgba(0,0,0,.5)}
 .plan-top{display:flex;justify-content:space-between;align-items:center;gap:var(--s2)}
-.tag{display:inline-block;background:var(--t-accent);color:var(--t-heading-dark);font-size:var(--fs-p-xs);font-weight:700;padding:5px 11px;border-radius:var(--rp)}
+.tag{display:inline-block;background:var(--t-accent);color:var(--t-bg-dark);font-size:var(--fs-p-xs);font-weight:700;padding:5px 11px;border-radius:var(--rp)}
 .price{display:flex;align-items:baseline;gap:6px;margin:var(--s4) 0 var(--s2)}
 .plan ul{display:grid;gap:12px;margin:var(--s5) 0;padding-top:var(--s5);border-top:1px solid var(--t-br-light);font-size:var(--fs-p-sm)}
 .plan.hot ul{border-color:var(--t-br-dark)}
@@ -841,7 +894,8 @@ html.labels #tlabel.on{display:block}
 
   function demoVars() {
     const f = state.type.fonts; const L = [':root{'];
-    state.tokens.filter(t => !t.key.startsWith('custom')).forEach(t => L.push(`--t-${t.key}:${tokValue(t)};`));
+    // each demo role reads its site role (on a dark website the page roles swap to their dark counterparts)
+    DEMO_KEYS.forEach(k => { const t = tokKey(siteKey(k)) || tokKey(k); if (t) L.push(`--t-${k}:${tokValue(t)};`); });
     const r = { h: 'heading', p: 'paragraph', o: 'overline' };
     Object.keys(r).forEach(k => {
       const x = f[r[k]];
@@ -860,7 +914,7 @@ html.labels #tlabel.on{display:block}
   }
 
   function demoBody() {
-    const lab = k => k.startsWith('fs-') || k.startsWith('font-') ? '--' + k : '--' + nameOf(k);
+    const lab = k => k.startsWith('fs-') || k.startsWith('font-') ? '--' + k : '--' + nameOf(siteKey(k));
     const L = (...ks) => ` data-t="${esc(ks.map(lab).join(' · '))}"`;
     const brand = esc(state.name && state.name !== 'Untitled brand' ? state.name : 'Halden');
     const bars = [38, 52, 44, 66, 58, 74, 62, 88, 70, 96, 82, 100];
@@ -986,7 +1040,7 @@ html.labels #tlabel.on{display:block}
   <div class="sec-head center"><span class="ol">Pricing</span><h2${L('heading-dark', 'fs-h2')}>Simple plans that scale with you</h2>
     <div class="toggle"${L('bg-1', 'br-light')}><span>Monthly</span><span class="on"${L('bg-light', 'heading-dark')}>Yearly <em${L('primary')}>−20%</em></span></div></div>
   <div class="plans">${plans.map(([n, price, d, items, hot]) => `<article class="plan${hot ? ' hot dark' : ''}"${L(hot ? 'bg-dark' : 'bg-light', hot ? 'br-dark' : 'br-light')}>
-    <div class="plan-top"><h3 class="h5"${L(hot ? 'heading-light' : 'heading-dark', 'fs-h5')}>${n}</h3>${hot ? `<span class="tag"${L('accent', 'heading-dark')}>Most popular</span>` : ''}</div>
+    <div class="plan-top"><h3 class="h5"${L(hot ? 'heading-light' : 'heading-dark', 'fs-h5')}>${n}</h3>${hot ? `<span class="tag"${L('accent', 'bg-dark')}>Most popular</span>` : ''}</div>
     <div class="price"><span class="dis"${L(hot ? 'heading-light' : 'heading-dark', 'fs-dis')}>${price}</span><span class="small muted"${L(hot ? 'placeholder-light' : 'placeholder-dark')}>/ month</span></div>
     <p class="small"${L(hot ? 'paragraph-light' : 'paragraph-dark', 'fs-p-sm')}>${d}</p>
     <ul>${items.map(i => `<li><i class="ph ph-check"></i>${i}</li>`).join('')}</ul>
@@ -1094,7 +1148,7 @@ html.labels #tlabel.on{display:block}
     tsrc(id) { const t = tok(id); return t ? `${esc(srcLabel(t))}${t.alpha < 100 ? ` <span class="dim">@${t.alpha}%</span>` : ''}<span class="tval">${tokValue(t)}</span>` : ''; },
     talpha(id) { const t = tok(id); return t ? `${t.alpha}%` : ''; },
     checks() {
-      return CHECKS.filter(([a, b]) => tokKey(a) && tokKey(b)).map(([fg, bg, label]) => {
+      return checksFor().filter(([a, b]) => tokKey(a) && tokKey(b)).map(([fg, bg, label]) => {
         const c = contrastOf(fg, bg); const g = grade(c.ratio);
         return `<div class="chk">
           <span class="chk-aa" style="background:${c.bg};color:${c.fg}">Aa</span>
@@ -1323,10 +1377,10 @@ html.labels #tlabel.on{display:block}
         ${t.key.startsWith('custom') ? `<button class="icon-btn sm" data-act="del-token" data-tid="${t.id}" title="Remove variable"><i class="ph ph-x"></i></button>` : '<span class="icon-spacer"></span>'}
       </div>`).join('');
     return `${head('Color roles', 'Map shades to the variables your AI will use. Click a swatch to pick a shade, set its opacity and note what it is for in branding.md.',
-      `<button class="btn ghost" data-act="auto-roles"><i class="ph ph-magic-wand"></i>Auto-assign</button><button class="btn ghost" data-act="add-token"><i class="ph ph-plus"></i>Add variable</button>`)}
+      `<div class="appearance"><span class="appearance-label">Site</span><div class="seg" role="group" aria-label="Site appearance">${["light", "dark"].map(a => `<button class="${(state.appearance || "light") === a ? "on" : ""}" data-act="appearance" data-val="${a}" aria-pressed="${(state.appearance || "light") === a}"><i class="ph ph-${a === "light" ? "sun" : "moon"}"></i>${a === "light" ? "Light" : "Dark"}</button>`).join("")}</div></div><button class="btn ghost" data-act="auto-roles"><i class="ph ph-magic-wand"></i>Auto-assign</button><button class="btn ghost" data-act="add-token"><i class="ph ph-plus"></i>Add variable</button>`)}
     <div class="split">
       <div class="col-main">
-        ${GROUPS.filter(g => state.tokens.some(t => t.group === g)).map(g => `<section class="card tgroup" data-group="${g}">
+        ${groupsFor().filter(g => state.tokens.some(t => t.group === g)).map(g => `<section class="card tgroup" data-group="${g}">
           <div class="tgroup-head"><h2 class="card-title">${g}</h2><button class="btn ghost sm" data-act="add-token" data-group="${g}" title="Add a ${g.toLowerCase()} variable"><i class="ph ph-plus"></i>Add</button></div>
           <div class="tlist">${rows(g)}</div></section>`).join('')}
       </div>
@@ -1992,6 +2046,26 @@ html.labels #tlabel.on{display:block}
     'cp-eyedrop'() {
       if (!('EyeDropper' in window)) return;
       new window.EyeDropper().open().then(r => cpFromHex(r.sRGBHex)).catch(() => { /* cancelled */ });
+    },
+    appearance(el) {
+      const to = el.dataset.val, from = state.appearance || 'light';
+      if (to === from) return;
+      const before = coreTokens(state); // defaults for the current appearance
+      const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+      const customised = state.tokens.some(t => { const d = before.find(x => x.key === t.key); return d && (!same(t.src, d.src) || t.alpha !== d.alpha); });
+      if (customised && !confirm(`Switch to a ${to} website? The core color roles are re-assigned for ${to} backgrounds. Names and notes you edited, and your own variables, are kept.`)) return;
+      state.appearance = to;
+      const fresh = coreTokens(state);
+      const oldNote = Object.fromEntries(before.map(d => [d.key, d.note]));
+      const existing = new Map(state.tokens.map(t => [t.key, t]));
+      // keep each role's id and name; keep its note only if the user wrote it
+      const core = fresh.map(f => {
+        const o = existing.get(f.key);
+        return o ? Object.assign({}, f, { id: o.id, name: o.name, note: o.note === oldNote[f.key] ? f.note : o.note }) : f;
+      });
+      state.tokens = [...core, ...state.tokens.filter(t => t.key.startsWith('custom'))];
+      renderView();
+      toast(to === 'dark' ? 'Dark website: roles set for dark backgrounds' : 'Light website: roles set for light backgrounds');
     },
     'auto-roles'() {
       if (!confirm('Re-assign every core variable to a suggested shade? Names, notes and custom variables are kept.')) return;

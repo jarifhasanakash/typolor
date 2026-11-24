@@ -39,6 +39,8 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 html, body { margin: 0; }
+/* when the browser scrolls something into view (focus, keyboard), keep it clear of the sticky header */
+html { scroll-padding-top: calc(var(--top) + 12px); }
 body {
   background-color: var(--bg);
   background-image: radial-gradient(circle, var(--dot) var(--dot-size), transparent calc(var(--dot-size) + .6px));
@@ -149,7 +151,8 @@ input[type="checkbox"] { accent-color: var(--accent); width: 16px; height: 16px;
 
 /* ---------------------------------------------------------------- layout */
 .view { max-width: 1480px; margin: 0 auto; padding: 28px 24px 40px; }
-.vhead { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 24px; flex-wrap: wrap; }
+.vhead { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 40px; flex-wrap: wrap; } /* clear space before the step content */
+@media (max-width: 720px) { .vhead { margin-bottom: 32px; } }
 .vhead-text { max-width: 720px; }
 .eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
 .vhead h1 { font-size: 30px; line-height: 1.15; letter-spacing: -.025em; font-weight: 700; margin: 6px 0 8px; }
@@ -209,6 +212,14 @@ input[type="checkbox"] { accent-color: var(--accent); width: 16px; height: 16px;
 }
 .pick:hover .pick-ico, .pick:focus-visible .pick-ico { opacity: 1; transform: none; }
 @media (hover: none) { .pick-ico { opacity: 1; transform: none; } }
+
+/* ---- site appearance switch (Color roles) ---- */
+.appearance { display: inline-flex; align-items: center; gap: 8px; }
+.appearance-label { font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); }
+/* switches in a step's header row (Site light/dark, Desktop/Tablet/Mobile) match the buttons beside them */
+.vhead-actions .seg { height: 38px; align-items: stretch; }
+.vhead-actions .seg button { height: auto; padding: 0 14px; font-size: 14px; gap: 7px; }
+.vhead-actions .seg button i { font-size: 16px; }
 
 /* ---- dropdown menus (replace the browser's own select list) ---- */
 .popover.sel-pop { padding: 5px; max-height: min(340px, calc(100vh - 16px)); overflow-y: auto; overscroll-behavior: contain; }
@@ -385,18 +396,20 @@ body.is-dragging, body.is-dragging * { cursor: grabbing !important; user-select:
 .card.mini .mini-head { margin-bottom: 10px; }
 
 /* ---------------------------------------------------------------- preview stage */
-.stage { position: relative; overflow: hidden; border-radius: 10px; background: var(--surface-3); }
+.stage { position: relative; overflow: hidden; border-radius: var(--r-lg); /* 16px, same as the cards */ background: var(--surface-3); }
 .demo-frame { position: absolute; top: 0; left: 0; border: 0; transform-origin: 0 0; background: #fff; }
-.mini-stage { height: 420px; border: 1px solid var(--line); }
+.mini-stage { border-radius: var(--r); height: 420px; border: 1px solid var(--line); }
 .full-stage { height: calc(100vh - var(--top) - 200px); min-height: 520px; border: 1px solid var(--line); background: repeating-linear-gradient(45deg, var(--surface-3) 0 10px, var(--surface-2) 10px 20px); }
 .full-stage[data-device="tablet"] .demo-frame, .full-stage[data-device="mobile"] .demo-frame { box-shadow: var(--shadow-lg); }
 
 /* ---------------------------------------------------------------- typography */
 .fcard .card-title code { font-weight: 500; }
 .specimen { padding: 0; }
-.spec-bar { display: flex; gap: 10px; padding: 14px; border-bottom: 1px solid var(--line); position: sticky; top: var(--top); background: var(--surface); z-index: 2; border-radius: var(--r-lg) var(--r-lg) 0 0; }
+.spec-bar { display: flex; align-items: center; gap: 10px; padding: 14px; border-bottom: 1px solid var(--line); position: sticky; top: var(--top); background: var(--surface); z-index: 2; border-radius: var(--r-lg) var(--r-lg) 0 0; }
 .spec-row:last-child { border-radius: 0 0 var(--r-lg) var(--r-lg); }
 .spec-bar .inp { flex: 1; }
+.spec-bar .seg { height: 36px; align-items: stretch; } /* same height as the sample-text field, centred with it */
+.spec-bar .seg button { height: auto; }
 .spec-row { display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 4px 20px; padding: 16px 18px; border-bottom: 1px solid var(--line); }
 .spec-row:last-child { border-bottom: 0; }
 .spec-row.paragraph { background: var(--surface-2); }
@@ -637,6 +650,7 @@ button, .chip, .sw, .seed { touch-action: manipulation; }
   .brand img { width: 36px; height: 36px; } /* same size as the Reset button */
   .vfoot { display: none; }
   body { padding-bottom: calc(76px + env(safe-area-inset-bottom)); }
+  html { scroll-padding-bottom: calc(84px + env(safe-area-inset-bottom)); } /* ...and clear of the bottom step bar */
   .view { padding-left: max(16px, env(safe-area-inset-left)); padding-right: max(16px, env(safe-area-inset-right)); }
 
   /* bottom step bar */

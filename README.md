@@ -2,7 +2,7 @@
 
 > **Typolor** turns a few brand colors and fonts into a complete design-token set — color roles, a fluid type scale, spacing, radius and buttons — previews it on a real website, and exports a `branding.md` file you can hand to an AI before it designs anything.
 
-[![Version](https://img.shields.io/badge/version-2.1.0-4F46E5.svg)](#changelog)
+[![Version](https://img.shields.io/badge/version-2.2.0-4F46E5.svg)](#changelog)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Zero Dependencies](https://img.shields.io/badge/Dependencies-Zero%20Build-emerald.svg)](index.html)
 
@@ -37,6 +37,7 @@ Typolor is a six-step flow. Everything saves in your browser as you go.
 * Every added color gets a matching variable in the Brand roles, kept in sync when you rename or delete it.
 
 ### 🧩 Color roles
+* **Light or dark website**: one switch re-assigns the roles for light or dark backgrounds, including dark surface tiers (`--bg-dark-1`, `--bg-dark-2`) and dark-specific contrast checks.
 * Brand, text-on-light, text-on-dark, background and border groups, each with **+ Add** and drag-to-reorder (mouse, touch, or ↑ ↓ on the handle).
 * Shade picker with every palette, white, black and custom hex.
 * `--on-primary` follows contrast by default: it uses `--heading-light` or `--heading-dark`, whichever reads better on `--primary`.
@@ -111,6 +112,13 @@ python -m http.server 8000
 ---
 
 ## Changelog
+
+### 2.2.0
+* **Dark websites**: a Site · Light / Dark switch in Color roles. Dark sets the page to `--bg-dark` with new `--bg-dark-1` (cards, alternate sections) and `--bg-dark-2` (brand-tinted sections), picks brand shades that read on the dark page, white-alpha borders, and dark-specific contrast checks. The preview renders the whole sample site dark, and branding.md and the CSS export state it is a dark website. Renamed variables, your notes and custom variables are kept when switching.
+* Default neutral is pure grey `#808080`.
+* Softer corners throughout (10px controls, 16px cards and popovers); more space below each step's heading.
+* Header switches match the button height; the color picker keeps the normal cursor.
+* Fields scrolled into view (keyboard, focus) stay clear of the sticky header and the phone step bar.
 
 ### 2.1.0
 * **Mobile-optimised**: bottom step bar (back · step list · next / download), pickers open as bottom sheets, 16px fields so phones don't zoom, larger tap targets, tap-to-show token labels in the preview.
