@@ -1281,12 +1281,18 @@ html.labels #tlabel.on{display:block}
     });
   }
 
+  // range sliders draw their filled part from --fill (Chrome/Safari have no native "progress" part)
+  function paintRange(el) {
+    const min = parseFloat(el.min) || 0, max = parseFloat(el.max) || 100;
+    el.style.setProperty('--fill', ((parseFloat(el.value) - min) / (max - min) * 100).toFixed(2) + '%');
+  }
   function softRefresh() {
     $$('[data-region]').forEach(el => {
       const fn = REGIONS[el.dataset.region];
       if (fn) el.innerHTML = fn(el.dataset.arg);
     });
     syncBound();
+    $$('input[type="range"]').forEach(paintRange);
     schedulePreview();
     document.title = `Typolor Studio · ${state.name}`;
     save();
