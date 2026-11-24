@@ -1,116 +1,141 @@
 # Typolor Studio 🎨🔤
 
-> **Typolor** — The unified tactile design studio for generating harmonic color palettes and proportional typographic scales with instant export for Tailwind CSS, CSS Custom Properties, and modern design systems.
+> **Typolor** turns a few brand colors and fonts into a complete design-token set — color roles, a fluid type scale, spacing, radius and buttons — previews it on a real website, and exports a `branding.md` file you can hand to an AI before it designs anything.
 
+[![Version](https://img.shields.io/badge/version-2.0.0-4F46E5.svg)](#changelog)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Zero Dependencies](https://img.shields.io/badge/Dependencies-Zero%20Runtime%20Build-emerald.svg)](index.html)
-[![Mobile Native](https://img.shields.io/badge/Mobile-100%25%20Responsive-purple.svg)](index.html)
+[![Zero Dependencies](https://img.shields.io/badge/Dependencies-Zero%20Build-emerald.svg)](index.html)
+
+**Live:** https://jarifhasanakash.github.io/typolor/
 
 ---
 
-## Overview
+## How it works
 
-Designing a cohesive digital product requires balancing **color harmony** and **typographic proportion**. Most generators treat color and type in isolation. **Typolor** unifies them into a single, tactile studio designed with a physical industrial hardware aesthetic.
+Typolor is a six-step flow. Everything saves in your browser as you go.
+
+| Step | What you do |
+|---|---|
+| **1 · Colors** | Add brand colors (Primary, Secondary, Tertiary …). Each gets an 11-shade scale (`50`–`950`). One color is the **Neutral** and always sits last. |
+| **2 · Roles** | Map shades to semantic variables such as `--heading-dark`, `--bg-1`, `--br-light`, with opacity and a "use for" note. Live WCAG contrast checks and a mini preview sit alongside. |
+| **3 · Typography** | Pick heading, paragraph and overline fonts from 370 Google Fonts, then set a modular scale that grows fluidly from mobile to desktop with `clamp()`. |
+| **4 · Spacing** | Spacing and radius primitives on a 4px unit, container max width, button style, layout rules and icon instructions. |
+| **5 · Preview** | A full sample website painted only with your variables. Switch desktop / tablet / mobile and turn on token labels to see which variable paints what. |
+| **6 · Export** | Download `branding.md`, CSS variables, a Tailwind v4 theme, or a project file to reopen later. |
 
 ---
 
 ## Features
 
-### 🎨 Perceptual Color Palette Generation
-* **11-Shade Scale (`50` &ndash; `950`)**: Balanced curve transfer preventing muddy darks or washed-out light tints.
-* **Algorithm Modes**:
-  * **Original**: Nearest perceptual skeleton matching with relative $\Delta E$ projection and curve transfer.
-  * **Lock Shade**: Pin your exact input color to any shade (50, 100, ..., 500, ..., 950) with tent-tapered distribution.
-  * **APCA Mode**: Calibrated lightness curve targets for accessible text contrast.
-* **Multi-Format Color Switcher**: Seamless live conversions across **HEX**, **RGB**, **HSB** (Hue, Saturation, Brightness), **HSL**, and **OKLCH**.
-* **Tactile Studio Picker**: Custom 2D Saturation-Value box, Hue spectrum track, and 18 hand-crafted curated designer seeds.
-* **Live History Track**: Persistent horizontal history of recently explored colors with instant one-tap restoration.
+### 🎨 Colors
+* **11-shade scales** from the Typolor engine, with three algorithms:
+  * **Original** — nearest hand-tuned skeleton, ΔE projection and curve transfer.
+  * **Lock** — pins your exact color to a chosen shade.
+  * **APCA** — lightness tuned for accessible text contrast.
+* **One-click "Add color"** picks a hue that stays distinct from your existing colors; harmony (complementary, analogous, triadic, split) and status (success, warning, danger, info) suggestions are one toggle away.
+* **Auto-tinted neutral** derived from your primary, always kept at the bottom.
+* Every added color gets a matching variable in the Brand roles, kept in sync when you rename or delete it.
 
-### 🔤 Musical Interval Typographic Scale Studio
-* **Musical Ratios**: Minor Second (1.067), Major Second (1.125), Minor Third (1.200), Major Third (1.250), Perfect Fourth (1.333), Augmented Fourth (1.414), Perfect Fifth (1.500), Golden Ratio (1.618), or custom ratio.
-* **Google Fonts Integration**: Live dropdown containing popular Sans, Serif, and Monospace fonts, plus real-time typing to load *any* Google Font on the fly.
-* **Independent Heading & Paragraph Typography Controls (v1.1)**:
-  * **Headings Controls**: Dedicated Font Weight selector (`300`&ndash;`900`, default `700` Bold), Line Height range slider (`0.80`&ndash;`2.00`, default `1.20`), and Letter Spacing range slider (`-0.08em`&ndash;`0.20em`, default `0.00em`) in the main station.
-  * **Paragraphs Controls**: Dedicated 3-box control station positioned directly before the Paragraphs preview rows for real-time adjusting of Body Font Weight (`300`&ndash;`700`, default `400` Regular), Line Height (`0.80`&ndash;`2.00`, default `1.50`), and Letter Spacing (`-0.08em`&ndash;`0.20em`, default `0.00em`).
-  * **One-Click Anti-Clockwise Resets**: Dedicated tactile reset buttons on every individual control card, plus global "Reset Defaults".
-* **Sample Text Presets**: Header actions with tactile hardware pills for **Alphabet** (full alphabet phrase), **Pangram**, and **Prose**, alongside custom real-time editable sample text.
-* **Category Banners & Dimensions**: Real-time REM and PX readouts with instant single-click CSS snippet copying.
+### 🧩 Color roles
+* Brand, text-on-light, text-on-dark, background and border groups, each with **+ Add** and drag-to-reorder (mouse, touch, or ↑ ↓ on the handle).
+* Shade picker with every palette, white, black and custom hex.
+* `--on-primary` follows contrast by default: it uses `--heading-light` or `--heading-dark`, whichever reads better on `--primary`.
+* Live **WCAG 2.1 contrast checks** for the pairings that matter.
 
-### ⚡ Instant Multi-Format Token Export
-* **Tailwind CSS v4**: Modern `@theme` block ready to drop into CSS.
-* **Tailwind CSS v3**: `tailwind.config.js` theme extension object.
-* **CSS Custom Properties**: Structured `:root` tokens for both typography and colors.
-* **JSON Tokens**: Machine-readable token schema for design tokens / Figma pipelines.
+### 🔤 Typography
+* **370 Google Fonts** in a searchable, categorised picker (each name shown in its own typeface), plus any other Google Font by name.
+* Separate heading / paragraph / overline settings: weight, line height, letter spacing, case.
+* **Fluid scale**: a mobile ratio and a desktop ratio between two viewports, written as `clamp()`; any size can be overridden by hand.
 
-### 📱 Mobile-Native Architecture
-* **Safe-Area Insets**: Full edge-to-edge layout with `viewport-fit=cover` and dynamic viewport units (`100dvh`).
-* **Ergonomic Bottom Sheet**: Tactile color studio shifts to a floating bottom card on mobile with safe touch margins.
-* **Zero Input Auto-Zoom**: Enforced minimum 16px inputs on coarse pointers to eliminate iOS Safari zoom drift.
-* **Zero Tap Lag**: `touch-action: manipulation` across all interactive buttons, chips, and swatches.
-* **Sticky-Hover Immune**: All `:hover` states gated behind capability queries (`@media (hover: hover) and (pointer: fine)`).
+### 📐 Spacing, radius & buttons
+* Spacing primitives named by multiplier — `--sp-0`, `--sp-x` (4px), `--sp-x2` (8px) … `--sp-x40` (160px).
+* Radius primitives — `--br-00`, `--br-r1` (4px) … `--br-r10` (40px), `--br-rc` (fully rounded).
+* `--max-width` container setting.
+* **Button style**: square / rounded / pill, padding, font family, size, weight, line height and letter spacing, with a live sample. Values that match a primitive are exported as that variable.
+* Renaming a spacing or radius variable updates its references in your layout rules.
 
-### 🎛️ Tactile Industrial Hardware Aesthetic
-* Concentric recessed wells and milled slots.
-* Off-white tactile porcelain pucks with studio key lighting.
-* Obsidian hardware `#1A1A1A` action controls.
-* High-contrast dark and light modes with dynamic status bar synchronization.
+### 🌐 Live preview
+* A modern sample website (hero, bento features, process, stats, testimonials, pricing, FAQ, CTA, footer) built only from your tokens.
+* Desktop, tablet and mobile widths so the fluid type scale is visible.
+* Token labels: hover any element to see the variables it uses.
 
----
-
-## Getting Started
-
-Typolor runs natively in any modern web browser with **zero installation or build step required**.
-
-### Quick Start
-
-1. Clone or download the repository:
-   ```bash
-   git clone https://github.com/jarifhasanakash/typolor.git
-   cd typolor
-   ```
-
-2. Open `index.html` directly in your browser:
-   * Double-click `index.html`, or
-   * Use any local static server:
-     ```bash
-     npx serve .
-     # or
-     python -m http.server 8000
-     ```
+### ⚡ Export
+* **`branding.md`** — written for AI tools: usage rules, every variable with its value and "use for" note, contrast table, palettes, fonts with a Google Fonts link, sizes, spacing, container, layout rules, radius, buttons, icons and a copy-paste `:root` block. Toggle sections on and off; preview it formatted with the 👁 button.
+* **CSS** — `:root` variables plus base typography and `.btn` rules.
+* **Tailwind v4** — an `@theme` block (`bg-primary`, `text-h1`, `p-sp-x4`, `rounded-btn`, `max-w-page` …).
+* **Project file** (`.json`) — reopen and keep editing on any device.
 
 ---
 
-## File Structure
+## Getting started
 
+No install and no build step.
+
+```bash
+git clone https://github.com/jarifhasanakash/typolor.git
+cd typolor
 ```
-├── index.html           # Main tactile studio application (HTML + CSS + Application Logic)
-├── typolor-engine.js    # Core standalone color math and scale calculation engine
-├── README.md            # Project documentation and guide
-└── LICENSE              # MIT Open Source License
+
+Open `index.html` in a browser, or serve the folder:
+
+```bash
+npx serve .
+# or
+python -m http.server 8000
 ```
 
 ---
 
-## Keyboard Shortcuts
+## File structure
 
-| Key | Action |
-| --- | --- |
-| `Space` | Randomly shuffle curated designer color seeds |
-| `Enter` / `Space` on Orb | Toggle Tactile Color Studio popover |
-| `Esc` | Close color studio popover, custom dropdowns, or export modal |
+```
+├── index.html          # App shell
+├── app.js              # State, the six steps, preview site and exporters
+├── styles.css          # App styles (light and dark)
+├── typolor-engine.js   # Standalone color engine (shade generation, APCA, naming)
+├── favicon.svg
+├── README.md
+└── LICENSE
+```
 
 ---
 
-## Open Source Credits & Acknowledgements
+## Keyboard
 
-Typolor is built on open standards and incorporates the following open-source libraries:
-* **[Chroma.js](https://github.com/gka/chroma.js)** by Gregor Aisch &mdash; Color manipulation and contrast mathematics (MIT License).
-* **[Phosphor Icons](https://phosphoricons.com/)** &mdash; Flexible icon library (MIT License).
-* **[Tailwind CSS](https://tailwindcss.com/)** &mdash; Default color anchors and spacing proportions (MIT License).
-* **[Google Fonts](https://fonts.google.com/)** &mdash; Open-source typography.
+| Key | Where | Action |
+|---|---|---|
+| `↑` `↓` | Drag handle in Color roles | Move the variable up or down |
+| `↑` `↓` `Enter` | Font picker search | Move through fonts and choose |
+| `Esc` | Any picker | Close it |
+
+---
+
+## Changelog
+
+### 2.0.0
+A rebuild around one goal: producing a `branding.md` an AI can design from.
+
+* New six-step flow: Colors → Roles → Typography → Spacing → Preview → Export.
+* Multiple brand colors with a neutral, semantic color roles, contrast checks.
+* Fluid `clamp()` type scale with mobile and desktop ratios; 370-font Google Fonts picker.
+* Spacing, radius, container and button tokens.
+* Live sample website with device sizes and token labels.
+* Exports: `branding.md` (with formatted preview), CSS, Tailwind v4, project file.
+* New light interface with optional dark mode.
+
+**Changed from v1:** the HEX/RGB/HSB/HSL/OKLCH format switcher, color history, Tailwind v3 export and JSON token export are not in v2. The project file replaces JSON tokens. v1 is preserved at the [`v1.1`](https://github.com/jarifhasanakash/typolor/tree/v1.1) tag.
+
+---
+
+## Credits
+
+* **[Chroma.js](https://github.com/gka/chroma.js)** by Gregor Aisch — color math and contrast (MIT).
+* **[Phosphor Icons](https://phosphoricons.com/)** — icons (MIT).
+* **[Tailwind CSS](https://tailwindcss.com/)** — default color anchors used by the engine (MIT).
+* **[Google Fonts](https://fonts.google.com/)** — open-source typography.
 
 ---
 
 ## License
 
-Distributed under the **MIT License**. See [`LICENSE`](LICENSE) for details.
+Distributed under the **MIT License**. See [`LICENSE`](LICENSE).
